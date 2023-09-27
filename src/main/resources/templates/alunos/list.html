@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="www.thymeleaf.com.br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Alunos</title>
+</head>
+
+<body>
+<h1>Alunos Cadastrados</h1>
+<hr />
+
+<form th:action="@{/alunos/form}" method="GET">
+    <button class="btn btn-primary" type="submit">Novo</button>
+</form>
+<br />
+
+
+<div th:text="${mensagem}" style="color: red"></div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Matrícula</th>
+        <th>Login</th>
+        <th>Senha</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="aluno : ${alunos}">
+        <td>[[${aluno.id}]]</td>
+        <td><a th:href="@{/alunos/{id}(id=${aluno.id})}" th:text="${aluno.nome}"></a></td>
+        <td th:text="${aluno.matricula}"></td>
+        <td th:text="${aluno.login}"></td>
+        <td th:text="${#strings.substring(aluno.senha,0,3)} + '...'"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="www.thymeleaf.com.br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Processos</title>
+</head>
+<body>
+<h1>Cadastro de Processo</h1>
+
+<div></div>
+
+<form th:action="@{/alunos/saveprocesso}" method="POST" th:object="${processo}">
+    Assunto: <input type="text" th:field="*{assunto.nome}"> <br><br>
+    Texto: <input type="text"> <br><br>
+    <input type="submit" value="Cadastrar">
+
+</form>
+</body>
+</html>
