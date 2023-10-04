@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +29,9 @@ public class Aluno implements Serializable {
 
     private String senha;
 
+    @OneToMany
+    private List<Processo> processos = new ArrayList<>();
+
     @OneToOne
-    private Processo processo;
+    private Colegiado colegiado;
 }

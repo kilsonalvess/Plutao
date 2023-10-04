@@ -32,5 +32,11 @@ public class Colegiado{
     private String curso;
 
     @OneToMany
-    private List<Professor> professores = new ArrayList<>();
+    private List<Professor> membros = new ArrayList<>();
+
+    @OneToMany
+    private List<Reuniao> reunioes = new ArrayList<>();
+
+    @OneToOne
+    private Aluno aluno;
 }

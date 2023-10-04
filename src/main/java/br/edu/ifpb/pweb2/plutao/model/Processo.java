@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +20,8 @@ public class Processo{
     private int id;
 
     private String numero;
+
+    private String requerimento;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataRecepecao;
@@ -32,9 +37,22 @@ public class Processo{
     private TipoDecisao decisaoRelator;
 
     @ManyToOne
+    private Professor relator;
+
+    @ManyToOne
     @JoinColumn(name = "estudante_id")
     private Aluno aluno;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private Assunto assunto;
+
+    @ManyToOne
+    private Reuniao emPauta;
+
+    @OneToMany
+    private List<Voto> votos = new ArrayList<>();
+
+    public Processo(Aluno aluno){
+        this.aluno = aluno;
+    }
 }

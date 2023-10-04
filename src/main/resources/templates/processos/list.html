@@ -9,17 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Alunos</title>
+    <title>Listagem de Processos</title>
 </head>
-<body>
 
+<body>
 <div class="logo-bar mb-0 p-3">
         <span class="logo-font">
             <img th:src="@{/imagens/bitbank-header-t.png}" /> Plutao
         </span>
 </div>
-
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
     <div class="navbar-nav">
         <a class="nav-item nav-link" th:href="@{/home}">Home</a>
@@ -37,23 +35,43 @@
 
     <div class="card">
         <div class="card-header">
-            Cadastro de Aluno
+            Listagem de Processos
         </div>
         <div class="card-body">
-            <form th:action="@{/alunos}" method="POST" th:object="${aluno}">
-                Nome: <input type="text" th:field="*{nome}"> <br><br>
-                Matrícula: <input type="text" th:field="*{matricula}"> <br><br>
-                Telefone:  <input type="text" th:field="*{telefone}" > <br><br>
-                Login: <input type="text" th:field="*{login}"> <br><br>
-                Senha: <input type="text" th:field="*{senha}"> <br><br>
-                <input type="submit" value="Salvar">
-                <a th:href="@{/alunos}">Cancelar</a>
+
+            <div th:if="${not #strings.isEmpty(mensagem)}" th:text="${mensagem}" class="alert alert-success"></div>
+
+            <form th:action="@{/processos/form}" method="GET">
+                <button class="btn btn-primary" type="submit">Novo</button>
             </form>
+
+            <div th:if="${not #lists.isEmpty(processos)}">
+                <div th:text="'Total ' + ${#lists.size(processos)} + ' registros'" style="text-align: right; color: gray; font-size: 0.85em;" />
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Número</th>
+                        <th>Assunto</th>
+                        <th>Decisão Relator/th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="processo : ${processos}">
+                        <td>[[${processo.id}]]</td>
+                        <td><a th:href="@{/processos/{id}(id=${processo.id})}" th:text="${processo.numero}"></a></td>
+                        <td><b>[[${processo.assunto.nome}]]</b></td>
+                        <td>
+                            <img th:if="${processo.decisaoRelator == 'Deferimento'}" th:src="@{/imagens/admin.png}" />
+                            <img th:unless="${processo.decisaoRelator}" th:src="@{imagens/naoadmin.png}" />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 </body>
 
 </html>
-
-

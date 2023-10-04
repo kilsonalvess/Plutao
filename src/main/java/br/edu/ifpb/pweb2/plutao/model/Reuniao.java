@@ -1,15 +1,14 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +25,10 @@ public class Reuniao{
     private StatusReuniao reuniao;
 
     private byte[] ata;
+
+    @ManyToOne
+    private Colegiado colegiado;
+
+    @OneToMany
+    private List<Processo> processos = new ArrayList<>();
 }

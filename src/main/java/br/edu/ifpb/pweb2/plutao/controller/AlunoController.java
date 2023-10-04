@@ -7,8 +7,12 @@ import br.edu.ifpb.pweb2.plutao.repository.AssuntoRepository;
 import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -23,22 +27,29 @@ public class AlunoController {
 
     @RequestMapping("/form")
     public ModelAndView getForm(Aluno aluno, ModelAndView mav){
-        mav.setViewName("alunos/form");
         mav.addObject("aluno", aluno);
+        mav.setViewName("alunos/form");
         return mav;
     }
-    @RequestMapping("/save")
-    public ModelAndView save(Aluno aluno, ModelAndView mav){
+   @PostMapping
+    public ModelAndView save(Aluno aluno, ModelAndView mav, RedirectAttributes redAttrs){
         alunoRepository.save(aluno);
-        mav.setViewName("alunos/list");
-        mav.addObject("alunos", alunoRepository.findAll());
+        redAttrs.addAttribute("mensagem", "Aluno cadastrado com sucesso!");
+        mav.setViewName("redirect:alunos");
         return mav;
     }
-    @RequestMapping("/list")
-    public ModelAndView liste(ModelAndView mav){
-        mav.setViewName("alunos/list");
+    @GetMapping
+    public ModelAndView listAll(ModelAndView mav){
         mav.addObject("alunos", alunoRepository.findAll());
+        mav.setViewName("alunos/list");
         return mav;
+    }
+
+    @RequestMapping("/{id}")
+    public ModelAndView getCorrentistaById(@PathVariable(value = "id") Integer id, ModelAndView modelAndView) {
+        modelAndView.addObject("aluno", alunoRepository.findById(id));
+        modelAndView.setViewName("alunos/form");
+        return modelAndView;
     }
 
     @RequestMapping("/processo")

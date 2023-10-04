@@ -1,10 +1,7 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
 import br.edu.ifpb.pweb2.plutao.model.TipoVoto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +18,10 @@ public class Voto{
     private TipoVoto voto;
 
     private boolean ausente;
+
+    @ManyToOne
+    private Professor professor;
+
+    @OneToOne
+    private Processo processo;
 }

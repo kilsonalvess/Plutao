@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Alunos</title>
+    <title>Cadastro de Processos</title>
 </head>
 <body>
 
@@ -37,17 +37,25 @@
 
     <div class="card">
         <div class="card-header">
-            Cadastro de Aluno
+            Cadastro de Processo
         </div>
         <div class="card-body">
-            <form th:action="@{/alunos}" method="POST" th:object="${aluno}">
-                Nome: <input type="text" th:field="*{nome}"> <br><br>
-                Matrícula: <input type="text" th:field="*{matricula}"> <br><br>
-                Telefone:  <input type="text" th:field="*{telefone}" > <br><br>
-                Login: <input type="text" th:field="*{login}"> <br><br>
-                Senha: <input type="text" th:field="*{senha}"> <br><br>
+            <form th:action="@{/processos}" method="POST" th:object="${processo}">
+                <label for="numero">Número</label>
+                <input type="text" th:field="*{numero}"> <br><br>
+
+                <label for="assunto">Assunto</label>
+                <input type="text" th:field="*{assunto.nome}"> <br><br>
+
+                <label for="requerimento">Requerimento</label>
+                <input type="text" th:field="*{requerimento}" > <br><br>
+
+                <label for="matricula">Matrícula</label>
+                <select th:field="*{aluno.id}" class="form-select">
+                    <option th:each="cor : ${alunoItems}" th:value="${cor.id}" th:label="${cor.matricula}" />
+                </select><br />
                 <input type="submit" value="Salvar">
-                <a th:href="@{/alunos}">Cancelar</a>
+                <a th:href="@{/processos}">Cancelar</a>
             </form>
         </div>
     </div>
