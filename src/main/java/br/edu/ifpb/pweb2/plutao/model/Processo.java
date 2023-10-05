@@ -44,6 +44,7 @@ public class Processo{
     private Aluno aluno;
 
     @OneToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "assunto_id")
     private Assunto assunto;
 
     @ManyToOne

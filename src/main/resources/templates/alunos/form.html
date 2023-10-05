@@ -33,7 +33,6 @@
 </nav>
 
 <div class="container">
-    <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
         <div class="card-header">
@@ -41,11 +40,22 @@
         </div>
         <div class="card-body">
             <form th:action="@{/alunos}" method="POST" th:object="${aluno}">
-                Nome: <input type="text" th:field="*{nome}"> <br><br>
-                Matrícula: <input type="text" th:field="*{matricula}"> <br><br>
-                Telefone:  <input type="text" th:field="*{telefone}" > <br><br>
-                Login: <input type="text" th:field="*{login}"> <br><br>
-                Senha: <input type="text" th:field="*{senha}"> <br><br>
+                <input type="hidden" th:field="*{id}" />
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" th:field="*{nome}" /><br /><br />
+
+                <label for="nome" class="form-label">Matrícula:</label>
+                <input type="text" th:field="*{matricula}" /><br /><br />
+
+                <label for="nome" class="form-label">Telefone:</label>
+                <input type="text" th:field="*{telefone}" /><br /><br />
+
+                <label for="nome" class="form-label">Login:</label>
+                <input type="text" th:field="*{login}" /><br /><br />
+
+                <label for="nome" class="form-label">Senha:</label>
+                <input type="text" th:field="*{senha}" /><br /><br />
+
                 <input type="submit" value="Salvar">
                 <a th:href="@{/alunos}">Cancelar</a>
             </form>
