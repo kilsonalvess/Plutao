@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Alunos</title>
+    <title>Cadastro de Professores</title>
 </head>
 <body>
 
@@ -25,6 +25,7 @@
         <a class="nav-item nav-link" th:href="@{/home}">Home</a>
         <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
         <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
+        <a class="nav-item nav-link" th:href="@{/professores}" >Professores</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -33,35 +34,38 @@
 </nav>
 
 <div class="container">
+    <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
         <div class="card-header">
-            Cadastro de Aluno
+            Cadastro de Professor
         </div>
         <div class="card-body">
-            <form th:action="@{/alunos}" method="POST" th:object="${aluno}">
-                <input type="hidden" th:field="*{id}" />
-                <label for="nome" class="form-label">Nome:</label>
-                <input type="text" th:field="*{nome}"/><br><br>
+            <form th:action="@{/professores}" method="POST" th:object="${professor}">
+                <label for="nome">Nome</label>
+                <input type="text" th:field="*{nome}"> <br><br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}"></p>
 
-                <label for="nome" class="form-label">Matrícula:</label>
-                <input type="text" th:field="*{matricula}" /><br /><br />
+                <label for="matricula">Matrícula</label>
+                <input type="text" th:field="*{matricula}"> <br><br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('matricula')}" th:errorclass="error" th:errors="*{matricula}"></p>
 
-                <label for="nome" class="form-label">Telefone:</label>
-                <input type="text" th:field="*{telefone}" /><br /><br />
+                <label for="telefone">Telefone</label>
+                <input type="text" th:field="*{telefone}" > <br><br>
 
-                <label for="nome" class="form-label">Login:</label>
-                <input type="text" th:field="*{login}" /><br /><br />
+                <label for="login">Login</label>
+                <input type="text" th:field="*{login}" > <br><br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('login')}" th:errorclass="error" th:errors="*{login}"></p>
 
-                <label for="nome" class="form-label">Senha:</label>
-                <input type="text" th:field="*{senha}" /><br /><br />
+                <label for="requerimento">Senha</label>
+                <input type="text" th:field="*{senha}" > <br><br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('senha')}" th:errorclass="error" th:errors="*{senha}"></p>
 
+                <label for="requerimento">Coordenador</label>
+                <input type="checkbox" th:field="*{coordenador}" > <br><br>
+
                 <input type="submit" value="Salvar">
-                <a th:href="@{/alunos}">Cancelar</a>
+                <a th:href="@{/professores}">Cancelar</a>
             </form>
         </div>
     </div>

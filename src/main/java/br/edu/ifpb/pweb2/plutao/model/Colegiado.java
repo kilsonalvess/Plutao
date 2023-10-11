@@ -34,7 +34,7 @@ public class Colegiado{
     @OneToMany
     private List<Professor> membros = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "colegiado")
     private List<Reuniao> reunioes = new ArrayList<>();
 
     @OneToOne

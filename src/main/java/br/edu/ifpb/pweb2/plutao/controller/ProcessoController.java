@@ -6,10 +6,14 @@ import br.edu.ifpb.pweb2.plutao.repository.AlunoRepository;
 import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import br.edu.ifpb.pweb2.plutao.service.AlunoService;
 import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
+import jakarta.validation.Valid;
+import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -36,9 +40,14 @@ public class ProcessoController {
     }
 
     @PostMapping
-    public ModelAndView saveProcesso(Processo processo, ModelAndView mav){
+    public ModelAndView saveProcesso(@Valid Processo processo, BindingResult validation, ModelAndView mav){
+        if (validation.hasErrors()) {
+            mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
+            mav.setViewName("processos/form");
+            return mav;
+        }
         processoService.save(processo);
-        mav.setViewName("redirect:processos/{id}");
+        mav.setViewName("redirect:/processos");
         return mav;
     }
 
@@ -48,11 +57,12 @@ public class ProcessoController {
         mav.addObject("processos", processoService.findAll());
         return mav;
     }
-    @RequestMapping("/{id}")
-    public ModelAndView getProcessoById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
-        mav.addObject("processo", processoService.findById(id));
-        mav.setViewName("processos/list");
+
+    @RequestMapping("/{id}/delete")
+    public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+        processoService.deleteById(id);
+        attr.addFlashAttribute("mensagem", "Processo removido com sucesso!");
+        mav.setViewName("redirect:/processos");
         return mav;
     }
-
 }

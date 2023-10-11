@@ -38,4 +38,8 @@ public class AlunoService implements Service<Aluno, Integer>{
     public void deleteById(Integer id) {
         alunoRepository.deleteById(id);
     }
+
+    public Aluno findByMatricula(String matricula) {
+        return alunoRepository.findByMatricula(matricula);
+    }
 }

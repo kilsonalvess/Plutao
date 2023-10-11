@@ -15,6 +15,7 @@ public class Voto{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Enumerated(EnumType.ORDINAL)
     private TipoVoto voto;
 
     private boolean ausente;

@@ -1,6 +1,8 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +21,10 @@ public class Processo{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank(message = "Campo número obrigatório!")
     private String numero;
 
+    @NotBlank(message = "Campo requerimento obrigatório!")
     private String requerimento;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -34,14 +38,16 @@ public class Processo{
 
     private byte[] parecer;
 
+    @Enumerated(EnumType.ORDINAL)
     private TipoDecisao decisaoRelator;
 
     @ManyToOne
+    @JoinColumn(name = "professor_id")
     private Professor relator;
 
     @ManyToOne
-    @JoinColumn(name = "estudante_id")
-    private Aluno aluno;
+    @JoinColumn(name = "aluno_id")
+    private Aluno interessado;
 
     @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "assunto_id")
@@ -51,9 +57,10 @@ public class Processo{
     private Reuniao emPauta;
 
     @OneToMany
+    @JoinColumn(name = "voto_id")
     private List<Voto> votos = new ArrayList<>();
 
     public Processo(Aluno aluno){
-        this.aluno = aluno;
+        this.interessado = aluno;
     }
 }

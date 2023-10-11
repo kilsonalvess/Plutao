@@ -22,6 +22,7 @@ public class Reuniao{
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataReuniao;
 
+    @Enumerated(EnumType.ORDINAL)
     private StatusReuniao reuniao;
 
     private byte[] ata;
@@ -30,5 +31,6 @@ public class Reuniao{
     private Colegiado colegiado;
 
     @OneToMany
+    @JoinColumn(name = "reuniao_id")
     private List<Processo> processos = new ArrayList<>();
 }

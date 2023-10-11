@@ -15,7 +15,7 @@
 <body>
 <div class="logo-bar mb-0 p-3">
         <span class="logo-font">
-            <img th:src="@{/imagens/bitbank-header-t.png}" /> Plutao
+            <img th:src="@{/imagens/plutao.jpg}" /> Plutao
         </span>
 </div>
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
@@ -23,6 +23,7 @@
         <a class="nav-item nav-link" th:href="@{/home}">Home</a>
         <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
         <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
+        <a class="nav-item nav-link" th:href="@{/professores}" >Professores</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -39,8 +40,6 @@
         </div>
         <div class="card-body">
 
-            <div th:if="${not #strings.isEmpty(mensagem)}" th:text="${mensagem}" class="alert alert-success"></div>
-
             <form th:action="@{/processos/form}" method="GET">
                 <button class="btn btn-primary" type="submit">Novo</button>
             </form>
@@ -54,17 +53,26 @@
                         <th>Id</th>
                         <th>Número</th>
                         <th>Assunto</th>
-                        <th>Decisão Relator/th>
+                        <th>Decisão Relator</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="processo : ${processos}">
                         <td>[[${processo.id}]]</td>
                         <td><a th:href="@{/processos/{id}(id=${processo.id})}" th:text="${processo.numero}"></a></td>
-                        <td><b>[[${processo.assunto.nome}]]</b></td>
+                        <td>[[${processo.assunto.nome}]]</td>
                         <td>
-                            <img th:if="${processo.decisaoRelator == 'Deferimento'}" th:src="@{/imagens/admin.png}" />
-                            <img th:unless="${processo.decisaoRelator}" th:src="@{imagens/naoadmin.png}" />
+                            [[${processo.decisaoRelator}]]
+                        </td>
+                        <td>
+                            <form th:action="@{/processos/{id}(id=${processo.id})}">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/processos/{id}/delete(id=${processo.id})}">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>

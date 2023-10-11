@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.service;
 
+import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,4 @@ public class ProcessoService implements Service<Processo, Integer>{
     public void deleteById(Integer id) {
         processoRepository.deleteById(id);
     }
-
-
 }
