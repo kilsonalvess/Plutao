@@ -17,7 +17,7 @@ import java.util.List;
 public class Colegiado{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataInicio;
