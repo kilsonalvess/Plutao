@@ -45,8 +45,23 @@
                 <input type="text" th:field="*{numero}"> <br><br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('numero')}" th:errorclass="error" th:errors="*{numero}"></p>
 
-                <label for="assunto">Assunto</label>
-                <input type="text" th:field="*{assunto.nome}"> <br><br>
+                <label for="assunto">Assunto
+                    <select id="assunto" name="assunto">
+                        <option value="selecione">---Selecione a opção desejada---</option>
+                        <option value="matricula">Matricula</option>
+                        <option value="trancamento de matricula">Trancamento de matricula</option>
+                        <option value="aproveitamento de estudos">Aproveitamento de Estudos</option>
+                        <option value="historico escolar">Historico Escolar</option>
+                        <option value="outro">Outro</option>
+                        </select>
+                </label>
+              
+               <!--<input type="text" th:field="*{assunto.nome}"> <br><br> -->
+                
+
+                <br>
+                <br>
+                
                 <p class="texto-erro" th:if="${#fields.hasErrors('assunto')}" th:errorclass="error" th:errors="*{assunto}"></p>
 
                 <label for="requerimento">Requerimento</label>
