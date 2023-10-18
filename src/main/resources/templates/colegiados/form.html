@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Cadastro de Colegiados</title>
 </head>
 <body>
 
@@ -22,10 +22,9 @@
 
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
     <div class="navbar-nav">
+        <a class="nav-item nav-link" th:href="@{/home}">Home</a>
         <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
         <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
-        <a class="nav-item nav-link" th:href="@{/professores}" >Professores</a>
-        <a class="nav-item nav-link" th:href="@{/colegiados}" >Colegiados</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -38,15 +37,25 @@
 
     <div class="card">
         <div class="card-header">
-            Home
+            Cadastro de Colegiado
         </div>
         <div class="card-body">
-            <div layout:fragment="content">
-                <div class="home">
-                    <h3>Sistema que controla o julgamento de processos</h3>
-                    <p>Projeto desenvolvido por: Victor Eduardo, Julyana Alencar, Kilson Alves e Fabrycio Medeiros</p>
-                </div>
-            </div>
+            <form th:action="@{/colegiados}" method="POST" th:object="${colegiado}">
+                <label for="descricao">Descrição</label>
+                <input type="text" th:field="*{descricao}"> <br><br>
+                <p class="texto-erro" th:if="${#fields.hasErrors('descricao')}" th:errorclass="error" th:errors="*{descricao}"></p>
+
+                <label for="portaria">Portaria</label>
+                <input type="text" th:field="*{portaria}"> <br><br>
+                <p class="texto-erro" th:if="${#fields.hasErrors('portaria')}" th:errorclass="error" th:errors="*{portaria}"></p>
+
+                <label for="curso">Curso</label>
+                <input type="text" th:field="*{curso}"> <br><br>
+                <p class="texto-erro" th:if="${#fields.hasErrors('curso')}" th:errorclass="error" th:errors="*{curso}"></p>
+
+                <input type="submit" value="Salvar">
+                <a th:href="@{/colegiados}">Cancelar</a>
+            </form>
         </div>
     </div>
 </div>
