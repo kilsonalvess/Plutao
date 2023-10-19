@@ -46,13 +46,13 @@
                 <p class="texto-erro" th:if="${#fields.hasErrors('numero')}" th:errorclass="error" th:errors="*{numero}"></p>
 
                 <label for="assunto">Assunto
-                    <select id="assunto" name="assunto" class="form-control">
+                    <select id="assunto" class="form-control">
                         <option value="selecione">---Selecione a opção desejada---</option>
-                        <option value="matricula">Matricula</option>
-                        <option value="trancamento de matricula">Trancamento de matricula</option>
-                        <option value="aproveitamento de estudos">Aproveitamento de Estudos</option>
-                        <option value="historico escolar">Historico Escolar</option>
-                        <option value="outro">Outro</option>
+                        <option value="matrícula" th:field="*{assunto.nome}">Matrícula</option>
+                        <option value="trancamento de matrícula" th:field="*{assunto.nome}">Trancamento de matrícula</option>
+                        <option value="aproveitamento de estudos" th:field="*{assunto.nome}">Aproveitamento de Estudos</option>
+                        <option value="histórico escolar" th:field="*{assunto.nome}">Histórico Escolar</option>
+                        <option value="outro" th:field="*{assunto.nome}">Outro</option>
                         </select>
                 </label>
               

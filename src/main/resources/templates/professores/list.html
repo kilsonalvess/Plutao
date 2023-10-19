@@ -51,8 +51,8 @@
                         <th>Id</th>
                         <th>Nome</th>
                         <th>Matrícula</th>
+                        <th>Coordenador</th>
                         <th>Login</th>
-                        <th>Senha</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -61,10 +61,10 @@
                         <td><a th:href="@{/professores/{id}(id=${professor.id})}" th:text="${professor.nome}"></a></td>
                         <td>[[${professor.matricula}]]</td>
                         <td>
-                            <img th:if="${professor.login}" th:src="@{/imagens/admin.png}" />
-                            <img th:unless="${professor.login}" th:src="@{imagens/naoadmin.png}" />
+                            <img th:if="${professor.coordenador}" th:src="@{/imagens/admin.png}" />
+                            <img th:unless="${professor.coordenador}" th:src="@{imagens/naoadmin.png}" />
                         </td>
-                        <td th:text="${#strings.substring(professor.senha,0,3)} + '...'"></td>
+                        <td th:text="${professor.login}"></td>
                         <td>
                             <form th:action="@{/professores/{id}(id=${professor.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>
