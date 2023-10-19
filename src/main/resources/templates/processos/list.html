@@ -22,8 +22,8 @@
     <div class="navbar-nav">
         <a class="nav-item nav-link" th:href="@{/home}">Home</a>
         <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
         <a class="nav-item nav-link" th:href="@{/professores}" >Professores</a>
+        <a class="nav-item nav-link" th:href="@{/colegiados}" >Colegiados</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -53,17 +53,17 @@
                         <th>Id</th>
                         <th>Número</th>
                         <th>Assunto</th>
+                        <th>Data Recepção</th>
                         <th>Decisão Relator</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="processo : ${processos}">
                         <td>[[${processo.id}]]</td>
-                        <td><a th:href="@{/processos/{id}(id=${processo.id})}" th:text="${processo.numero}"></a></td>
+                        <td th:text="${processo.numero}">></td>
                         <td>[[${processo.assunto.nome}]]</td>
-                        <td>
-                            [[${processo.decisaoRelator}]]
-                        </td>
+                        <td th:text="${#dates.format(processo.dataRecepecao, 'dd/MM/yyyy')}"></td>
+                        <td>[[${processo.decisaoRelator}]]</td>
                         <td>
                             <form th:action="@{/processos/{id}(id=${processo.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>

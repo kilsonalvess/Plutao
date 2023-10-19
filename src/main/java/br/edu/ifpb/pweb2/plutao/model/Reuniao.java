@@ -19,7 +19,7 @@ public class Reuniao{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataReuniao;
 
     @Enumerated(EnumType.ORDINAL)

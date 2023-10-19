@@ -41,26 +41,27 @@
         </div>
         <div class="card-body">
             <form th:action="@{/colegiados}" method="POST" th:object="${colegiado}">
+                <input type="hidden" th:field="*{id}" class="form-control"/>
+
                 <label for="descricao">Descrição</label>
-                <input type="text" th:field="*{descricao}"> <br><br>
+                <input type="text" th:field="*{descricao}" class="form-control"> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('descricao')}" th:errorclass="error" th:errors="*{descricao}"></p>
 
                 <label for="portaria">Portaria</label>
-                <input type="text" th:field="*{portaria}"> <br><br>
+                <input type="text" th:field="*{portaria}" class="form-control"> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('portaria')}" th:errorclass="error" th:errors="*{portaria}"></p>
 
                 <label for="curso">Curso</label>
-                <input type="text" th:field="*{curso}"> <br><br>
+                <input type="text" th:field="*{curso}" class="form-control"> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('curso')}" th:errorclass="error" th:errors="*{curso}"></p>
 
                 <label for="dataInicio">Data de Início</label>
-                <input type="date" th:field="*{dataInicio}" class="form-control"/> <br /><br />
+                <input type="date" th:field="*{dataInicio}" class="form-control"/> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('dataInicio')}" th:errorclass="error" th:errors="*{dataInicio}"></p>
 
                 <label for="dataFim">Data de Fim</label>
-                <input type="date" th:field="*{dataFim}" class="form-control"/> <br /><br />
+                <input type="date" th:field="*{dataFim}" class="form-control"/> <br>
                 <p th:if="${#fields.hasErrors('dataFim')}" th:errorclass="error" th:errors="*{dataFim}"></p>
-                <br>
 
                 <input type="submit" value="Salvar">
                 <a th:href="@{/colegiados}">Cancelar</a>
