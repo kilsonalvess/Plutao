@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.BindingResult;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,14 +16,11 @@ import org.springframework.validation.BindingResult;
 public class Assunto{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String nome;
 
-    @OneToOne
-    private Processo processo;
+    @OneToMany
+    private List<Processo> processos;
 
-    public Assunto(String nome) {
-        this.nome = nome;
-    }
 }

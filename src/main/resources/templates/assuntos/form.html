@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Cadastro de Assuntos</title>
 </head>
 <body>
 
@@ -22,11 +22,9 @@
 
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
     <div class="navbar-nav">
+        <a class="nav-item nav-link" th:href="@{/home}">Home</a>
         <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/assuntos}" >Assuntos</a>
-        <a class="nav-item nav-link" th:href="@{/colegiados}" >Colegiados</a>
         <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
-        <a class="nav-item nav-link" th:href="@{/professores}" >Professores</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -39,20 +37,25 @@
 
     <div class="card">
         <div class="card-header">
-            Home
+            Cadastro de Assunto
         </div>
         <div class="card-body">
-            <div layout:fragment="content">
-                <div class="home">
-                    <h3>Sistema que controla o julgamento de processos</h3>
-                    <p>Projeto desenvolvido por: Victor Eduardo, Julyana Alencar, Kilson Alves e Fabrycio Medeiros</p>
-                </div>
-            </div>
+            <form th:action="@{/assuntos}" method="POST" th:object="${assunto}">
+                <input type="hidden" th:field="*{id}" class="form-control"/>
+
+                <label for="numero">Nome</label>
+                <input type="text" th:field="*{nome}" class="form-control"> <br>
+                <p class="texto-erro" th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}"></p>
+
+                <br>
+
+                <input type="submit" value="Salvar">
+                <a th:href="@{/assuntos}">Cancelar</a>
+            </form>
         </div>
     </div>
 </div>
 </body>
-
 </html>
 
 

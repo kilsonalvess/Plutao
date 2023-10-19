@@ -41,27 +41,18 @@
         </div>
         <div class="card-body">
             <form th:action="@{/processos}" method="POST" th:object="${processo}">
+                <input type="hidden" th:field="*{id}" class="form-control"/>
+
                 <label for="numero">Número</label>
                 <input type="text" th:field="*{numero}" class="form-control"> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('numero')}" th:errorclass="error" th:errors="*{numero}"></p>
 
-                <label for="assunto">Assunto
-                    <select id="assunto" class="form-control">
-                        <option value="selecione">---Selecione a opção desejada---</option>
-                        <option value="matrícula" th:field="*{assunto.nome}">Matrícula</option>
-                        <option value="trancamento de matrícula" th:field="*{assunto.nome}">Trancamento de matrícula</option>
-                        <option value="aproveitamento de estudos" th:field="*{assunto.nome}">Aproveitamento de Estudos</option>
-                        <option value="histórico escolar" th:field="*{assunto.nome}">Histórico Escolar</option>
-                        <option value="outro" th:field="*{assunto.nome}">Outro</option>
-                        </select>
-                </label>
-              
-               <!--<input type="text" th:field="*{assunto.nome}"> <br><br> -->
-
-                <br>
-                <br>
-                
+                <label for="assunto">Assunto</label>
+                    <select th:field="*{assunto}" class="form-select">
+                        <option th:each="ass : ${assuntosItens}" th:value="${ass.id}" th:label="${ass.nome}" />
+                    </select>
                 <p class="texto-erro" th:if="${#fields.hasErrors('assunto')}" th:errorclass="error" th:errors="*{assunto}"></p>
+                <br>
 
                 <label for="requerimento">Requerimento</label>
                 <input type="text" th:field="*{requerimento}" class="form-control"> <br>
