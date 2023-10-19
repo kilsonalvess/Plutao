@@ -40,24 +40,25 @@
         </div>
         <div class="card-body">
             <form th:action="@{/alunos}" method="POST" th:object="${aluno}">
-                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{id}" class="form-control"/>
+
                 <label for="nome" class="form-label">Nome:</label>
-                <input type="text" th:field="*{nome}"/><br><br>
+                <input type="text" th:field="*{nome}" class="form-control"/> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}"></p>
 
                 <label for="nome" class="form-label">Matrícula:</label>
-                <input type="text" th:field="*{matricula}" /><br /><br />
+                <input type="text" th:field="*{matricula}" class="form-control" /> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('matricula')}" th:errorclass="error" th:errors="*{matricula}"></p>
 
                 <label for="nome" class="form-label">Telefone:</label>
-                <input type="text" th:field="*{telefone}" /><br /><br />
+                <input type="text" th:field="*{telefone}" class="form-control"/> <br>
 
                 <label for="nome" class="form-label">Login:</label>
-                <input type="text" th:field="*{login}" /><br /><br />
+                <input type="text" th:field="*{login}" class="form-control"/> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('login')}" th:errorclass="error" th:errors="*{login}"></p>
 
                 <label for="nome" class="form-label">Senha:</label>
-                <input type="text" th:field="*{senha}" /><br /><br />
+                <input type="text" th:field="*{senha}" class="form-control"/> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('senha')}" th:errorclass="error" th:errors="*{senha}"></p>
 
                 <input type="submit" value="Salvar">
