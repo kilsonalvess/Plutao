@@ -1,6 +1,7 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,11 @@ public class Colegiado{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataInicio;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Future(message = "Data deve ser futura")
     private Date dataFim;
 
     private String descricao;

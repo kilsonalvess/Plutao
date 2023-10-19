@@ -1,14 +1,11 @@
-node_modules/
-pom.xml/
+pom.xml
 src/main/resources/application.properties
+node_modules/
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
-
-
 
 ### STS ###
 .apt_generated

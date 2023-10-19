@@ -16,7 +16,7 @@
 
 <div class="logo-bar mb-0 p-3">
         <span class="logo-font">
-            <img th:src="@{/imagens/plutao.jpg}" /> Plutao
+            <img th:src="@{/imagens/Plutao.png}" class="resized-image" /> Plutao
         </span>
 </div>
 
@@ -52,6 +52,15 @@
                 <label for="curso">Curso</label>
                 <input type="text" th:field="*{curso}"> <br><br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('curso')}" th:errorclass="error" th:errors="*{curso}"></p>
+
+                <label for="dataInicio">Data de Início</label>
+                <input type="date" th:field="*{dataInicio}" class="form-control"/> <br /><br />
+                <p class="texto-erro" th:if="${#fields.hasErrors('dataInicio')}" th:errorclass="error" th:errors="*{dataInicio}"></p>
+
+                <label for="dataFim">Data de Fim</label>
+                <input type="date" th:field="*{dataFim}" class="form-control"/> <br /><br />
+                <p th:if="${#fields.hasErrors('dataFim')}" th:errorclass="error" th:errors="*{dataFim}"></p>
+                <br>
 
                 <input type="submit" value="Salvar">
                 <a th:href="@{/colegiados}">Cancelar</a>
