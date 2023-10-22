@@ -37,16 +37,15 @@
 <div class="container">
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
-    <div class="card">
-        <div class="card-header">
-            Home
-        </div>
-        <div class="card-body">
+    <div class="card border-0">
+        
+        <div class="card-body-home">
             <div layout:fragment="content">
                 <div class="home">
-                    <h3>Sistema que controla o julgamento de processos</h3>
+                    <h2>Sistema para controle de processos academicos</h2>
                     <p>Projeto desenvolvido por: Victor Eduardo, Julyana Alencar, Kilson Alves e Fabrycio Medeiros</p>
                 </div>
+                
             </div>
         </div>
     </div>
