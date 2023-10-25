@@ -20,25 +20,13 @@
         </span>
 </div>
 
-<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" th:href="@{/home}">Home</a>
-        <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
-    </div>
-
-    <div style="margin-right: 5px;"><a href="#">
-        <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a>
-    </div>
-</nav>
 
 <div class="container">
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
+    <h2 class="titulo"> Cadastro de Processo</h2>
 
-    <div class="card">
-        <div class="card-header">
-            Cadastro de Processo
-        </div>
+    <div class="card-form">
+       
         <div class="card-body">
             <form th:action="@{/processos}" method="POST" th:object="${processo}">
                 <input type="hidden" th:field="*{id}" class="form-control"/>
@@ -60,8 +48,8 @@
 
                 <label for="dataRecepcao">Data</label>
                 <input type="date" th:field="*{dataRecepecao}" class="form-control"> <br><br>
-                <input type="submit" value="Salvar">
-                <a th:href="@{/processos}">Cancelar</a>
+                <input  class="btn btn-outline-primary" type="submit" value="Salvar">
+                <a class="btn btn-outline-secondary" th:href="@{/processos}">Cancelar</a>
             </form>
         </div>
     </div>

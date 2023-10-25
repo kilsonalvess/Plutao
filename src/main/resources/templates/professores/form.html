@@ -20,21 +20,13 @@
         </span>
 </div>
 
-<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
-    
-
-    <div style="margin-right: 5px;"><a href="#">
-        <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a>
-    </div>
-</nav>
 
 <div class="container">
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
+    <h2 class="titulo">Cadastro de Professor</h2>
 
-    <div class="card">
-        <div class="card-header">
-            Cadastro de Professor
-        </div>
+    <div class="card-form">
+       
         <div class="card-body">
             <form th:action="@{/professores}" method="POST" th:object="${professor}">
                 <input type="hidden" th:field="*{id}" class="form-control"/>
@@ -61,8 +53,8 @@
                 <label for="requerimento">Coordenador</label>
                 <input type="checkbox" th:field="*{coordenador}" > <br><br>
 
-                <input type="submit" value="Salvar">
-                <a th:href="@{/professores}">Cancelar</a>
+                <input class="btn btn-outline-primary" type="submit" value="Salvar">
+                <a class="btn btn-outline-secondary" th:href="@{/professores}">Cancelar</a>
             </form>
         </div>
     </div>

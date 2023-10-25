@@ -20,25 +20,13 @@
         </span>
 </div>
 
-<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" th:href="@{/home}">Home</a>
-        <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
-    </div>
-
-    <div style="margin-right: 5px;"><a href="#">
-        <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a>
-    </div>
-</nav>
 
 <div class="container">
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
+    <h2 class="titulo">Cadastro de Colegiado</h2>
 
-    <div class="card">
-        <div class="card-header">
-            Cadastro de Colegiado
-        </div>
+    <div class="card-form">
+       
         <div class="card-body">
             <form th:action="@{/colegiados}" method="POST" th:object="${colegiado}">
                 <input type="hidden" th:field="*{id}" class="form-control"/>
@@ -63,8 +51,8 @@
                 <input type="date" th:field="*{dataFim}" class="form-control"/> <br>
                 <p th:if="${#fields.hasErrors('dataFim')}" th:errorclass="error" th:errors="*{dataFim}"></p>
 
-                <input type="submit" value="Salvar">
-                <a th:href="@{/colegiados}">Cancelar</a>
+                <input class="btn btn-outline-primary" type="submit" value="Salvar">
+                <a class="btn btn-outline-secondary" th:href="@{/colegiados}">Cancelar</a>
             </form>
         </div>
     </div>
