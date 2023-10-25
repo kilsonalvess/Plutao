@@ -3,6 +3,7 @@ package br.edu.ifpb.pweb2.plutao.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class Aluno implements Serializable {
 
     private String telefone;
 
-    @NotBlank(message = "Campo matrícula Obrigatório!")
+    @NotEmpty(message = "Campo matrícula Obrigatório!")
     private String matricula;
 
     @NotBlank(message = "Campo login Obrigatório!")

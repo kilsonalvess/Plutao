@@ -21,7 +21,7 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
-    @RequestMapping("/form")
+    @GetMapping("/form")
     public ModelAndView getForm(Aluno aluno, ModelAndView mav){
         mav.addObject("aluno", aluno);
         mav.setViewName("alunos/form");
@@ -51,14 +51,14 @@ public class AlunoController {
         return mav;
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public ModelAndView getAlunoById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
         mav.addObject("aluno", alunoService.findById(id));
         mav.setViewName("alunos/form");
         return mav;
     }
 
-    @RequestMapping("/{id}/delete")
+    @GetMapping("/{id}/delete")
     public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
         alunoService.deleteById(id);
         attr.addFlashAttribute("mensagem", "Aluno removido com sucesso!");
@@ -66,7 +66,7 @@ public class AlunoController {
         return mav;
     }
 
-    @RequestMapping("/estadoProcessos")
+    @GetMapping("/estadoProcessos")
     public ModelAndView alunoEstadoProcessos(Aluno aluno , ModelAndView mav){
         mav.setViewName("alunos/listEstadoProcessos");
         return mav;

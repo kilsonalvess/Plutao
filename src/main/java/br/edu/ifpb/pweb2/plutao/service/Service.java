@@ -1,7 +1,5 @@
 package br.edu.ifpb.pweb2.plutao.service;
 
-import jakarta.transaction.Transactional;
-
 import java.util.List;
 
 public interface Service<T, ID> {

@@ -13,12 +13,12 @@ public class VotoService implements Service<Voto, Integer>{
 
     @Autowired
     private VotoRepository votoRepository;
-    @Override
+
     public List<Voto> findAll() {
         return votoRepository.findAll();
     }
 
-    @Override
+    
     public Voto findById(Integer id) {
         Voto voto = null;
         Optional<Voto> opVoto = votoRepository.findById(id);
@@ -28,12 +28,12 @@ public class VotoService implements Service<Voto, Integer>{
         return voto;
     }
 
-    @Override
+   
     public Voto save(Voto voto) {
         return votoRepository.save(voto);
     }
 
-    @Override
+   
     public void deleteById(Integer id) {
         deleteById(id);
     }

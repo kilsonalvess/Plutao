@@ -36,7 +36,7 @@ public class Processo{
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataParecer;
 
-    private byte[] parecer;
+    private boolean parecer;
 
     @Enumerated(EnumType.ORDINAL)
     private TipoDecisao decisaoRelator;

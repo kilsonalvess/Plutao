@@ -28,9 +28,17 @@ public class ProcessoController {
     private AlunoService alunoService;
 
     @RequestMapping("/form")
-    public ModelAndView getForm( Processo processo, ModelAndView mav){
+    public ModelAndView getForm(Processo processo, ModelAndView mav) {
         mav.addObject("processo", processo);
         mav.setViewName("processos/form");
+        return mav;
+    }
+
+    @RequestMapping("/{id}/delete")
+    public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+        processoService.deleteById(id);
+        attr.addFlashAttribute("mensagem", "Processo removido com sucesso!");
+        mav.setViewName("redirect:/processos");
         return mav;
     }
 
@@ -40,7 +48,7 @@ public class ProcessoController {
     }
 
     @PostMapping
-    public ModelAndView saveProcesso(@Valid Processo processo, BindingResult validation, ModelAndView mav){
+    public ModelAndView saveProcesso(@Valid Processo processo, BindingResult validation, ModelAndView mav) {
         if (validation.hasErrors()) {
             mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
             mav.setViewName("processos/form");
@@ -58,11 +66,28 @@ public class ProcessoController {
         return mav;
     }
 
-    @RequestMapping("/{id}/delete")
-    public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
-        processoService.deleteById(id);
-        attr.addFlashAttribute("mensagem", "Processo removido com sucesso!");
-        mav.setViewName("redirect:/processos");
+    @GetMapping("/list/status/{idStatus}/aluno/{idAluno}")
+    public ModelAndView listaPorStatusEAluno(
+            @RequestParam boolean idStatus,
+            @RequestParam Integer idAluno,
+            ModelAndView mav) {
+
+        List<Processo> listaProcessos = processoService.consultarProcessosPorStatusEAluno(idStatus, idAluno);
+        // mav.setViewName("processos/list");
+        // mav.addObject("processos", listaProcessos);
+        return mav;
+    }
+    // tipo de acesso - Retorno - metodo(parametro)
+    // public X metodoA(Y)
+
+    @GetMapping("/list/professor/{idProfessor}")
+    public ModelAndView listaPorProfessor(
+            @RequestParam Integer idProfessor,
+            ModelAndView mav) {
+
+        List<Processo> listaProcessos = processoService.consultarProcessosPorProfessor(idProfessor);
+        // mav.setViewName("processos/list");
+        // mav.addObject("processos", listaProcessos);
         return mav;
     }
 }
