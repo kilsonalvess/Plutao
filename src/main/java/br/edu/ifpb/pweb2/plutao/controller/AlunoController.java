@@ -1,18 +1,20 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
+import br.edu.ifpb.pweb2.plutao.enums.StatusEnum;
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
+import br.edu.ifpb.pweb2.plutao.model.Assunto;
 import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.service.AlunoService;
+import br.edu.ifpb.pweb2.plutao.service.AssuntoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
@@ -22,6 +24,8 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
+    @Autowired
+    private AssuntoService assuntoService;
     @RequestMapping("/form")
     public ModelAndView getForm(Aluno aluno, ModelAndView mav){
         mav.addObject("aluno", aluno);
@@ -72,12 +76,23 @@ public class AlunoController {
         mav.setViewName("processos");
         return mav;
     }
+
     @RequestMapping("/{id}/processos")
     public ModelAndView getProcessos(@PathVariable(value = "id") Integer id, ModelAndView mav) {
         mav.addObject("aluno", alunoService.findById(id));
         mav.addObject("processos", alunoService.consultaProcessos(id));
         mav.setViewName("alunos/processos");
         return mav;
+    }
+
+    @ModelAttribute("assuntoItens")
+    public List<Assunto> getCorrentistas() {
+        return assuntoService.findAll();
+    }
+
+    @ModelAttribute("statusItens")
+    public List<StatusEnum> getStatus() {
+        return List.of(StatusEnum.values());
     }
 
 }

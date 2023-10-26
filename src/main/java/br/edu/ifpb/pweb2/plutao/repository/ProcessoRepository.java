@@ -1,7 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.repository;
 
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
-import br.edu.ifpb.pweb2.plutao.model.Assunto;
 import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.model.Professor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +14,6 @@ public interface ProcessoRepository extends JpaRepository<Processo, Integer> {
 
     List<Processo> findByRelator(Professor professor);
 
-    List<Processo> findAllByInteressadoId(Integer id);;
+    List<Processo> findAllByInteressadoId(Integer id);
+
 }

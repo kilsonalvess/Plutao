@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
+import br.edu.ifpb.pweb2.plutao.enums.StatusEnum;
 import br.edu.ifpb.pweb2.plutao.enums.TipoDecisao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -37,6 +38,9 @@ public class Processo{
     private Date dataParecer;
 
     private boolean parecer;
+
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 
     @Enumerated(EnumType.ORDINAL)
     private TipoDecisao decisaoRelator;

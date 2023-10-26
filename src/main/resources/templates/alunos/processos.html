@@ -39,6 +39,33 @@
         </div>
         <div class="card-body">
 
+            <form method="get" th:action="@{/aluno/processo/consultar}">
+
+                <div id="search-input">
+                    <select name="filtro" id="select-table">
+                        <optgroup label="Status processo">
+                            <option th:each="status : ${statusItens}" th:value="${status}" th:text="${status.getStatus()}">
+                            </option>
+                        </optgroup>
+
+                        <optgroup label="Assunto do processo">
+                            <option th:each="assunto : ${assuntoItens}" th:value="${assunto.id}" th:text="${assunto.nome}">
+                            </option>
+                        </optgroup>
+
+                        <optgroup label="Sem filtro">
+                            <option value=""> Sem filtro </option>
+                        </optgroup>
+                    </select>
+
+                </div>
+                <label for="ordenacao"> Exibir em ordem decrescente </label>
+                <input type="radio" value="true" name="order" id = "ordenacao">
+
+                <input id="filter-input" type="submit" value="filtrar">
+
+            </form>
+
             <div th:if="${not #lists.isEmpty(processos)}">
                 <div th:text="'Total ' + ${#lists.size(processos)} + ' processos'" style="text-align: right; color: gray; font-size: 0.85em;" />
 

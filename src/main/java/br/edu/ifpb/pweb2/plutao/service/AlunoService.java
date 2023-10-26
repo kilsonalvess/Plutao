@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.service;
 
+import br.edu.ifpb.pweb2.plutao.enums.StatusEnum;
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.repository.AlunoRepository;
@@ -51,4 +52,5 @@ public class AlunoService implements Service<Aluno, Integer>{
     public List<Processo> consultaProcessos(Integer id){
         return processoRepository.findAllByInteressadoId(id);
     }
+
 }
