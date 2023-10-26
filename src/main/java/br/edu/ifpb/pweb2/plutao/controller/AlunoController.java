@@ -1,6 +1,7 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
+import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.service.AlunoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,10 @@ public class AlunoController {
            return mav;
        }
        if (aluno.getId() == null) {
-           attr.addFlashAttribute("messagem", "Aluno cadastrado com sucesso!");
+           attr.addFlashAttribute("mensagem", "Aluno cadastrado com sucesso!");
 
        } else {
-           attr.addFlashAttribute("messagem", "Aluno editado com sucesso!");
+           attr.addFlashAttribute("mensagem", "Aluno editado com sucesso!");
        }
         alunoService.save(aluno);
         mav.setViewName("redirect:/alunos");
@@ -68,7 +69,14 @@ public class AlunoController {
 
     @RequestMapping("/estadoProcessos")
     public ModelAndView alunoEstadoProcessos(Aluno aluno , ModelAndView mav){
-        mav.setViewName("alunos/listEstadoProcessos");
+        mav.setViewName("processos");
+        return mav;
+    }
+    @RequestMapping("/{id}/processos")
+    public ModelAndView getProcessos(@PathVariable(value = "id") Integer id, ModelAndView mav) {
+        mav.addObject("aluno", alunoService.findById(id));
+        mav.addObject("processos", alunoService.consultaProcessos(id));
+        mav.setViewName("alunos/processos");
         return mav;
     }
 

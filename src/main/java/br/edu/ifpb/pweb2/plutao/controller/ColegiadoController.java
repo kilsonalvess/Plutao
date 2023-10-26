@@ -45,10 +45,10 @@ public class ColegiadoController {
             return mav;
         }
         if (colegiado.getId() == null) {
-            attr.addFlashAttribute("messagem", "Colegiado cadastrado com sucesso!");
+            attr.addFlashAttribute("mensagem", "Colegiado cadastrado com sucesso!");
 
         } else {
-            attr.addFlashAttribute("messagem", "Colegiado editado com sucesso!");
+            attr.addFlashAttribute("mensagem", "Colegiado editado com sucesso!");
         }
         colegiadoService.save(colegiado);
         mav.setViewName("redirect:/colegiados");

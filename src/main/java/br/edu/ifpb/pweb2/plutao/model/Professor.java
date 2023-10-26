@@ -3,6 +3,7 @@ package br.edu.ifpb.pweb2.plutao.model;
 import br.edu.ifpb.pweb2.plutao.model.Colegiado;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,24 +19,26 @@ public class Professor{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank(message = "Campo nome Obrigatório!")
+
+    @NotBlank(message = "Campo obrigatório")
     private String nome;
 
     private String telefone;
 
-    @NotBlank(message = "Campo matrícula Obrigatório!")
+    @NotBlank(message = "Campo obrigatório")
     private String matricula;
 
-    @NotBlank(message = "Campo login Obrigatório!")
+    @NotBlank(message = "Campo obrigatório")
     private String login;
 
-    @NotBlank(message = "Campo senha Obrigatório!")
+    @NotBlank(message = "Campo obrigatório")
+    @Size(min = 3, max = 60, message = "Senha deve ter entre 3 e 60 caracteres")
     private String senha;
 
     private boolean coordenador;
 
-    @OneToMany
-    private List<Colegiado> colegiados = new ArrayList<>();
+    @ManyToOne
+    private Colegiado colegiado;
 
     @OneToOne
     private Voto voto;

@@ -3,10 +3,12 @@ package br.edu.ifpb.pweb2.plutao.service;
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Assunto;
 import br.edu.ifpb.pweb2.plutao.model.Processo;
+import br.edu.ifpb.pweb2.plutao.model.Professor;
 import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,12 @@ public class ProcessoService implements Service<Processo, Integer>{
 
     @Autowired
     private ProcessoRepository processoRepository;
+
+    @Autowired
+    private ProfessorService professorService;
+
+    @Autowired
+    private AlunoService alunoService;
 
     @Override
     public List<Processo> findAll() {
@@ -41,4 +49,23 @@ public class ProcessoService implements Service<Processo, Integer>{
         processoRepository.deleteById(id);
     }
 
+    public List<Processo> consultarProcessosPorStatusEAluno(boolean status, Integer idAluno) {
+        Aluno aluno = alunoService.findById(idAluno);
+        return processoRepository.findByParecerAndInteressado(status, aluno);
+    }
+
+    public List<Processo> consultarProcessosPorProfessor(Integer idProfessor, boolean isCoordenador) {
+        Professor professor = professorService.findById(idProfessor);
+        if(professor.isCoordenador() && !isCoordenador){
+            return new ArrayList<>();
+        }else {
+            return processoRepository.findByRelator(professor);
+        }
+    }
+
+//    public List{
+//        return lista de alunos do repositório,
+//                criar for para varrer a lista,
+//                if para saber se é o assunto ou status
+//    }
 }

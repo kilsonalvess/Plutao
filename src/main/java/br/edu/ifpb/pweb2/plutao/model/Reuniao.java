@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
+import br.edu.ifpb.pweb2.plutao.enums.StatusReuniao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,4 +34,9 @@ public class Reuniao{
     @OneToMany
     @JoinColumn(name = "reuniao_id")
     private List<Processo> processos = new ArrayList<>();
+
+    public void addProcesso(Processo processo) {
+        this.processos.add(processo);
+
+    }
 }

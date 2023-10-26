@@ -11,4 +11,5 @@ import java.util.List;
 public interface AlunoRepository extends JpaRepository<Aluno, Integer> {
 
     Aluno findByMatricula(String matricula);
+
 }

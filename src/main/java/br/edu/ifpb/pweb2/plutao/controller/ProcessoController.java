@@ -39,7 +39,7 @@ public class ProcessoController {
         return mav;
     }
 
-    @ModelAttribute("alunoItems")
+    @ModelAttribute("alunoItens")
     public List<Aluno> getAlunos() {
         return alunoService.findAll();
     }
@@ -50,11 +50,16 @@ public class ProcessoController {
     }
 
     @PostMapping
-    public ModelAndView saveProcesso(@Valid Processo processo, BindingResult validation, ModelAndView mav){
+    public ModelAndView saveProcesso(@Valid Processo processo, BindingResult validation, ModelAndView mav, RedirectAttributes attr){
         if (validation.hasErrors()) {
             mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
             mav.setViewName("processos/form");
             return mav;
+        }if (processo.getId() == null) {
+            attr.addFlashAttribute("mensagem", "Processo cadastrado com sucesso!");
+
+        } else {
+            attr.addFlashAttribute("mensagem", "Processo editado com sucesso!");
         }
         processoService.save(processo);
         mav.setViewName("redirect:/processos");
@@ -82,4 +87,30 @@ public class ProcessoController {
         mav.setViewName("redirect:/processos");
         return mav;
     }
+
+    @GetMapping("/list/status/{idStatus}/aluno/{idAluno}")
+    public ModelAndView listaPorStatusEAluno(
+            @RequestParam boolean idStatus,
+            @RequestParam Integer idAluno,
+            ModelAndView mav) {
+
+        List<Processo> listaProcessos = processoService.consultarProcessosPorStatusEAluno(idStatus, idAluno);
+        mav.setViewName("processos/list");
+        mav.addObject("processos", listaProcessos);
+        return mav;
+    }
+
+    @GetMapping("/list/professor/{idProfessor}/coordenador/{isCoordenador}")
+    public ModelAndView listaPorProfessor(
+            @RequestParam Integer idProfessor,
+            @RequestParam boolean isCoordenador,
+            ModelAndView mav) {
+
+        List<Processo> listaProcessos = processoService.consultarProcessosPorProfessor(idProfessor, isCoordenador);
+        mav.setViewName("processos/list");
+        mav.addObject("processos", listaProcessos);
+        return mav;
+    }
+
+
 }

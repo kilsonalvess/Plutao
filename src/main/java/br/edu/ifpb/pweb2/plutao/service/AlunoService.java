@@ -1,7 +1,9 @@
 package br.edu.ifpb.pweb2.plutao.service;
 
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
+import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.repository.AlunoRepository;
+import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,9 @@ public class AlunoService implements Service<Aluno, Integer>{
 
     @Autowired
     private AlunoRepository alunoRepository;
+
+    @Autowired
+    private ProcessoRepository processoRepository;
 
     @Override
     public List<Aluno> findAll() {
@@ -41,5 +46,9 @@ public class AlunoService implements Service<Aluno, Integer>{
 
     public Aluno findByMatricula(String matricula) {
         return alunoRepository.findByMatricula(matricula);
+    }
+
+    public List<Processo> consultaProcessos(Integer id){
+        return processoRepository.findAllByInteressadoId(id);
     }
 }

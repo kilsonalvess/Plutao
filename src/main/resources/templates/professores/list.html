@@ -53,12 +53,14 @@
                         <th>Matrícula</th>
                         <th>Coordenador</th>
                         <th>Login</th>
+                        <th>Editar</th>
+                        <th>Excluir</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="professor : ${professores}">
                         <td>[[${professor.id}]]</td>
-                        <td><a th:href="@{/professores/{id}(id=${professor.id})}" th:text="${professor.nome}"></a></td>
+                        <td>[[${professor.nome}]]</td>
                         <td>[[${professor.matricula}]]</td>
                         <td>
                             <img th:if="${professor.coordenador}" th:src="@{/imagens/admin.png}" />

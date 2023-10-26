@@ -1,8 +1,8 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
+import br.edu.ifpb.pweb2.plutao.enums.TipoDecisao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,12 +19,12 @@ import java.util.List;
 public class Processo{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @NotBlank(message = "Campo número obrigatório!")
+    @NotBlank(message = "Campo obrigatório")
     private String numero;
 
-    @NotBlank(message = "Campo requerimento obrigatório!")
+    @NotBlank(message = "Campo obrigatório")
     private String requerimento;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -36,7 +36,7 @@ public class Processo{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataParecer;
 
-    private byte[] parecer;
+    private boolean parecer;
 
     @Enumerated(EnumType.ORDINAL)
     private TipoDecisao decisaoRelator;
@@ -59,6 +59,9 @@ public class Processo{
     @OneToMany
     @JoinColumn(name = "voto_id")
     private List<Voto> votos = new ArrayList<>();
+
+    @ElementCollection
+    private List<byte[]> anexos;
 
     public Processo(Aluno aluno){
         this.interessado = aluno;

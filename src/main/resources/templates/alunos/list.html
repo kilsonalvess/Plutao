@@ -51,20 +51,25 @@
                         <th>Id</th>
                         <th>Nome</th>
                         <th>Matrícula</th>
+                        <th>Telefone</th>
                         <th>Login</th>
-                        <th>Senha</th>
+                        <th>Processos</th>
+                        <th>Editar</th>
+                        <th>Excluir</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="aluno : ${alunos}">
                         <td>[[${aluno.id}]]</td>
-                        <td><a th:href="@{/alunos/{id}(id=${aluno.id})}" th:text="${aluno.nome}"></a></td>
+                        <td>[[${aluno.nome}]]</td>
+                        <td>[[${aluno.telefone}]]</td>
                         <td>[[${aluno.matricula}]]</td>
+                        <td>[[${aluno.login}]]</td>
                         <td>
-                            <img th:if="${aluno.login}" th:src="@{/imagens/admin.png}" />
-                            <img th:unless="${aluno.login}" th:src="@{imagens/naoadmin.png}" />
+                            <form th:action="@{/alunos/{id}/processos(id=${aluno.id})}">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-text"></i></button>
+                            </form>
                         </td>
-                        <td th:text="${#strings.substring(aluno.senha,0,3)} + '...'"></td>
                         <td>
                             <form th:action="@{/alunos/{id}(id=${aluno.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>

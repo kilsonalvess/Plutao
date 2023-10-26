@@ -53,14 +53,14 @@
                     <tr>
                         <th>Id</th>
                         <th>Nome</th>
-                        <th>Processos</th>
+                        <th>Editar</th>
+                        <th>Excluir</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="assunto : ${assuntos}">
                         <td>[[${assunto.id}]]</td>
                         <td th:text="${assunto.nome}">></td>
-                        <td th:text="${assunto.processos}"></td>
                         <td>
                             <form th:action="@{/assuntos/{id}(id=${assunto.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>

@@ -1,4 +1,4 @@
-package br.edu.ifpb.pweb2.plutao.model;
+package br.edu.ifpb.pweb2.plutao.enums;
 
 public enum TipoDecisao {
     DEFERIMENTO,

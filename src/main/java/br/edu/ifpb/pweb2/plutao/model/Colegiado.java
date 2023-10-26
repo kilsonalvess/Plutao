@@ -2,6 +2,7 @@ package br.edu.ifpb.pweb2.plutao.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,13 +28,16 @@ public class Colegiado{
     @Future(message = "Data deve ser futura")
     private Date dataFim;
 
+    @NotBlank(message = "Campo obrigatório")
     private String descricao;
 
+    @NotBlank(message = "Campo obrigatório")
     private String portaria;
 
+    @NotBlank(message = "Campo obrigatório")
     private String curso;
 
-    @OneToMany
+    @OneToMany(mappedBy = "colegiado")
     private List<Professor> membros = new ArrayList<>();
 
     @OneToMany(mappedBy = "colegiado")
@@ -41,4 +45,8 @@ public class Colegiado{
 
     @OneToOne
     private Aluno aluno;
+
+    public void addReuniao(Reuniao reuniao) {
+        this.reunioes.add(reuniao);
+    }
 }

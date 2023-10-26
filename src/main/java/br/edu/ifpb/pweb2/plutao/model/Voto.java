@@ -1,6 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
-import br.edu.ifpb.pweb2.plutao.model.TipoVoto;
+import br.edu.ifpb.pweb2.plutao.enums.TipoVoto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

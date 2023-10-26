@@ -45,10 +45,10 @@ public class AssuntoController {
             return mav;
         }
         if (assunto.getId() == null) {
-            attr.addFlashAttribute("messagem", "Assunto cadastrado com sucesso!");
+            attr.addFlashAttribute("mensagem", "Assunto cadastrado com sucesso!");
 
         } else {
-            attr.addFlashAttribute("messagem", "Assunto editado com sucesso!");
+            attr.addFlashAttribute("mensagem", "Assunto editado com sucesso!");
         }
         assuntoService.save(assunto);
         mav.setViewName("redirect:/assuntos");

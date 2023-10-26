@@ -18,6 +18,7 @@ public class Assunto{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Campo obrigatório")
     private String nome;
 
     @OneToMany

@@ -35,10 +35,10 @@ public class ProfessorController {
             return mav;
         }
         if (professor.getId() == null) {
-            attr.addFlashAttribute("messagem", "Professor cadastrado com sucesso!");
+            attr.addFlashAttribute("mensagem", "Professor cadastrado com sucesso!");
 
         } else {
-            attr.addFlashAttribute("messagem", "Professor editado com sucesso!");
+            attr.addFlashAttribute("mensagem", "Professor editado com sucesso!");
         }
         professorService.save(professor);
         mav.setViewName("redirect:/professores");
