@@ -39,10 +39,6 @@
         </div>
         <div class="card-body">
 
-            <form th:action="@{/processos/form}" method="GET">
-                <button class="btn btn-primary" type="submit">Novo</button>
-            </form>
-
             <div th:if="${not #lists.isEmpty(processos)}">
                 <div th:text="'Total ' + ${#lists.size(processos)} + ' processos'" style="text-align: right; color: gray; font-size: 0.85em;" />
 
