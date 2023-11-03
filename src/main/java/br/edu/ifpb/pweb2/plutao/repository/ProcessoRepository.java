@@ -10,10 +10,10 @@ import java.util.List;
 
 @Repository
 public interface ProcessoRepository extends JpaRepository<Processo, Integer> {
-    List<Processo> findByParecerAndInteressado(boolean status, Aluno aluno);
+    List<Processo> findByParecerAndAluno(boolean status, Aluno aluno);
 
     List<Processo> findByRelator(Professor professor);
 
-    List<Processo> findAllByInteressadoId(Integer id);
+    List<Processo> findAllByAlunoId(Integer id);
 
 }

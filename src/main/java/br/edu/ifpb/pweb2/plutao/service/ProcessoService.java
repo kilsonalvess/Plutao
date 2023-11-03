@@ -51,7 +51,7 @@ public class ProcessoService implements Service<Processo, Integer>{
 
     public List<Processo> consultarProcessosPorStatusEAluno(boolean status, Integer idAluno) {
         Aluno aluno = alunoService.findById(idAluno);
-        return processoRepository.findByParecerAndInteressado(status, aluno);
+        return processoRepository.findByParecerAndAluno(status, aluno);
     }
 
     public List<Processo> consultarProcessosPorProfessor(Integer idProfessor, boolean isCoordenador) {

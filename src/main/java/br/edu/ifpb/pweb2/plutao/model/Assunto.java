@@ -24,4 +24,7 @@ public class Assunto{
     @OneToMany
     private List<Processo> processos;
 
+    public Assunto(String nome) {
+        this.nome = nome;
+    }
 }

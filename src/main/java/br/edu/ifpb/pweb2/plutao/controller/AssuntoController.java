@@ -1,6 +1,5 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
-import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Assunto;
 import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.service.AssuntoService;

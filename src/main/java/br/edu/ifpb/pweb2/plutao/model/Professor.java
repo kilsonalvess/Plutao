@@ -23,6 +23,7 @@ public class Professor{
     @NotBlank(message = "Campo obrigatório")
     private String nome;
 
+    @NotBlank(message = "Campo obrigatório")
     private String telefone;
 
     @NotBlank(message = "Campo obrigatório")
@@ -37,12 +38,12 @@ public class Professor{
 
     private boolean coordenador;
 
-    @ManyToOne
-    private Colegiado colegiado;
+    @ManyToMany(mappedBy = "membros")
+    private List<Colegiado> colegiados;
+
+    @OneToMany(mappedBy = "")
+    private List<Processo> processos = new ArrayList<>();
 
     @OneToOne
     private Voto voto;
-
-    @OneToMany
-    private List<Processo> processos = new ArrayList<>();
 }

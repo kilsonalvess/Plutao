@@ -23,7 +23,7 @@ public class Reuniao{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataReuniao;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private StatusReuniao reuniao;
 
     private byte[] ata;

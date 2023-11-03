@@ -15,14 +15,14 @@ public class Voto{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private boolean ausente;
+
     @Enumerated(EnumType.ORDINAL)
     private TipoVoto voto;
 
-    private boolean ausente;
-
-    @ManyToOne
+    @OneToOne
     private Professor professor;
 
-    @OneToOne
+    @ManyToOne
     private Processo processo;
 }

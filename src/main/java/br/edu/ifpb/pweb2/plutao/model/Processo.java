@@ -1,6 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.model;
 
-import br.edu.ifpb.pweb2.plutao.enums.StatusEnum;
+import br.edu.ifpb.pweb2.plutao.enums.StatusProcesso;
 import br.edu.ifpb.pweb2.plutao.enums.TipoDecisao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -29,7 +29,7 @@ public class Processo{
     private String requerimento;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dataRecepecao;
+    private Date dataCriacao;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataDistribuicao;
@@ -39,35 +39,45 @@ public class Processo{
 
     private boolean parecer;
 
-    @Enumerated(EnumType.STRING)
-    private StatusEnum status;
+    private byte[] documento;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
+    private StatusProcesso estado;
+
+    @Enumerated(EnumType.STRING)
     private TipoDecisao decisaoRelator;
 
     @ManyToOne
-    @JoinColumn(name = "professor_id")
     private Professor relator;
 
     @ManyToOne
-    @JoinColumn(name = "aluno_id")
-    private Aluno interessado;
+    private Aluno aluno;
 
-    @OneToOne(cascade=CascadeType.PERSIST)
-    @JoinColumn(name = "assunto_id")
+    @ManyToOne
+    private Colegiado colegiado;
+
+    @ManyToOne
+    @JoinColumn(name = "assunto")
     private Assunto assunto;
 
     @ManyToOne
     private Reuniao emPauta;
 
-    @OneToMany
-    @JoinColumn(name = "voto_id")
+    @OneToMany(mappedBy = "processo")
     private List<Voto> votos = new ArrayList<>();
 
-    @ElementCollection
-    private List<byte[]> anexos;
+    public Processo( Aluno aluno, Assunto assunto, String textoRequerimento, Colegiado colegiado) {
+        this.aluno = aluno;
+        this.numero = Integer.toString(this.id);
+        this.estado = StatusProcesso.CRIADO;
+        this.dataCriacao = new Date();
+        this.assunto = assunto;
+        this.requerimento = textoRequerimento;
+        this.colegiado = colegiado;
+    }
 
-    public Processo(Aluno aluno){
-        this.interessado = aluno;
+    public Processo(Aluno aluno,Assunto assunto){
+        this.aluno = aluno;
+        this.assunto = assunto;
     }
 }

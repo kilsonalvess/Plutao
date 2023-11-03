@@ -31,14 +31,16 @@ public class Colegiado{
     @NotBlank(message = "Campo obrigatório")
     private String descricao;
 
-    @NotBlank(message = "Campo obrigatório")
     private String portaria;
 
     @NotBlank(message = "Campo obrigatório")
     private String curso;
 
-    @OneToMany(mappedBy = "colegiado")
+    @ManyToMany
     private List<Professor> membros = new ArrayList<>();
+
+    @OneToMany(mappedBy = "colegiado")
+    private List<Processo> processos;
 
     @OneToMany(mappedBy = "colegiado")
     private List<Reuniao> reunioes = new ArrayList<>();

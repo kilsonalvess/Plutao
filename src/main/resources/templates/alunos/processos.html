@@ -34,47 +34,50 @@
 
     <div class="card">
 
-        <div class="card-header" th:text="'Bem vindo ao seus processos, ' + ${aluno.nome} "style="text-align: right; color: gray; font-size: 1.2em;">
-
-        </div>
         <div class="card-body">
+            <!-- LISTAGEM DE PROCESSOS-->
+            <div style="margin: 30px;">
+                <h3 style="margin-top: 20px">Bem vindo ao seus processos, [[${aluno.nome}]]</h3>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 20px;">
+                    <a type="button" th:href="@{'/aluno/' + ${aluno.id} + '/processos/criar'}" class="btn btn-success"
+                    >Cadastrar processo</a>
+                    <div class="btn-group">
+                        <div class="input-group mb-3" style="margin-right: 10px;">
+                            <label class="input-group-text" for="filterAssunto">Assunto</label>
+                            <select class="form-select" id="filterAssunto" name="filtro">
+                                <option value="">Todos</option>
+                                <option th:each = "assunto : ${assuntoItens}" th:value="${assunto.nome}" th:text = "${assunto.nome}"> </option>
 
-            <form method="get" th:action="@{/aluno/processo/consultar}">
-
-                <div id="search-input">
-                    <select name="filtro" id="select-table">
-                        <optgroup label="Status processo">
-                            <option th:each="status : ${statusItens}" th:value="${status}" th:text="${status.getStatus()}">
-                            </option>
-                        </optgroup>
-
-                        <optgroup label="Assunto do processo">
-                            <option th:each="assunto : ${assuntoItens}" th:value="${assunto.id}" th:text="${assunto.nome}">
-                            </option>
-                        </optgroup>
-
-                        <optgroup label="Sem filtro">
-                            <option value=""> Sem filtro </option>
-                        </optgroup>
-                    </select>
-
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="filterStatus">Status</label>
+                            <select class="form-select" id="filterStatus">
+                                <option value="">Todos</option>
+                                <option value="Criado">Criado</option>
+                                <option value="DISTRIBUIDO">Distribuído</option>
+                                <option value="Em pauta">Em pauta</option>
+                                <option value="Em julgamento">Em julgamento</option>
+                                <option value="Julgado">Julgado</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <label for="ordenacao"> Exibir em ordem decrescente </label>
-                <input type="radio" value="true" name="order" id = "ordenacao">
 
-                <input id="filter-input" type="submit" value="filtrar">
 
-            </form>
+                <div th:if="${not #lists.isEmpty(processos)}"></div>
+                <div th:text="'Total ' + ${#lists.size(processos)} + ' processos'" style="text-align: right; color: gray; font-size: 0.85em;"></div>
 
-            <div th:if="${not #lists.isEmpty(processos)}">
-                <div th:text="'Total ' + ${#lists.size(processos)} + ' processos'" style="text-align: right; color: gray; font-size: 0.85em;" />
-
+                <!--TABELA DE PROCESSOS-->
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>Id</th>
                         <th>Número</th>
                         <th>Assunto</th>
+                        <th>Data de Criação</th>
+                        <th>Estado</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -82,6 +85,8 @@
                         <td>[[${processo.id}]]</td>
                         <td>[[${processo.numero}]]</td>
                         <td>[[${processo.assunto.nome}]]</td>
+                        <td>[[${processo.dataCriacao}]]</td>
+                        <td>[[${processo.estado}]]</td>
                     </tr>
                     </tbody>
                 </table>

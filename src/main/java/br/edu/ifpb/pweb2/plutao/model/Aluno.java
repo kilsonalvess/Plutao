@@ -41,4 +41,16 @@ public class Aluno implements Serializable {
 
     @OneToOne
     private Colegiado colegiado;
+
+    public Aluno(String nome, String fone, String matricula, String login, String senha) {
+        this.nome = nome;
+        this.telefone = fone;
+        this.matricula = matricula;
+        this.login = login;
+        this.senha = senha;
+    }
+
+    public void adicionarProcesso(Processo processo){
+        this.processos.add(processo);
+    }
 }

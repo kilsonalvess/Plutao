@@ -1,9 +1,8 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
-import br.edu.ifpb.pweb2.plutao.enums.StatusEnum;
+import br.edu.ifpb.pweb2.plutao.enums.StatusProcesso;
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Assunto;
-import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.service.AlunoService;
 import br.edu.ifpb.pweb2.plutao.service.AssuntoService;
 import jakarta.validation.Valid;
@@ -86,13 +85,13 @@ public class AlunoController {
     }
 
     @ModelAttribute("assuntoItens")
-    public List<Assunto> getCorrentistas() {
+    public List<Assunto> getAssuntos() {
         return assuntoService.findAll();
     }
 
     @ModelAttribute("statusItens")
-    public List<StatusEnum> getStatus() {
-        return List.of(StatusEnum.values());
+    public List<StatusProcesso> getStatus() {
+        return List.of(StatusProcesso.values());
     }
 
 }
