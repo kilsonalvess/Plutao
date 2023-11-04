@@ -36,7 +36,7 @@ public class Aluno implements Serializable {
     @Size(min = 3, max = 60, message = "Senha deve ter entre 3 e 60 caracteres")
     private String senha;
 
-    @OneToMany
+    @OneToMany(mappedBy = "aluno")
     private List<Processo> processos = new ArrayList<>();
 
     @OneToOne
@@ -52,5 +52,9 @@ public class Aluno implements Serializable {
 
     public void adicionarProcesso(Processo processo){
         this.processos.add(processo);
+    }
+    @Override
+    public String toString(){
+        return "Aluno "+ this.nome;
     }
 }

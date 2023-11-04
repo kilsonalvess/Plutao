@@ -22,7 +22,6 @@ public class Processo{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Campo obrigatório")
     private String numero;
 
     @NotBlank(message = "Campo obrigatório")
@@ -66,7 +65,7 @@ public class Processo{
     @OneToMany(mappedBy = "processo")
     private List<Voto> votos = new ArrayList<>();
 
-    public Processo( Aluno aluno, Assunto assunto, String textoRequerimento, Colegiado colegiado) {
+    public Processo(Aluno aluno, Assunto assunto, String textoRequerimento, Colegiado colegiado) {
         this.aluno = aluno;
         this.numero = Integer.toString(this.id);
         this.estado = StatusProcesso.CRIADO;

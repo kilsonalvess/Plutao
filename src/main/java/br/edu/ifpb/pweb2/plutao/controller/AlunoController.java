@@ -3,8 +3,10 @@ package br.edu.ifpb.pweb2.plutao.controller;
 import br.edu.ifpb.pweb2.plutao.enums.StatusProcesso;
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Assunto;
+import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.service.AlunoService;
 import br.edu.ifpb.pweb2.plutao.service.AssuntoService;
+import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,10 @@ public class AlunoController {
 
     @Autowired
     private AssuntoService assuntoService;
+
+    @Autowired
+    private ProcessoService processoService;
+
     @RequestMapping("/form")
     public ModelAndView getForm(Aluno aluno, ModelAndView mav){
         mav.addObject("aluno", aluno);
@@ -84,7 +90,35 @@ public class AlunoController {
         return mav;
     }
 
-    @ModelAttribute("assuntoItens")
+    @RequestMapping("/{id}/processos/criar")
+    public ModelAndView criarProcesso(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+        Aluno aluno = this.alunoService.findById(id);
+        mav.addObject("aluno", aluno);
+        mav.addObject("processo", new Processo(aluno,new Assunto()));
+        mav.setViewName("alunos/criar-processo");
+        return mav;
+    }
+
+    @RequestMapping("/{id}/processos/save")
+    public ModelAndView saveProcesso(@Valid Processo processo, BindingResult validation, @PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+
+        Aluno aluno = this.alunoService.findById(id);
+        if (validation.hasErrors()) {
+            mav.addObject("aluno", aluno);
+            mav.addObject("processo", new Processo(aluno,new Assunto()));
+            mav.setViewName("/alunos/criar-processo");
+            return mav;
+        }
+        processo.setAluno(aluno);
+        processoService.salvarProcesso(processo);
+        mav.addObject("aluno", aluno);
+        mav.addObject("processos", processoService.getProcessosPorAluno(aluno));
+        mav.setViewName("redirect:/alunos/"+id+"/processos");
+        attr.addFlashAttribute("mensagem", "Processo criado com Sucesso");
+        return mav;
+    }
+
+    @ModelAttribute("assuntosItens")
     public List<Assunto> getAssuntos() {
         return assuntoService.findAll();
     }

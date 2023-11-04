@@ -31,6 +31,7 @@
 </nav>
 
 <div class="container">
+    <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
 
@@ -40,14 +41,14 @@
                 <h3 style="margin-top: 20px">Bem vindo ao seus processos, [[${aluno.nome}]]</h3>
                 <hr>
                 <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 20px;">
-                    <a type="button" th:href="@{'/aluno/' + ${aluno.id} + '/processos/criar'}" class="btn btn-success"
+                    <a type="button" th:href="@{/alunos/{id}/processos/criar(id=${aluno.id})}" class="btn btn-success"
                     >Cadastrar processo</a>
                     <div class="btn-group">
                         <div class="input-group mb-3" style="margin-right: 10px;">
                             <label class="input-group-text" for="filterAssunto">Assunto</label>
                             <select class="form-select" id="filterAssunto" name="filtro">
                                 <option value="">Todos</option>
-                                <option th:each = "assunto : ${assuntoItens}" th:value="${assunto.nome}" th:text = "${assunto.nome}"> </option>
+                                <option th:each = "assunto : ${assuntosItens}" th:value="${assunto.nome}" th:text = "${assunto.nome}"> </option>
 
                             </select>
                         </div>
@@ -85,7 +86,7 @@
                         <td>[[${processo.id}]]</td>
                         <td>[[${processo.numero}]]</td>
                         <td>[[${processo.assunto.nome}]]</td>
-                        <td>[[${processo.dataCriacao}]]</td>
+                        <td th:text="${#dates.format(processo.dataCriacao, 'dd/MM/yyyy')}"></td>
                         <td>[[${processo.estado}]]</td>
                     </tr>
                     </tbody>

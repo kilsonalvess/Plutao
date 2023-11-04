@@ -16,4 +16,5 @@ public interface ProcessoRepository extends JpaRepository<Processo, Integer> {
 
     List<Processo> findAllByAlunoId(Integer id);
 
+    List<Processo> findByAluno(Aluno aluno);
 }
