@@ -62,8 +62,8 @@
                         <td>[[${processo.id}]]</td>
                         <td th:text="${processo.numero}">></td>
                         <td>[[${processo.assunto.nome}]]</td>
-                        <td th:text="${#dates.format(processo.dataRecepecao, 'dd/MM/yyyy')}"></td>
-                        <td>[[${processo.interessado.nome}]]</td>
+                        <td th:text="${#dates.format(processo.dataCriacao, 'dd/MM/yyyy')}"></td>
+                        <td>[[${processo.aluno.nome}]]</td>
                         <td>
                             <form th:action="@{/processos/{id}(id=${processo.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>
