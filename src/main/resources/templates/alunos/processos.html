@@ -95,5 +95,41 @@
         </div>
     </div>
 </div>
+
+<script th:src="@{/js/bootstrap.buddle.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+
+<!-- FILTRO POR STATUS-->
+<script>
+    $(document).ready(function () {
+        $('#filterStatus, #filterAssunto').on('change', function () {
+            var status = $('#filterStatus').val();
+            var assunto = $('#filterAssunto').val();
+            filterTable(status, assunto);
+        });
+
+        function filterTable(status, assunto) {
+            var rows = $('table tbody tr');
+            rows.show();
+
+            if (status) {
+                rows.filter(':not(:contains("' + status + '"))').hide();
+            }
+
+            if (assunto) {
+                rows.filter(':not(:contains("' + assunto + '"))').hide();
+            }
+        }
+
+        $.expr[":"].contains = $.expr.createPseudo(function (text) {
+            return function (element) {
+                return $(element).text().toUpperCase().indexOf(text.toUpperCase()) >= 0;
+            };
+        });
+    });
+</script>
 </body>
 </html>
