@@ -46,4 +46,12 @@ public class Professor{
 
     @OneToOne
     private Voto voto;
+
+    public void adicionarColegiado(Colegiado colegiado){
+        this.colegiados.add(colegiado);
+    }
+    @Override
+    public String toString(){
+        return "Professor " + this.nome;
+    }
 }

@@ -2,10 +2,12 @@ package br.edu.ifpb.pweb2.plutao.service;
 
 
 import br.edu.ifpb.pweb2.plutao.model.Colegiado;
+import br.edu.ifpb.pweb2.plutao.model.Professor;
 import br.edu.ifpb.pweb2.plutao.repository.ColegiadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +34,11 @@ public class ColegiadoService implements Service<Colegiado, Integer>{
 
     @Override
     public Colegiado save(Colegiado colegiado) {
-        return colegiadoRepository.save(colegiado);
+        for(Professor professor : colegiado.getMembros() ){
+            professor.adicionarColegiado(colegiado);
+        }
+        colegiado.setDataInicio(new Date());
+        return this.colegiadoRepository.save(colegiado);
     }
 
     @Override

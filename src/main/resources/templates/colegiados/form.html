@@ -43,9 +43,19 @@
                 <input type="text" th:field="*{curso}" class="form-control"> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('curso')}" th:errorclass="error" th:errors="*{curso}"></p>
 
-                <label for="dataInicio">Data de Início</label>
-                <input type="date" th:field="*{dataInicio}" class="form-control"/> <br>
-                <p class="texto-erro" th:if="${#fields.hasErrors('dataInicio')}" th:errorclass="error" th:errors="*{dataInicio}"></p>
+                <label for="assunto">Membro:</label>
+                <select th:field="*{membros}" class="form-select">
+                    <option th:each="prof : ${professoresList}" th:value="${prof.id}" th:label="${prof.nome}" />
+                </select>
+                <p class="texto-erro" th:if="${#fields.hasErrors('membros')}" th:errorclass="error" th:errors="*{membros}"></p>
+                <br>
+
+                <label for="assunto">Membro:</label>
+                <select th:field="*{membros}" class="form-select">
+                    <option th:each="prof : ${professoresList}" th:value="${prof.id}" th:label="${prof.nome}" />
+                </select>
+                <p class="texto-erro" th:if="${#fields.hasErrors('membros')}" th:errorclass="error" th:errors="*{membros}"></p>
+                <br>
 
                 <label for="dataFim">Data de Fim</label>
                 <input type="date" th:field="*{dataFim}" class="form-control"/> <br>

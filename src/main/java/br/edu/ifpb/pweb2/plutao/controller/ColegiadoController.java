@@ -37,6 +37,13 @@ public class ColegiadoController {
         return professorService.findAll();
     }
 
+    @GetMapping
+    public ModelAndView listAll(ModelAndView mav) {
+        mav.addObject("colegiados", colegiadoService.findAll());
+        mav.setViewName("colegiados/list");
+        return mav;
+    }
+
     @PostMapping
     public ModelAndView saveAluno(@Valid Colegiado colegiado, BindingResult validation, ModelAndView mav, RedirectAttributes attr) {
         if (validation.hasErrors()) {
@@ -51,20 +58,15 @@ public class ColegiadoController {
             attr.addFlashAttribute("mensagem", "Colegiado editado com sucesso!");
         }
         colegiadoService.save(colegiado);
-        mav.setViewName("redirect:/colegiados");
-        return mav;
-    }
-
-    @GetMapping
-    public ModelAndView listAll(ModelAndView mav) {
         mav.addObject("colegiados", colegiadoService.findAll());
-        mav.setViewName("colegiados/list");
+        mav.setViewName("redirect:/colegiados");
         return mav;
     }
 
     @RequestMapping("/{id}")
     public ModelAndView getColegiadoById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
         mav.addObject("colegiado", colegiadoService.findById(id));
+        mav.addObject("mensagem","Colegiado editado com Sucesso");
         mav.setViewName("colegiados/form");
         return mav;
     }
