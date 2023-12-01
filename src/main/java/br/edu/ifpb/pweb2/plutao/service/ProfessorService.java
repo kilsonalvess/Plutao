@@ -5,6 +5,7 @@ import br.edu.ifpb.pweb2.plutao.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,5 +38,25 @@ public class ProfessorService implements Service<Professor, Integer>{
     @Override
     public void deleteById(Integer id) {
         professorRepository.deleteById(id);
+    }
+
+    public List<Professor> getProfessoresComColegiado(){
+        List<Professor> professores = new ArrayList<Professor>();
+        for (Professor professor : this.professorRepository.findAll()){
+            if(professor.getColegiados() != null){
+                professores.add(professor);
+            }
+        }
+        return professores;
+    }
+
+    public List<Professor> getProfessoresComProcessos(){
+        List<Professor> professores = new ArrayList<Professor>();
+        for (Professor professor : this.professorRepository.findAll()){
+            if(professor.getProcessos().size() > 0){
+                professores.add(professor);
+            }
+        }
+        return professores;
     }
 }

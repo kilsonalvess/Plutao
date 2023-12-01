@@ -41,7 +41,7 @@ public class Professor{
     @ManyToMany(mappedBy = "membros")
     private List<Colegiado> colegiados;
 
-    @OneToMany(mappedBy = "")
+    @OneToMany(mappedBy = "relator")
     private List<Processo> processos = new ArrayList<>();
 
     @OneToOne
@@ -50,6 +50,10 @@ public class Professor{
     public void adicionarColegiado(Colegiado colegiado){
         this.colegiados.add(colegiado);
     }
+    public void adicionarProcesso(Processo processo){
+        this.processos.add(processo);
+    }
+
     @Override
     public String toString(){
         return "Professor " + this.nome;

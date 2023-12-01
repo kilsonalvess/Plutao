@@ -7,6 +7,7 @@ import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,16 @@ public class AlunoService implements Service<Aluno, Integer>{
 
     public List<Processo> consultaProcessos(Integer id){
         return processoRepository.findAllByAlunoId(id);
+    }
+
+    public List<Aluno> getAlunosComProcessos(){
+        List<Aluno> alunos = new ArrayList<Aluno>();
+        for (Aluno aluno : this.alunoRepository.findAll()){
+            if(aluno.getProcessos() != null){
+                alunos.add(aluno);
+            }
+        }
+        return alunos;
     }
 
 }

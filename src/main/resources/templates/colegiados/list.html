@@ -52,6 +52,7 @@
                         <th>Portaria</th>
                         <th>Descrição</th>
                         <th>Data Fim</th>
+                        <th>Membros</th>
                         <th>Editar</th>
                         <th>Excluir</th>
                     </tr>
@@ -63,6 +64,7 @@
                         <td>[[${colegiado.portaria}]]</td>
                         <td>[[${colegiado.descricao}]]</td>
                         <td th:text="${#dates.format(colegiado.dataFim, 'dd/MM/yyyy')}"></td>
+                        <td>[[${colegiado.membros}]]</td>
                         <td>
                             <form th:action="@{/colegiados/{id}(id=${colegiado.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>

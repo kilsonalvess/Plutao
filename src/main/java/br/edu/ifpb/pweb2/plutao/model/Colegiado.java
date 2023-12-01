@@ -51,4 +51,14 @@ public class Colegiado{
     public void addReuniao(Reuniao reuniao) {
         this.reunioes.add(reuniao);
     }
+
+    public Colegiado(List<Professor> professores){
+        this.membros = professores;
+    }
+
+    @Override
+    public String toString(){
+        return "Colegiado de " + this.curso;
+    }
+
 }

@@ -50,6 +50,7 @@
                         <th>Matrícula</th>
                         <th>Coordenador</th>
                         <th>Login</th>
+                        <th>Processos</th>
                         <th>Editar</th>
                         <th>Excluir</th>
                     </tr>
@@ -64,6 +65,14 @@
                             <img th:unless="${professor.coordenador}" th:src="@{imagens/naoadmin.png}" />
                         </td>
                         <td th:text="${professor.login}"></td>
+                        <td>
+                            <form th:if="${professor.coordenador}" th:action="@{/coordenador/processos}">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-text"></i></button>
+                            </form>
+                            <form th:unless="${professor.coordenador}" th:action="@{/professores/{id}/processos(id=${professor.id})}">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-text"></i></button>
+                            </form>
+                        </td>
                         <td>
                             <form th:action="@{/professores/{id}(id=${professor.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>

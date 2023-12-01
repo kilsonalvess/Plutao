@@ -1,17 +1,19 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
+import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Professor;
+import br.edu.ifpb.pweb2.plutao.service.AlunoService;
+import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
 import br.edu.ifpb.pweb2.plutao.service.ProfessorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/professores")
@@ -19,6 +21,21 @@ public class ProfessorController {
 
     @Autowired
     private ProfessorService professorService;
+
+    @Autowired
+    private ProcessoService processoService;
+
+    @Autowired
+    private AlunoService alunoService;
+
+    @ModelAttribute("alunos")
+    public List<Aluno> getAlunos(){
+        return this.alunoService.getAlunosComProcessos();
+    }
+    @ModelAttribute("relatores")
+    public List<Professor> getRelatores(){
+        return this.professorService.getProfessoresComProcessos();
+    }
 
     @RequestMapping("/form")
     public ModelAndView getForm(Professor professor, ModelAndView mav){
@@ -65,6 +82,22 @@ public class ProfessorController {
         attr.addFlashAttribute("mensagem", "Professor removido com sucesso!");
         mav.setViewName("redirect:/professores");
         return mav;
+    }
+
+    @GetMapping("{id}/processos")
+    public ModelAndView showPainelProcessos(ModelAndView model,@PathVariable("id") Integer id){
+        Professor professor = this.professorService.findById(id);
+        model.addObject("professor", professor);
+        model.addObject("processos", processoService.getProcessosPorProfessor(professor));
+        model.setViewName("/professores/painel");
+        return model;
+    }
+
+    @GetMapping("{idProcesso}")
+    public ModelAndView showProcesso(ModelAndView model, @PathVariable("idProcesso") Integer idProcesso){
+        model.addObject("processo", processoService.getProcessoPorId(idProcesso));
+        model.setViewName("/professor/processo");
+        return model;
     }
 
 }

@@ -65,21 +65,30 @@ public class ProcessoService implements Service<Processo, Integer>{
         }
     }
 
-//    public List{
-//        return lista de alunos do repositório,
-//                criar for para varrer a lista,
-//                if para saber se é o assunto ou status
-//    }
-
     public List<Processo> getProcessosPorAluno(Aluno aluno){
         return this.processoRepository.findByAluno(aluno);
     }
 
+    public List<Processo> getProcessosPorProfessor(Professor professor){
+        return this.processoRepository.findByRelator(professor);
+    }
+
+    public Processo getProcessoPorId(Integer id){
+        return this.processoRepository.findById(id).orElse(null);
+    }
     public Processo salvarProcesso(Processo processo){
         processo.getAluno().adicionarProcesso(processo);
         processo.setEstado(StatusProcesso.CRIADO);
         processo.setDataCriacao(new Date());
         processo.setNumero(""+new Date().getTime());
         return this.processoRepository.save(processo);
+    }
+
+    public Processo atribuirProcesso(Processo processo,Integer id){
+        Processo processoAtualizado = this.processoRepository.findById(id).orElse(new Processo());
+        processoAtualizado.setRelator(processo.getRelator());
+        processoAtualizado.setEstado(StatusProcesso.DISTRIBUIDO);
+        processoAtualizado.setDataDistribuicao(new Date());
+        return this.processoRepository.save(processoAtualizado);
     }
 }
