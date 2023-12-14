@@ -33,8 +33,10 @@ public class Colegiado{
 
     private String portaria;
 
-    @NotBlank(message = "Campo obrigatório")
-    private String curso;
+    @OneToOne
+    @JoinColumn(name = "curso")
+    private Curso curso;
+
 
     @ManyToMany
     private List<Professor> membros = new ArrayList<>();

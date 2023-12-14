@@ -96,7 +96,7 @@ public class ProfessorController {
     @GetMapping("{idProcesso}")
     public ModelAndView showProcesso(ModelAndView model, @PathVariable("idProcesso") Integer idProcesso){
         model.addObject("processo", processoService.getProcessoPorId(idProcesso));
-        model.setViewName("/professor/processo");
+        model.setViewName("/professores/processo");
         return model;
     }
 
