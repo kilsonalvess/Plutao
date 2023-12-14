@@ -26,7 +26,7 @@ public class CursoController {
     public ModelAndView listCursos(ModelAndView model){
         model.addObject("cursos", cursoService.getCursos());
         model.addObject("curso", new Curso());
-        model.setViewName("administrador/curso/painel");
+        model.setViewName("cursos/list");
         return model;
     }
 
@@ -34,7 +34,7 @@ public class CursoController {
     public ModelAndView createCurso(ModelAndView model, RedirectAttributes redirectAttributes ){
         model.addObject("curso", new Curso());
         model.addObject("acao", "salvar");
-        model.setViewName("administrador/curso/form");
+        model.setViewName("cursos/form");
         return model;
     }
 
@@ -46,7 +46,7 @@ public class CursoController {
             RedirectAttributes redirectAttributes
     ){
         if (validation.hasErrors()) {
-            model.setViewName("administrador/curso/form");
+            model.setViewName("cursos/form");
             model.addObject("acao", "salvar");
             return model;
         }
@@ -62,7 +62,7 @@ public class CursoController {
     public ModelAndView editCurso(@PathVariable("id") long id, ModelAndView model, RedirectAttributes redirectAttributes){
         model.addObject("curso", cursoService.getCursoPorId(id));
         model.addObject("acao", "editar");
-        model.setViewName("administrador/curso/form");
+        model.setViewName("cursos/form");
         redirectAttributes.addFlashAttribute("mensagem","Curso Editado com Sucesso");
         redirectAttributes.addFlashAttribute("cursosEditado", true);
         return model;

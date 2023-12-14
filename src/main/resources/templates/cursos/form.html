@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Cadastro de Cursos</title>
 </head>
 <body>
 
@@ -22,12 +22,9 @@
 
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
     <div class="navbar-nav">
+        <a class="nav-item nav-link" th:href="@{/home}">Home</a>
         <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/assuntos}" >Assuntos</a>
-        <a class="nav-item nav-link" th:href="@{/colegiados}" >Colegiados</a>
-        <a class="nav-item nav-link" th:href="@{/cursos}" >Cursos</a>
         <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
-        <a class="nav-item nav-link" th:href="@{/professores}" >Professores</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -38,21 +35,38 @@
 <div class="container">
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
-    <div class="card border-0">
-        
-        <div class="card-body-home">
-            <div layout:fragment="content">
-                <div class="home">
-                    <h2>Sistema para controle de processos academicos</h2>
-                    <p>Projeto desenvolvido por: Victor Eduardo, Julyana Alencar, Kilson Alves e Fabrycio Medeiros</p>
+    <div class="card">
+        <div class="card-header">
+            Cadastro de Curso
+        </div>
+        <div class="card-body">
+            <h1 style="margin-bottom: 20px;margin-top: 20px;" th:text="${acao} == 'salvar' ? 'Criar Curso' : 'Editar Curso'"></h1>
+            <!-- INICIO DO FORM -->
+            <form th:action="${acao} == 'salvar' ? @{/cursos/criar} : @{/cursos/{id}(id=${curso.id})}" method="post" th:object="${curso}">
+
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" th:field="*{id}"><br>
+                        <!--NOME-->
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome do Curso:</label>
+                            <input type="text" id="nome" th:field="*{nome}" class="form-control">
+                            <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}" class="alert alert-danger"></p>
+                        </div>
+                    </div>
                 </div>
-                
-            </div>
+                <div class="modal-footer">
+                    <a th:href="@{/cursos}"  class="btn btn-secondary" style="margin-right: 10px;">Fechar</a>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                            style="padding-left: 25px; padding-right:25px">Salvar</button>
+                </div>
+            </form>
+
+
         </div>
     </div>
 </div>
 </body>
-
 </html>
 
 
