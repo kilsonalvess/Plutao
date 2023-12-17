@@ -1,41 +1,49 @@
 package br.edu.ifpb.pweb2.plutao.service;
 
+import br.edu.ifpb.pweb2.plutao.enums.StatusProcesso;
+import br.edu.ifpb.pweb2.plutao.enums.StatusReuniao;
+import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.model.Reuniao;
 import br.edu.ifpb.pweb2.plutao.repository.ReuniaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component
-public class ReuniaoService implements Service<Reuniao, Integer>{
-
+@Service
+public class ReuniaoService {
     @Autowired
     private ReuniaoRepository reuniaoRepository;
 
-    @Override
-    public List<Reuniao> findAll() {
-        return reuniaoRepository.findAll();
+    public List<Reuniao> getReunioes(){
+        return this.reuniaoRepository.findAll();
     }
 
-    @Override
-    public Reuniao findById(Integer id) {
-        Reuniao reuniao = null;
-        Optional<Reuniao> opReuniao = reuniaoRepository.findById(id);
-        if (opReuniao.isPresent()) {
-            reuniao = opReuniao.get();
+    public Reuniao getReuniaoPorId(Integer id){
+        return this.reuniaoRepository.findById(id).orElse(null);
+    }
+
+    public Reuniao salvarReuniao(Reuniao reuniao){
+        List<Processo> processosSelecionados = new ArrayList<Processo>();
+        reuniao.setReuniao(StatusReuniao.PROGRAMADA);
+        for (Processo processo : reuniao.getProcessos()){
+            if (processo != null) {
+                processo.setEstado(StatusProcesso.EM_PAUTA);
+                processo.setEmPauta(reuniao);
+                processosSelecionados.add(processo);
+            }
         }
-        return reuniao;
+        reuniao.setProcessos(processosSelecionados);
+        reuniao.getColegiado().adicionarReuniao(reuniao);
+        return this.reuniaoRepository.save(reuniao);
     }
 
-    @Override
-    public Reuniao save(Reuniao reuniao) {
-        return reuniaoRepository.save(reuniao);
+    public void apagarReuniao(Integer id){
+        this.reuniaoRepository.deleteById(id);
     }
 
-    @Override
-    public void deleteById(Integer id) {
-        reuniaoRepository.deleteById(id);
-    }
+
 }

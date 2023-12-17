@@ -37,6 +37,9 @@ public class Colegiado{
     @JoinColumn(name = "curso")
     private Curso curso;
 
+    @OneToOne
+    @JoinColumn(name="coordenador")
+    private Coordenador coordenador;
 
     @ManyToMany
     private List<Professor> membros = new ArrayList<>();
@@ -47,11 +50,12 @@ public class Colegiado{
     @OneToMany(mappedBy = "colegiado")
     private List<Reuniao> reunioes = new ArrayList<>();
 
-    @OneToOne
-    private Aluno aluno;
-
-    public void addReuniao(Reuniao reuniao) {
-        this.reunioes.add(reuniao);
+    public Colegiado(Date dataInicio, Date dataFim, String descricao, String portaria, Curso curso) {
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.descricao = descricao;
+        this.portaria = portaria;
+        this.curso = curso;
     }
 
     public Colegiado(List<Professor> professores){
@@ -62,5 +66,14 @@ public class Colegiado{
     public String toString(){
         return "Colegiado de " + this.curso;
     }
+
+    public void adicionarReuniao(Reuniao reuniao){
+        this.reunioes.add(reuniao);
+    }
+
+    public void adicionarProcesso(Processo processo){
+        this.processos.add(processo);
+    }
+
 
 }

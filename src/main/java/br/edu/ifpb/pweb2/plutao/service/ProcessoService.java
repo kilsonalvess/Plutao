@@ -1,68 +1,24 @@
 package br.edu.ifpb.pweb2.plutao.service;
 
 import br.edu.ifpb.pweb2.plutao.enums.StatusProcesso;
-import br.edu.ifpb.pweb2.plutao.model.Aluno;
-import br.edu.ifpb.pweb2.plutao.model.Assunto;
-import br.edu.ifpb.pweb2.plutao.model.Processo;
-import br.edu.ifpb.pweb2.plutao.model.Professor;
+import br.edu.ifpb.pweb2.plutao.model.*;
 import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-@Component
-public class ProcessoService implements Service<Processo, Integer>{
+@Service
+public class ProcessoService{
 
     @Autowired
     private ProcessoRepository processoRepository;
 
-    @Autowired
-    private ProfessorService professorService;
-
-    @Autowired
-    private AlunoService alunoService;
-
-    @Override
-    public List<Processo> findAll() {
-        return processoRepository.findAll();
-    }
-
-    @Override
-    public Processo findById(Integer id) {
-        Processo processo = null;
-        Optional<Processo> opProcesso = processoRepository.findById(id);
-        if (opProcesso.isPresent()) {
-            processo = opProcesso.get();
-        }
-        return processo;
-    }
-
-    @Override
-    public Processo save(Processo processo) {
-        return processoRepository.save(processo);
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-        processoRepository.deleteById(id);
-    }
-
-    public List<Processo> consultarProcessosPorStatusEAluno(boolean status, Integer idAluno) {
-        Aluno aluno = alunoService.findById(idAluno);
-        return processoRepository.findByParecerAndAluno(status, aluno);
-    }
-
-    public List<Processo> consultarProcessosPorProfessor(Integer idProfessor, boolean isCoordenador) {
-        Professor professor = professorService.findById(idProfessor);
-        if(professor.isCoordenador() && !isCoordenador){
-            return new ArrayList<>();
-        }else {
-            return processoRepository.findByRelator(professor);
-        }
+    public List<Processo> getProcessos(){
+        return this.processoRepository.findAll();
     }
 
     public List<Processo> getProcessosPorAluno(Aluno aluno){
@@ -76,6 +32,7 @@ public class ProcessoService implements Service<Processo, Integer>{
     public Processo getProcessoPorId(Integer id){
         return this.processoRepository.findById(id).orElse(null);
     }
+
     public Processo salvarProcesso(Processo processo){
         processo.getAluno().adicionarProcesso(processo);
         processo.setEstado(StatusProcesso.CRIADO);
@@ -84,11 +41,25 @@ public class ProcessoService implements Service<Processo, Integer>{
         return this.processoRepository.save(processo);
     }
 
-    public Processo atribuirProcesso(Processo processo,Integer id){
+    public Processo atualizarProcesso(Processo processo, Integer id){
+        Processo processoAtualizado = this.processoRepository.findById(id).orElse(new Processo());
+        processoAtualizado.setJustificativaRelator(processo.getJustificativaRelator());
+        processoAtualizado.setDecisaoRelator(processo.getDecisaoRelator());
+        return this.processoRepository.save(processoAtualizado);
+    }
+
+    public Processo atribuirProcesso(Processo processo, Integer id){
         Processo processoAtualizado = this.processoRepository.findById(id).orElse(new Processo());
         processoAtualizado.setRelator(processo.getRelator());
+        for (Colegiado colegiado : processo.getRelator().getColegiados()){
+            if(colegiado.getCurso() == processo.getRelator().getCurso()){
+                processoAtualizado.setColegiado(colegiado);
+                break;
+            }
+        }
         processoAtualizado.setEstado(StatusProcesso.DISTRIBUIDO);
         processoAtualizado.setDataDistribuicao(new Date());
         return this.processoRepository.save(processoAtualizado);
     }
+
 }

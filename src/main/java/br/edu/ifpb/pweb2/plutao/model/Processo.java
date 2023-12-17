@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Processo{
+public class    Processo{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -36,15 +36,18 @@ public class Processo{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataParecer;
 
-    private boolean parecer;
-
     private byte[] documento;
+
+    private String justificativaRelator;
 
     @Enumerated(EnumType.STRING)
     private StatusProcesso estado;
 
     @Enumerated(EnumType.STRING)
     private TipoDecisao decisaoRelator;
+
+    @OneToMany(mappedBy = "processo")
+    private List<Voto> listaDeVotos;
 
     @ManyToOne
     private Professor relator;
@@ -78,5 +81,10 @@ public class Processo{
     public Processo(Aluno aluno,Assunto assunto){
         this.aluno = aluno;
         this.assunto = assunto;
+    }
+
+    @Override
+    public String toString(){
+        return ""+this.numero+","+this.aluno;
     }
 }

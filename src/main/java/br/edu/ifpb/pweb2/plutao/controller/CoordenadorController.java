@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 @Controller
-@RequestMapping("/coordenador/processos")
+@RequestMapping("/coordenador/{id}")
 public class CoordenadorController {
 
     @Autowired
@@ -57,32 +57,33 @@ public class CoordenadorController {
         return this.cursoService.getCursos();
     }
 
-    @GetMapping
+    @GetMapping("processos")
     public ModelAndView showPainelProcessos(ModelAndView model){
-        model.addObject("processos", processoService.findAll());
+        model.addObject("processos", processoService.getProcessos());
         model.setViewName("/coordenador/painel");
         return model;
     }
 
     //------ Processos ---------
 
-    @GetMapping("{id}")
-    public ModelAndView showProcesso(ModelAndView model, @PathVariable("id") Integer id){
+    @GetMapping("processos/{idProcesso}")
+    public ModelAndView showProcesso(ModelAndView model, @PathVariable("idProcesso") Integer id){
         model.addObject("processo", processoService.getProcessoPorId(id));
         model.setViewName("/coordenador/processo");
         return model;
     }
 
-    @PostMapping("{id}")
+    @PostMapping("processos/{idProcesso}")
     public ModelAndView salvarProcesso(
             ModelAndView model,
             Processo processo,
             @PathVariable("id")Integer id,
+            @PathVariable("idProcesso")Integer idProcesso,
             RedirectAttributes redirectAttributes
     ){
-        processoService.atribuirProcesso(processo, id);
-        model.addObject("processos", processoService.findAll());
-        model.setViewName("redirect:/coordenador/processos");
+        processoService.atribuirProcesso(processo,idProcesso);
+        model.addObject("processos", processoService.getProcessos());
+        model.setViewName("redirect:/coordenador/"+id+"/processos");
         redirectAttributes.addFlashAttribute("mensagem", "Processo designado com Sucesso");
         return model;
     }
@@ -93,7 +94,7 @@ public class CoordenadorController {
     public ModelAndView showPainelReuniaos(ModelAndView model, @PathVariable("id") Long id){
         Coordenador coordenador = coordenadorService.getCoordenadorPorId(id);
         Colegiado colegiado = colegiadoService.getColegiadoPorCoordenador(coordenador);
-        model.addObject("reunioes", colegiado.getReuniaos());
+        model.addObject("reunioes", colegiado.getReunioes());
         model.setViewName("/coordenador/reunioes");
         return model;
     }
@@ -159,7 +160,7 @@ public class CoordenadorController {
         reuniao.setColegiado(colegiado);
         reuniaoService.salvarReuniao(reuniao);
         System.out.println(reuniao.getColegiado());
-        model.addObject("reunioes", colegiado.getReuniaos());
+        model.addObject("reunioes", colegiado.getReunioes());
         model.setViewName("redirect:/coordenador/"+id+"/reunioes");
         redirectAttributes.addFlashAttribute("mensagem", "Reunião Criada com Sucesso");
         redirectAttributes.addFlashAttribute("reuniaoSalvos", true);
