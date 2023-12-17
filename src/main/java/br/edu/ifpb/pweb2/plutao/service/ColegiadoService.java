@@ -2,38 +2,34 @@ package br.edu.ifpb.pweb2.plutao.service;
 
 
 import br.edu.ifpb.pweb2.plutao.model.Colegiado;
+import br.edu.ifpb.pweb2.plutao.model.Coordenador;
 import br.edu.ifpb.pweb2.plutao.model.Professor;
 import br.edu.ifpb.pweb2.plutao.repository.ColegiadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-@Component
-public class ColegiadoService implements Service<Colegiado, Integer>{
+@Service
+public class ColegiadoService{
 
     @Autowired
     private ColegiadoRepository colegiadoRepository;
 
-    @Override
-    public List<Colegiado> findAll() {
-        return colegiadoRepository.findAll();
+    public List<Colegiado> getColegiados(){
+        return this.colegiadoRepository.findAll();
     }
 
-    @Override
-    public Colegiado findById(Integer id) {
-        Colegiado colegiado = null;
-        Optional<Colegiado> opColegiado = colegiadoRepository.findById(id);
-        if (opColegiado.isPresent()) {
-            colegiado = opColegiado.get();
-        }
-        return colegiado;
+    public Colegiado getColegiadoPorId(Integer id){
+        return this.colegiadoRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public Colegiado save(Colegiado colegiado) {
+    public Colegiado getColegiadoPorCoordenador(Coordenador coordenador){
+        return this.colegiadoRepository.findByCoordenador(coordenador).get(0);
+    }
+
+    public Colegiado salvarColegiado(Colegiado colegiado){
         for(Professor professor : colegiado.getMembros() ){
             professor.adicionarColegiado(colegiado);
         }
@@ -41,8 +37,7 @@ public class ColegiadoService implements Service<Colegiado, Integer>{
         return this.colegiadoRepository.save(colegiado);
     }
 
-    @Override
-    public void deleteById(Integer id) {
-        colegiadoRepository.deleteById(id);
+    public void deletarColegiado(Integer id){
+        this.colegiadoRepository.deleteById(id);
     }
 }

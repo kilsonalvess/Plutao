@@ -1,9 +1,10 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
-import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Colegiado;
+import br.edu.ifpb.pweb2.plutao.model.Curso;
 import br.edu.ifpb.pweb2.plutao.model.Professor;
 import br.edu.ifpb.pweb2.plutao.service.ColegiadoService;
+import br.edu.ifpb.pweb2.plutao.service.CursoService;
 import br.edu.ifpb.pweb2.plutao.service.ProfessorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class ColegiadoController {
     @Autowired
     private ProfessorService professorService;
 
+    @Autowired
+    private CursoService cursoService;
 
     @RequestMapping("/form")
     public ModelAndView getForm(Colegiado colegiado, ModelAndView mav) {
@@ -35,6 +38,11 @@ public class ColegiadoController {
     @ModelAttribute("professoresList")
     public List<Professor> getProfessores() {
         return professorService.findAll();
+    }
+
+    @ModelAttribute("cursos")
+    public List<Curso> getCursos(){
+        return this.cursoService.getCursos();
     }
 
     @GetMapping
