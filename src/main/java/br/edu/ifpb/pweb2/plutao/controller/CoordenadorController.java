@@ -27,9 +27,6 @@ public class CoordenadorController {
     private AlunoService alunoService;
 
     @Autowired
-    private CursoService cursoService;
-
-    @Autowired
     private CoordenadorService coordenadorService;
 
     @Autowired
@@ -77,7 +74,7 @@ public class CoordenadorController {
     @GetMapping("processos")
     public ModelAndView showPainelProcessos(ModelAndView model){
         model.addObject("processos", processoService.getProcessos());
-        model.setViewName("list");
+        model.setViewName("/coordenador/painel-processo");
         return model;
     }
 

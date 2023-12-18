@@ -53,7 +53,6 @@
                         <th>Assunto</th>
                         <th>Data Recepção</th>
                         <th>Aluno</th>
-                        <th>Atribuir</th>
                         <th>Editar</th>
                         <th>Excluir</th>
                     </tr>
@@ -65,11 +64,6 @@
                         <td>[[${processo.assunto.nome}]]</td>
                         <td th:text="${#dates.format(processo.dataCriacao, 'dd/MM/yyyy')}"></td>
                         <td>[[${processo.aluno.nome}]]</td>
-                        <td>
-                            <form th:action="@{coordenadores/{id}(id=${coordenador.id})}">
-                                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-person-plus-fill"></i></button>
-                            </form>
-                        </td>
                         <td>
                             <form th:action="@{/processos/{id}(id=${processo.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></button>

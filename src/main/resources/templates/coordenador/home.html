@@ -22,7 +22,7 @@
 
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
     <div class="navbar-nav">
-        <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
+        <a class="nav-item nav-link" th:href="@{/coordenador/{coordenadorId}/processos(coordenadorId=${coordenador.id})}" >Processos</a>
         <a class="nav-item nav-link" th:href="@{/coordenador/{coordenadorId}/reunioes(coordenadorId=${coordenador.id})}">Reuniões</a>
     </div>
 
@@ -39,7 +39,7 @@
         <div class="card-body-home">
             <div layout:fragment="content">
                 <div class="home">
-                    <h2>Bem vindo ao sistema Plutão</h2>
+                    <h2>Sistema Plutão - Página do Coordenador</h2>
                 </div>
 
             </div>
