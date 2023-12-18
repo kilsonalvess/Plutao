@@ -16,7 +16,7 @@ public class CoordenadorService {
         return this.coordenadorRepository.findAll();
     }
 
-    public Coordenador getCoordenadorPorId(Long id){
+    public Coordenador getCoordenadorPorId(Integer id){
         return this.coordenadorRepository.findById(id).orElse(null);
     }
 
@@ -24,7 +24,7 @@ public class CoordenadorService {
         return this.coordenadorRepository.save(coordenador);
     }
 
-    public void deletarCoordenador(Long id){
+    public void deletarCoordenador(Integer id){
         this.coordenadorRepository.deleteById(id);
     }
 

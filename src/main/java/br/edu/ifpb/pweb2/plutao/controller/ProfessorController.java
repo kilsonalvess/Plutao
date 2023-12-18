@@ -26,15 +26,8 @@ public class ProfessorController {
     private AlunoService alunoService;
 
     @Autowired
-    private CursoService cursoService;
-
-    @Autowired
     private ReuniaoService reuniaoService;
 
-    @ModelAttribute("cursos")
-    public List<Curso> getCursos() {
-        return this.cursoService.getCursos();
-    }
 
     @ModelAttribute("alunos")
     public List<Aluno> getAlunos() {
@@ -50,14 +43,15 @@ public class ProfessorController {
     public ModelAndView showPainelProcessos(ModelAndView model, @PathVariable("id") Integer id) {
         Professor professor = this.professorService.getProfessorPorId(id);
         model.addObject("processos", processoService.getProcessosPorProfessor(professor));
-        model.setViewName("/professor/painel-processos");
+        model.addObject("professor", professor);
+        model.setViewName("/professores/painel");
         return model;
     }
 
     @GetMapping("/processos/{idProcesso}")
     public ModelAndView showProcesso(ModelAndView model, @PathVariable("idProcesso") Integer idProcesso) {
         model.addObject("processo", processoService.getProcessoPorId(idProcesso));
-        model.setViewName("/professor/processo");
+        model.setViewName("/professores/processo");
         return model;
     }
 
@@ -66,7 +60,7 @@ public class ProfessorController {
         processoService.atualizarProcesso(processo, idProcesso);
         Professor professor = this.professorService.getProfessorPorId(id);
         model.addObject("processos", processoService.getProcessosPorProfessor(professor));
-        model.setViewName("redirect:/professor/" + id + "/processos");
+        model.setViewName("redirect:/professores/" + id + "/processos");
         return model;
     }
 
@@ -76,14 +70,14 @@ public class ProfessorController {
         Colegiado colegiado = professor.getColegiados().get(0);
         List<Reuniao> reunioes = colegiado.getReunioes();
         model.addObject("reunioes", reunioes);
-        model.setViewName("/professor/painel-reunioes");
+        model.setViewName("/professores/painel-reunioes");
         return model;
     }
 
     @GetMapping("/reunioes/{idReuniao}")
     public ModelAndView showReuniao(ModelAndView model, @PathVariable("idReuniao") Integer idReuniao){
         model.addObject("reuniao", this.reuniaoService.getReuniaoPorId(idReuniao));
-        model.setViewName("/professor/reuniao");
+        model.setViewName("/professores/reuniao");
         return model;
     }
 

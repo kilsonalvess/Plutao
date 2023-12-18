@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
+import br.edu.ifpb.pweb2.plutao.enums.StatusReuniao;
 import br.edu.ifpb.pweb2.plutao.model.*;
 import br.edu.ifpb.pweb2.plutao.service.*;
 import jakarta.validation.Valid;
@@ -52,15 +53,31 @@ public class CoordenadorController {
         return this.alunoService.getAlunosComProcessos();
     }
 
-    @ModelAttribute("cursos")
-    public List<Curso> getCursos(){
-        return this.cursoService.getCursos();
+    @ModelAttribute("coordenador")
+    public Coordenador getCoordenador(@PathVariable("id") Integer id){
+        return this.coordenadorService.getCoordenadorPorId(id);
+    }
+
+    @ModelAttribute("programada")
+    public StatusReuniao getProgramada(){
+        return StatusReuniao.PROGRAMADA;
+    }
+
+    @ModelAttribute("encerrada")
+    public StatusReuniao getEncerrada(){
+        return StatusReuniao.ENCERRADA;
+    }
+
+    @GetMapping
+    public ModelAndView home(ModelAndView model){
+        model.setViewName("/coordenador/home");
+        return model;
     }
 
     @GetMapping("processos")
     public ModelAndView showPainelProcessos(ModelAndView model){
         model.addObject("processos", processoService.getProcessos());
-        model.setViewName("/coordenador/painel");
+        model.setViewName("list");
         return model;
     }
 
@@ -91,7 +108,7 @@ public class CoordenadorController {
     //------ REUNIÕES ---------
 
     @GetMapping("reunioes")
-    public ModelAndView showPainelReuniaos(ModelAndView model, @PathVariable("id") Long id){
+    public ModelAndView showPainelReuniaos(ModelAndView model, @PathVariable("id") Integer id){
         Coordenador coordenador = coordenadorService.getCoordenadorPorId(id);
         Colegiado colegiado = colegiadoService.getColegiadoPorCoordenador(coordenador);
         model.addObject("reunioes", colegiado.getReunioes());
@@ -100,7 +117,7 @@ public class CoordenadorController {
     }
 
     @GetMapping("reunioes/criar")
-    public ModelAndView createReuniao(ModelAndView model,@PathVariable("id")Long id){
+    public ModelAndView createReuniao(ModelAndView model,@PathVariable("id")Integer id){
         List<Processo> processosDisponiveis = new ArrayList<Processo>();
         Coordenador coordenador = coordenadorService.getCoordenadorPorId(id);
         Colegiado colegiado = colegiadoService.getColegiadoPorCoordenador(coordenador);
@@ -130,7 +147,7 @@ public class CoordenadorController {
             @Valid Reuniao reuniao,
             BindingResult validation,
             ModelAndView model,
-            @PathVariable("id")Long id,
+            @PathVariable("id")Integer id,
             RedirectAttributes redirectAttributes
     ){
         if (validation.hasErrors()) {

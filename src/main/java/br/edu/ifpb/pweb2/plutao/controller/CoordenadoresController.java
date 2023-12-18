@@ -47,7 +47,7 @@ public class CoordenadoresController {
     @GetMapping
     public ModelAndView listCoordenadores(ModelAndView model){
         model.addObject("coordenadores", coordenadorService.getCoordenadores());
-        model.setViewName("coordenador/painel");
+        model.setViewName("coordenador/list");
         return model;
     }
 
@@ -80,7 +80,7 @@ public class CoordenadoresController {
     }
 
     @GetMapping("{id}")
-    public ModelAndView editCoordenador(@PathVariable("id") long id, ModelAndView model){
+    public ModelAndView editCoordenador(@PathVariable("id") Integer id, ModelAndView model){
         model.addObject("coordenador", coordenadorService.getCoordenadorPorId(id));
         model.addObject("acao", "editar");
         model.setViewName("coordenador/form");
@@ -91,7 +91,7 @@ public class CoordenadoresController {
     public ModelAndView updateCoordenador(
             @Valid Coordenador coordenador,
             BindingResult validation,
-            @PathVariable("id") Long id,
+            @PathVariable("id") Integer id,
             ModelAndView model,
             RedirectAttributes redirectAttributes
     ){
@@ -109,7 +109,7 @@ public class CoordenadoresController {
     }
 
     @RequestMapping("{id}/delete")
-    public ModelAndView deleteCoordenador(@PathVariable("id") Long id, ModelAndView model, RedirectAttributes redirectAttributes){
+    public ModelAndView deleteCoordenador(@PathVariable("id") Integer id, ModelAndView model, RedirectAttributes redirectAttributes){
         coordenadorService.deletarCoordenador(id);
         model.addObject("coordenadores", coordenadorService.getCoordenadores());
         model.setViewName("redirect:/coordenadores");

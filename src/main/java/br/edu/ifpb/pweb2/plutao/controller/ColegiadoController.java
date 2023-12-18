@@ -1,9 +1,11 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
 import br.edu.ifpb.pweb2.plutao.model.Colegiado;
+import br.edu.ifpb.pweb2.plutao.model.Coordenador;
 import br.edu.ifpb.pweb2.plutao.model.Curso;
 import br.edu.ifpb.pweb2.plutao.model.Professor;
 import br.edu.ifpb.pweb2.plutao.service.ColegiadoService;
+import br.edu.ifpb.pweb2.plutao.service.CoordenadorService;
 import br.edu.ifpb.pweb2.plutao.service.CursoService;
 import br.edu.ifpb.pweb2.plutao.service.ProfessorService;
 import jakarta.validation.Valid;
@@ -29,6 +31,9 @@ public class ColegiadoController {
     @Autowired
     private CursoService cursoService;
 
+    @Autowired
+    private CoordenadorService coordenadorService;
+
     @RequestMapping("/form")
     public ModelAndView getForm(Colegiado colegiado, ModelAndView mav) {
         mav.addObject("colegiado", colegiado);
@@ -43,6 +48,11 @@ public class ColegiadoController {
     @ModelAttribute("cursos")
     public List<Curso> getCursos(){
         return this.cursoService.getCursos();
+    }
+
+    @ModelAttribute("coordenadores")
+    public List<Coordenador> getCoordenadores(){
+        return this.coordenadorService.getCoordenadores();
     }
 
     @GetMapping

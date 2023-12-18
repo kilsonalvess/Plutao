@@ -46,6 +46,13 @@
                 <p class="texto-erro" th:if="${#fields.hasErrors('curso')}" th:errorclass="error" th:errors="*{curso}"></p>
                 <br>
 
+                <label for="coordenador" class="form-label">Coordenador:</label>
+                    <select class="form-select" required id="coordenador" th:field="*{coordenador}">
+                        <option th:each="coordenador: ${coordenadores}" th:value="${coordenador.id}" th:text="${coordenador}"></option>
+                    </select>
+                <p class="texto-erro" th:if="${#fields.hasErrors('coordenador')}" th:errorclass="error" th:errors="*{coordenador}"></p>
+                <br>
+
                 <label for="assunto">Membro:</label>
                 <select th:field="*{membros}" class="form-select">
                     <option th:each="prof : ${professoresList}" th:value="${prof.id}" th:label="${prof.nome}" />
