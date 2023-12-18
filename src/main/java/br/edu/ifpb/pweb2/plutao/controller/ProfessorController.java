@@ -1,12 +1,7 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
-import br.edu.ifpb.pweb2.plutao.model.Aluno;
-import br.edu.ifpb.pweb2.plutao.model.Curso;
-import br.edu.ifpb.pweb2.plutao.model.Professor;
-import br.edu.ifpb.pweb2.plutao.service.AlunoService;
-import br.edu.ifpb.pweb2.plutao.service.CursoService;
-import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
-import br.edu.ifpb.pweb2.plutao.service.ProfessorService;
+import br.edu.ifpb.pweb2.plutao.model.*;
+import br.edu.ifpb.pweb2.plutao.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/professores")
+@RequestMapping("/professore/{id}")
 public class ProfessorController {
 
     @Autowired
@@ -33,80 +28,62 @@ public class ProfessorController {
     @Autowired
     private CursoService cursoService;
 
+    @Autowired
+    private ReuniaoService reuniaoService;
+
     @ModelAttribute("cursos")
-    public List<Curso> getCursos(){
+    public List<Curso> getCursos() {
         return this.cursoService.getCursos();
     }
 
     @ModelAttribute("alunos")
-    public List<Aluno> getAlunos(){
+    public List<Aluno> getAlunos() {
         return this.alunoService.getAlunosComProcessos();
     }
+
     @ModelAttribute("relatores")
-    public List<Professor> getRelatores(){
+    public List<Professor> getRelatores() {
         return this.professorService.getProfessoresComProcessos();
     }
 
-    @RequestMapping("/form")
-    public ModelAndView getForm(Professor professor, ModelAndView mav){
-        mav.addObject("professor", professor);
-        mav.setViewName("professores/form");
-        return mav;
-    }
-
-    @PostMapping
-    public ModelAndView saveProfessor(@Valid Professor professor, BindingResult validation, ModelAndView mav, RedirectAttributes attr){
-        if (validation.hasErrors()) {
-            mav.addObject("message", "Erros de validação! Corrija-os e tente novamente.");
-            mav.setViewName("professores/form");
-            return mav;
-        }
-        if (professor.getId() == null) {
-            attr.addFlashAttribute("mensagem", "Professor cadastrado com sucesso!");
-
-        } else {
-            attr.addFlashAttribute("mensagem", "Professor editado com sucesso!");
-        }
-        professorService.save(professor);
-        mav.setViewName("redirect:/professores");
-        return mav;
-    }
-
-    @GetMapping
-    public ModelAndView listAll(ModelAndView mav){
-        mav.addObject("professores", professorService.findAll());
-        mav.setViewName("professores/list");
-        return mav;
-    }
-
-    @RequestMapping("/{id}/editar")
-    public ModelAndView getProfessorById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
-        mav.addObject("professor", professorService.findById(id));
-        mav.setViewName("professores/form");
-        return mav;
-    }
-
-    @RequestMapping("/{id}/delete")
-    public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
-        professorService.deleteById(id);
-        attr.addFlashAttribute("mensagem", "Professor removido com sucesso!");
-        mav.setViewName("redirect:/professores");
-        return mav;
-    }
-
-    @GetMapping("/{id}/processos")
-    public ModelAndView showPainelProcessos(ModelAndView model,@PathVariable("id") Integer id){
-        Professor professor = this.professorService.findById(id);
-        model.addObject("professor", professor);
+    @GetMapping("/processos")
+    public ModelAndView showPainelProcessos(ModelAndView model, @PathVariable("id") Integer id) {
+        Professor professor = this.professorService.getProfessorPorId(id);
         model.addObject("processos", processoService.getProcessosPorProfessor(professor));
-        model.setViewName("/professores/painel");
+        model.setViewName("/professor/painel-processos");
         return model;
     }
 
-    @GetMapping("/{idProcesso}")
-    public ModelAndView showProcesso(@PathVariable("idProcesso") Integer idProcesso, ModelAndView model){
+    @GetMapping("/processos/{idProcesso}")
+    public ModelAndView showProcesso(ModelAndView model, @PathVariable("idProcesso") Integer idProcesso) {
         model.addObject("processo", processoService.getProcessoPorId(idProcesso));
-        model.setViewName("/professores/processo");
+        model.setViewName("/professor/processo");
+        return model;
+    }
+
+    @PostMapping("/processos/{idProcesso}")
+    public ModelAndView atualizarProcesso(ModelAndView model, Processo processo, @PathVariable("id") Integer id, @PathVariable("idProcesso") Integer idProcesso) {
+        processoService.atualizarProcesso(processo, idProcesso);
+        Professor professor = this.professorService.getProfessorPorId(id);
+        model.addObject("processos", processoService.getProcessosPorProfessor(professor));
+        model.setViewName("redirect:/professor/" + id + "/processos");
+        return model;
+    }
+
+    @GetMapping("/reunioes")
+    public ModelAndView showPainelReunioes(ModelAndView model,@PathVariable("id") Integer id){
+        Professor professor = professorService.getProfessorPorId(id);
+        Colegiado colegiado = professor.getColegiados().get(0);
+        List<Reuniao> reunioes = colegiado.getReunioes();
+        model.addObject("reunioes", reunioes);
+        model.setViewName("/professor/painel-reunioes");
+        return model;
+    }
+
+    @GetMapping("/reunioes/{idReuniao}")
+    public ModelAndView showReuniao(ModelAndView model, @PathVariable("idReuniao") Integer idReuniao){
+        model.addObject("reuniao", this.reuniaoService.getReuniaoPorId(idReuniao));
+        model.setViewName("/professor/reuniao");
         return model;
     }
 

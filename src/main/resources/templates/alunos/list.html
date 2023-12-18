@@ -63,7 +63,7 @@
                         <td>[[${aluno.matricula}]]</td>
                         <td>[[${aluno.login}]]</td>
                         <td>
-                            <form th:action="@{/alunos/{id}/processos(id=${aluno.id})}">
+                            <form th:action="@{/aluno/{id}/processos(id=${aluno.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-text"></i></button>
                             </form>
                         </td>

@@ -62,4 +62,9 @@ public class ProfessorService implements Service<Professor, Integer>{
         }
         return professores;
     }
+
+    public Professor getProfessorPorId(Integer id){
+        return this.professorRepository.findById(id).orElse(null);
+    }
+
 }
