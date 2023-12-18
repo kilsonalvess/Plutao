@@ -42,6 +42,13 @@
                 <label for="telefone">Telefone</label>
                 <input type="text" th:field="*{telefone}" class="form-control"> <br>
 
+                <div class="mb-3">
+                    <label for="curso" class="form-label">Curso:</label>
+                    <select class="form-select" required id="curso" th:field="*{curso}">
+                        <option th:each="curso: ${cursos}" th:value="${curso.id}" th:text="${curso.nome}"></option>
+                    </select>
+                </div>
+
                 <label for="login">Login</label>
                 <input type="text" th:field="*{login}" class="form-control"> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('login')}" th:errorclass="error" th:errors="*{login}"></p>
@@ -49,9 +56,6 @@
                 <label for="requerimento">Senha</label>
                 <input type="text" th:field="*{senha}" class="form-control"> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('senha')}" th:errorclass="error" th:errors="*{senha}"></p>
-
-                <label for="requerimento">Coordenador</label>
-                <input type="checkbox" th:field="*{coordenador}" > <br><br>
 
                 <input class="btn btn-outline-primary" type="submit" value="Salvar">
                 <a class="btn btn-outline-secondary" th:href="@{/professores}">Cancelar</a>

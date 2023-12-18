@@ -40,6 +40,9 @@ public class ProfessorService implements Service<Professor, Integer>{
         professorRepository.deleteById(id);
     }
 
+    public List<Professor> getProfessores(){
+        return this.professorRepository.findAll();
+    }
     public List<Professor> getProfessoresComColegiado(){
         List<Professor> professores = new ArrayList<Professor>();
         for (Professor professor : this.professorRepository.findAll()){

@@ -33,7 +33,7 @@ public class AssuntoController {
 
     @ModelAttribute("processoItens")
     public List<Processo> getProcessos() {
-        return processoService.findAll();
+        return processoService.getProcessos();
     }
 
     @PostMapping

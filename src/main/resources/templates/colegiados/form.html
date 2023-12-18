@@ -39,9 +39,12 @@
                 <input type="text" th:field="*{portaria}" class="form-control"> <br>
                 <p class="texto-erro" th:if="${#fields.hasErrors('portaria')}" th:errorclass="error" th:errors="*{portaria}"></p>
 
-                <label for="curso">Curso</label>
-                <input type="text" th:field="*{curso}" class="form-control"> <br>
+                <label for="assunto">Curso</label>
+                <select th:field="*{curso}" class="form-select">
+                    <option th:each="curso : ${cursos}" th:value="${curso.id}" th:label="${curso.nome}" />
+                </select>
                 <p class="texto-erro" th:if="${#fields.hasErrors('curso')}" th:errorclass="error" th:errors="*{curso}"></p>
+                <br>
 
                 <label for="assunto">Membro:</label>
                 <select th:field="*{membros}" class="form-select">

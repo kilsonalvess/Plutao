@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class    Processo{
+public class Processo{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -37,6 +37,8 @@ public class    Processo{
     private Date dataParecer;
 
     private byte[] documento;
+
+    private boolean parecer;
 
     private String justificativaRelator;
 

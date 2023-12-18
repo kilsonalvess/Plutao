@@ -61,7 +61,7 @@ public class ProcessoController {
         } else {
             attr.addFlashAttribute("mensagem", "Processo editado com sucesso!");
         }
-        processoService.save(processo);
+        processoService.salvarProcesso(processo);
         mav.setViewName("redirect:/processos");
         return mav;
     }
@@ -69,48 +69,23 @@ public class ProcessoController {
     @GetMapping
     public ModelAndView listAll(ModelAndView mav) {
         mav.setViewName("processos/list");
-        mav.addObject("processos", processoService.findAll());
+        mav.addObject("processos", processoService.getProcessos());
         return mav;
     }
 
     @RequestMapping("/{id}")
     public ModelAndView getProcessoById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
-        mav.addObject("processo", processoService.findById(id));
+        mav.addObject("processo", processoService.getProcessoPorId(id));
         mav.setViewName("processos/form");
         return mav;
     }
 
     @RequestMapping("/{id}/delete")
     public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
-        processoService.deleteById(id);
+        processoService.deletarProcesso(id);
         attr.addFlashAttribute("mensagem", "Processo removido com sucesso!");
         mav.setViewName("redirect:/processos");
         return mav;
     }
-
-    @GetMapping("/list/status/{idStatus}/aluno/{idAluno}")
-    public ModelAndView listaPorStatusEAluno(
-            @RequestParam boolean idStatus,
-            @RequestParam Integer idAluno,
-            ModelAndView mav) {
-
-        List<Processo> listaProcessos = processoService.consultarProcessosPorStatusEAluno(idStatus, idAluno);
-        mav.setViewName("processos/list");
-        mav.addObject("processos", listaProcessos);
-        return mav;
-    }
-
-    @GetMapping("/list/professor/{idProfessor}/coordenador/{isCoordenador}")
-    public ModelAndView listaPorProfessor(
-            @RequestParam Integer idProfessor,
-            @RequestParam boolean isCoordenador,
-            ModelAndView mav) {
-
-        List<Processo> listaProcessos = processoService.consultarProcessosPorProfessor(idProfessor, isCoordenador);
-        mav.setViewName("processos/list");
-        mav.addObject("processos", listaProcessos);
-        return mav;
-    }
-
 
 }

@@ -1,19 +1,20 @@
 package br.edu.ifpb.pweb2.plutao.service;
 
 import br.edu.ifpb.pweb2.plutao.enums.StatusProcesso;
-import br.edu.ifpb.pweb2.plutao.model.*;
-import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
+import br.edu.ifpb.pweb2.plutao.model.Aluno;
+import br.edu.ifpb.pweb2.plutao.model.Colegiado;
+import br.edu.ifpb.pweb2.plutao.model.Processo;
+import br.edu.ifpb.pweb2.plutao.model.Professor;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-@Service
-public class ProcessoService{
 
+@Service
+public class ProcessoService {
     @Autowired
     private ProcessoRepository processoRepository;
 
@@ -48,7 +49,7 @@ public class ProcessoService{
         return this.processoRepository.save(processoAtualizado);
     }
 
-    public Processo atribuirProcesso(Processo processo, Integer id){
+    public Processo atribuirProcesso(Processo processo,Integer id){
         Processo processoAtualizado = this.processoRepository.findById(id).orElse(new Processo());
         processoAtualizado.setRelator(processo.getRelator());
         for (Colegiado colegiado : processo.getRelator().getColegiados()){
@@ -60,6 +61,10 @@ public class ProcessoService{
         processoAtualizado.setEstado(StatusProcesso.DISTRIBUIDO);
         processoAtualizado.setDataDistribuicao(new Date());
         return this.processoRepository.save(processoAtualizado);
+    }
+
+    public void deletarProcesso(Integer id){
+        processoRepository.deleteById(id);
     }
 
 }

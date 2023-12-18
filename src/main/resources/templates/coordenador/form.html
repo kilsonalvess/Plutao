@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}" th:with="titulo='Cadastro de Alunos'" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body>
+
+<div class="container">
+    <h2 class="titulo">Cadastro de Coordenadores</h2>
+
+    <div class="card-form">
+
+        <div class="card-body" layout:fragment="content">
+            <form th:action="${acao} == 'salvar' ? @{/coordenadores/criar} : @{/coordenadores/{id}(id=${coordenador.id})}" method="POST" th:object="${coordenador}">
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" th:field="*{id}">
+                        <!-- PROFESSOR -->
+                        <div class="col-md-6">
+                            <div class="input-group mb-4">
+                                <label for="professor" class="input-group-text" style="background-color:#198754 ;color: #ffff;">Professor:</label>
+                                <select required id="professor" th:field="*{professor.id}" class="form-select">
+                                    <option th:each="professor:${professores}" th:value="${professor.id}" th:text="${professor.nome} + ' - ' + ${professor.curso}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CURSO -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="curso" class="form-label">Curso:</label>
+                            <input type="text" id="cursoCoordenador" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a th:href="@{/coordenadores}" class="btn btn-secondary" style="margin-right: 10px;">Fechar</a>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" style="padding-left: 25px; padding-right: 25px">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+
+

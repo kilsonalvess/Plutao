@@ -1,8 +1,10 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
+import br.edu.ifpb.pweb2.plutao.model.Curso;
 import br.edu.ifpb.pweb2.plutao.model.Professor;
 import br.edu.ifpb.pweb2.plutao.service.AlunoService;
+import br.edu.ifpb.pweb2.plutao.service.CursoService;
 import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
 import br.edu.ifpb.pweb2.plutao.service.ProfessorService;
 import jakarta.validation.Valid;
@@ -27,6 +29,14 @@ public class ProfessorController {
 
     @Autowired
     private AlunoService alunoService;
+
+    @Autowired
+    private CursoService cursoService;
+
+    @ModelAttribute("cursos")
+    public List<Curso> getCursos(){
+        return this.cursoService.getCursos();
+    }
 
     @ModelAttribute("alunos")
     public List<Aluno> getAlunos(){
@@ -69,7 +79,7 @@ public class ProfessorController {
         return mav;
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping("/{id}/editar")
     public ModelAndView getProfessorById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
         mav.addObject("professor", professorService.findById(id));
         mav.setViewName("professores/form");
@@ -84,7 +94,7 @@ public class ProfessorController {
         return mav;
     }
 
-    @GetMapping("{id}/processos")
+    @GetMapping("/{id}/processos")
     public ModelAndView showPainelProcessos(ModelAndView model,@PathVariable("id") Integer id){
         Professor professor = this.professorService.findById(id);
         model.addObject("professor", professor);
@@ -93,8 +103,8 @@ public class ProfessorController {
         return model;
     }
 
-    @GetMapping("{idProcesso}")
-    public ModelAndView showProcesso(ModelAndView model, @PathVariable("idProcesso") Integer idProcesso){
+    @GetMapping("/{idProcesso}")
+    public ModelAndView showProcesso(@PathVariable("idProcesso") Integer idProcesso, ModelAndView model){
         model.addObject("processo", processoService.getProcessoPorId(idProcesso));
         model.setViewName("/professores/processo");
         return model;

@@ -47,7 +47,7 @@ public class ColegiadoController {
 
     @GetMapping
     public ModelAndView listAll(ModelAndView mav) {
-        mav.addObject("colegiados", colegiadoService.findAll());
+        mav.addObject("colegiados", colegiadoService.getColegiados());
         mav.setViewName("colegiados/list");
         return mav;
     }
@@ -65,15 +65,15 @@ public class ColegiadoController {
         } else {
             attr.addFlashAttribute("mensagem", "Colegiado editado com sucesso!");
         }
-        colegiadoService.save(colegiado);
-        mav.addObject("colegiados", colegiadoService.findAll());
+        colegiadoService.salvarColegiado(colegiado);
+        mav.addObject("colegiados", colegiadoService.getColegiados());
         mav.setViewName("redirect:/colegiados");
         return mav;
     }
 
     @RequestMapping("/{id}")
     public ModelAndView getColegiadoById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
-        mav.addObject("colegiado", colegiadoService.findById(id));
+        mav.addObject("colegiado", colegiadoService.getColegiadoPorId(id));
         mav.addObject("mensagem","Colegiado editado com Sucesso");
         mav.setViewName("colegiados/form");
         return mav;
@@ -81,7 +81,7 @@ public class ColegiadoController {
 
     @RequestMapping("/{id}/delete")
     public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
-        colegiadoService.deleteById(id);
+        colegiadoService.deletarColegiado(id);
         attr.addFlashAttribute("mensagem", "Colegiado removido com sucesso!");
         mav.setViewName("redirect:/colegiados");
         return mav;

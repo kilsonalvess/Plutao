@@ -34,71 +34,38 @@
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
-        <!--LISTAGEM--->
-        <div style="margin: 30px;">
-            <h1 style="margin-top: 20px">Processos</h1>
+        <div class="container">
+            <h1 style="margin-top:20px;margin-bottom: 20px;">Painel de Coordenadores</h1>
             <hr>
-            <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 20px;">
-                <div class="btn-group">
-                    <div class="input-group mb-3" style="margin-right: 10px;">
-                        <label class="input-group-text" for="filterStatus">Status</label>
-                        <select class="form-select" id="filterStatus">
-                            <option value="" selected>Todos</option>
-                            <option value="Criado">Criado</option>
-                            <option value="Distribuido">Distribuído</option>
-                            <option value="Em pauta">Em pauta</option>
-                            <option value="Em julgamento">Em julgamento</option>
-                            <option value="Julgado">Julgado</option>
-                        </select>
-                    </div>
-                    <div class="input-group mb-3" style="margin-right: 10px;">
-                        <label class="input-group-text" for="filterAluno">Aluno</label>
-                        <select class="form-select" id="filterAluno">
-                            <option value="">Todos</option>
-                            <option th:each="aluno:${alunos}" th:value="${aluno.nome}">[[${aluno.nome}]]</option>
-                        </select>
-                    </div>
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="filterRelator">Relator</label>
-                        <select class="form-select" id="filterRelator">
-                            <option selected value="-">Todos</option>
-                            <option th:each="relator:${relatores}" th:value="${relator.nome}">[[${relator.nome}]]</option>
-                        </select>
-                    </div>
-                </div>
+            <a th:href="@{coordenadores/criar}" type="button" class="btn btn-primary"
+               style="margin-bottom: 20px;">Cadastrar Coordenador</a>
+            <div role="alert" id="alerta-sucesso" class="alert d-flex align-items-center alert-dismissible fade show" th:classappend="${coordenadoresSalvo} ? 'alert-success' : ''">
+                <div th:text="${mensagem}"></div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <!--TABELA DE PROCESSOS-->
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Número</th>
-                    <th scope="col">Aluno</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Assunto</th>
-                    <th scope="col">Data de Criação</th>
-                    <th scope="col">Relator</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Curso</th>
                     <th scope="col">Opções</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="processo:${processos}">
-                    <td th:text="${processo.numero}?:'-'"></td>
-
-                    <td th:if="${processo.aluno} == null">-</td>
-                    <td th:unless="${processo.aluno} == null" th:text="${processo.aluno.nome}?:'-'"></td>
-
-                    <td th:text="${processo.estado}?:'-'"></td>
-
-                    <td th:if="${processo.assunto} == null">-</td>
-                    <td th:unless="${processo.assunto} == null" th:text="${processo.assunto.nome}"></td>
-
-                    <td th:text="${processo.dataCriacao}?:'-'"></td>
-
-                    <td th:if="${processo.relator} == null">-</td>
-                    <td th:unless="${processo.relator} == null" th:text="${processo.relator.nome}"></td>
-
+                <tr th:each="coordenador:${coordenadores}">
+                    <td>[[${coordenador.id}]]</td>
+                    <td th:text="${coordenador.professor.nome}"></td>
+                    <td th:text="${coordenador.professor.curso}"></td>
                     <td>
-                        <a th:href="@{/coordenador/processos/{id}(id=${processo.id})}" type="button" class="btn btn-primary">Consultar</a>
+                        <div class="btn-group">
+                            <form style="margin-right: 10px;" th:action="@{coordenadores/{id}/delete(id=${coordenador.id})}">
+                                <button type="submit"  class="btn btn-danger">Excluir</button>
+                            </form>
+                            <form th:action="@{coordenadores/{id}(id=${coordenador.id})}">
+                                <button type="submit" class="btn btn-primary">Editar</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
