@@ -1,5 +1,6 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
+import br.edu.ifpb.pweb2.plutao.enums.TipoDecisao;
 import br.edu.ifpb.pweb2.plutao.model.*;
 import br.edu.ifpb.pweb2.plutao.service.*;
 import jakarta.validation.Valid;
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/professore/{id}")
+@RequestMapping("/professor/{id}")
 public class ProfessorController {
 
     @Autowired
@@ -60,7 +61,7 @@ public class ProfessorController {
         processoService.atualizarProcesso(processo, idProcesso);
         Professor professor = this.professorService.getProfessorPorId(id);
         model.addObject("processos", processoService.getProcessosPorProfessor(professor));
-        model.setViewName("redirect:/professores/" + id + "/processos");
+        model.setViewName("redirect:/professor/" + id + "/processos");
         return model;
     }
 
@@ -69,6 +70,7 @@ public class ProfessorController {
         Professor professor = professorService.getProfessorPorId(id);
         Colegiado colegiado = professor.getColegiados().get(0);
         List<Reuniao> reunioes = colegiado.getReunioes();
+        model.addObject("professor", professor);
         model.addObject("reunioes", reunioes);
         model.setViewName("/professores/painel-reunioes");
         return model;

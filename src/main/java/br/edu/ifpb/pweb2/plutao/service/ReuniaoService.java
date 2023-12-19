@@ -41,6 +41,20 @@ public class ReuniaoService {
         return this.reuniaoRepository.save(reuniao);
     }
 
+    public Reuniao iniciarReuniao(Reuniao reuniao, Integer id) throws Exception{
+        for(Reuniao reuniao2 : this.reuniaoRepository.findAll()){
+            if(reuniao2.getReuniao().equals(StatusReuniao.EM_ANDAMENTO)){
+                throw new Exception("Já existe uma reunião em andamento!");
+            }
+        }
+        Reuniao reuniaoAtualizada = this.reuniaoRepository.findById(id).orElse(null);
+        reuniaoAtualizada.setReuniao(StatusReuniao.EM_ANDAMENTO);
+        for(Processo processo : reuniaoAtualizada.getProcessos()){
+            processo.setEstado(StatusProcesso.EM_JULGAMENTO);
+        }
+        return this.reuniaoRepository.save(reuniaoAtualizada);
+    }
+
     public void apagarReuniao(Integer id){
         this.reuniaoRepository.deleteById(id);
     }

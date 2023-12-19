@@ -50,6 +50,7 @@
                         <th>Matrícula</th>
                         <th>Login</th>
                         <th>Processos</th>
+                        <th>Reuniões</th>
                         <th>Editar</th>
                         <th>Excluir</th>
                     </tr>
@@ -61,8 +62,13 @@
                         <td>[[${professor.matricula}]]</td>
                         <td th:text="${professor.login}"></td>
                         <td>
-                            <form th:action="@{/professore/{id}/processos(id=${professor.id})}">
+                            <form th:action="@{/professor/{id}/processos(id=${professor.id})}">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-text"></i></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/professor/{id}/reunioes(id=${professor.id})}">
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-camera-video"></i></button>
                             </form>
                         </td>
                         <td>

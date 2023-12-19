@@ -78,9 +78,9 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form>
+                    <form th:action="@{/professor/{idProfessor}/processos/{idProcesso}(idProfessor=${processo.relator.id}, idProcesso=${processo.id})}" method="POST" th:object="${processo}">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Processo #1458746</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel" th:text="'Processo ' + ${processo.numero}"></h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -94,14 +94,25 @@
 
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">Justificar voto:</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{justificativaRelator}"></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="data" class="form-label">Decisão do Processo:</label>
+                                    <select th:if="${processo.decisaoRelator} == null" class="form-select" id="processo" th:field="*{decisaoRelator}">
+                                        <option th:each="value : ${T(br.edu.ifpb.pweb2.plutao.enums.TipoDecisao).values()}"
+                                                th:value="${value}"
+                                                th:text="${value}">
+                                        </option>
+
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Indeferir</button>
+                            <a th:href="@{/professor/{id}/processos(id=${processo.relator.id})}" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
-                                    style="padding-left: 25px; padding-right: 25px">Deferir</button>
+                                    style="padding-left: 25px; padding-right: 25px">Votar</button>
                         </div>
                     </form>
                 </div>

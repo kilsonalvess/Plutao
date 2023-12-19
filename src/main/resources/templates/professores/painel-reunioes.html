@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <meta charset="UTF-8">
     <link rel="icon" th:href="@{/imagens/processo.jpg}" type="image/x-icon">
-    <title>Listagem de Processos</title>
+    <title>Página do Coordenador - Reuniões</title>
 </head>
 <body>
 <div class="logo-bar mb-0 p-3">
@@ -20,9 +20,6 @@
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
     <div class="navbar-nav">
         <a class="nav-item nav-link" th:href="@{/home}">Home</a>
-        <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
-        <a class="nav-item nav-link" th:href="@{/professores}" >Professores</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -34,60 +31,49 @@
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
-
-        <div class="card-body">
-            <!-- LISTAGEM DE PROCESSOS-->
+        <div class="container">
+            <!--LISTAGEM DE REUNIÕES--->
             <div style="margin: 30px;">
-                <h3 style="margin-top: 20px">Bem vindo ao seus processos, [[${aluno.nome}]]</h3>
+                <h1 style="margin-top: 20px">Painel de Reuniões - [[${professor.nome}]]</h1>
                 <hr>
                 <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 20px;">
-                    <a type="button" th:href="@{/aluno/{id}/processos/criar(id=${aluno.id})}" class="btn btn-success"
-                    >Cadastrar processo</a>
                     <div class="btn-group">
                         <div class="input-group mb-3" style="margin-right: 10px;">
-                            <label class="input-group-text" for="filterAssunto">Assunto</label>
-                            <select class="form-select" id="filterAssunto" name="filtro">
-                                <option value="">Todos</option>
-                                <option th:each = "assunto : ${assuntosItens}" th:value="${assunto.nome}" th:text = "${assunto.nome}"> </option>
-
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="filterStatus">Status</label>
+                            <label class="input-group-text" for="filterStatus">Status da Reunião</label>
                             <select class="form-select" id="filterStatus">
-                                <option value="">Todos</option>
-                                <option value="Criado">Criado</option>
-                                <option value="DISTRIBUIDO">Distribuído</option>
-                                <option value="Em_pauta">Em pauta</option>
-                                <option value="Em_julgamento">Em julgamento</option>
-                                <option value="Julgado">Julgado</option>
+                                <option value="" selected>Todos</option>
+                                <option value="Encerrada">Encerrada</option>
+                                <option value="Programada">Programada</option>
                             </select>
                         </div>
                     </div>
                 </div>
-
-
-                <div th:if="${not #lists.isEmpty(processos)}"></div>
-                <div th:text="'Total ' + ${#lists.size(processos)} + ' processos'" style="text-align: right; color: gray; font-size: 0.85em;"></div>
-
-                <!--TABELA DE PROCESSOS-->
-                <table class="table table-striped table-hover">
+                <!--TABELA DE REUNIÕES-->
+                <table class="table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Número</th>
-                        <th>Assunto</th>
-                        <th>Data de Criação</th>
-                        <th>Estado</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Status da Reunião</th>
+                        <th scope="col">Quantidade de Processos</th>
+                        <th scope="col">Opções</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="processo : ${processos}">
-                        <td>[[${processo.id}]]</td>
-                        <td>[[${processo.numero}]]</td>
-                        <td>[[${processo.assunto.nome}]]</td>
-                        <td th:text="${#dates.format(processo.dataCriacao, 'dd/MM/yyyy')}"></td>
-                        <td>[[${processo.estado}]]</td>
+                    <tr th:each="reuniao:${reunioes}">
+                        <td th:text="${reuniao.id}?:'-'"></td>
+
+                        <td th:if="${reuniao.dataReuniao} == null">-</td>
+                        <td th:unless="${reuniao.dataReuniao} == null" th:text="${reuniao.dataReuniao}?:'-'"></td>
+
+                        <td th:text="${reuniao.reuniao}?:'-'"></td>
+
+                        <td th:if="${reuniao.processos} == null">-</td>
+                        <td th:unless="${reuniao.processos} == null" th:text="${reuniao.processos.size()}"></td>
+
+                        <td>
+                            <a th:href="@{/professor/{id}/reunioes/{idReuniao}(id=${professor.id},idReuniao=${reuniao.id})}" type="button" class="btn btn-primary">Consultar</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -107,20 +93,15 @@
     $(document).ready(function () {
         $('#filterStatus, #filterAssunto').on('change', function () {
             var status = $('#filterStatus').val();
-            var assunto = $('#filterAssunto').val();
-            filterTable(status, assunto);
+            filterTable(status);
         });
 
-        function filterTable(status, assunto) {
+        function filterTable(status) {
             var rows = $('table tbody tr');
             rows.show();
 
             if (status) {
                 rows.filter(':not(:contains("' + status + '"))').hide();
-            }
-
-            if (assunto) {
-                rows.filter(':not(:contains("' + assunto + '"))').hide();
             }
         }
 
