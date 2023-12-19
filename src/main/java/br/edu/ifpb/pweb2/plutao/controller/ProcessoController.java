@@ -2,11 +2,13 @@ package br.edu.ifpb.pweb2.plutao.controller;
 
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Assunto;
+import br.edu.ifpb.pweb2.plutao.model.Colegiado;
 import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.repository.AlunoRepository;
 import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import br.edu.ifpb.pweb2.plutao.service.AlunoService;
 import br.edu.ifpb.pweb2.plutao.service.AssuntoService;
+import br.edu.ifpb.pweb2.plutao.service.ColegiadoService;
 import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
 import jakarta.validation.Valid;
 import jakarta.validation.Validation;
@@ -32,6 +34,9 @@ public class ProcessoController {
     @Autowired
     private AssuntoService assuntoService;
 
+    @Autowired
+    private ColegiadoService colegiadoService;
+
     @RequestMapping("/form")
     public ModelAndView getForm( Processo processo, ModelAndView mav){
         mav.addObject("processo", processo);
@@ -47,6 +52,11 @@ public class ProcessoController {
     @ModelAttribute("assuntosItens")
     public List<Assunto> getAssuntos() {
         return assuntoService.findAll();
+    }
+
+    @ModelAttribute("colegiados")
+    public List<Colegiado> getColegiados() {
+        return colegiadoService.getColegiados();
     }
 
     @PostMapping

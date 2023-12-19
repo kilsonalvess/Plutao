@@ -64,6 +64,10 @@ public class CoordenadorController {
     public StatusReuniao getEncerrada(){
         return StatusReuniao.ENCERRADA;
     }
+    @ModelAttribute("emAndamento")
+    public StatusReuniao getEmAndamento(){
+        return StatusReuniao.EM_ANDAMENTO;
+    }
 
     @GetMapping
     public ModelAndView home(ModelAndView model){

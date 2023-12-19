@@ -55,6 +55,12 @@
                 </select>
                 <p class="texto-erro" th:if="${#fields.hasErrors('assunto')}" th:errorclass="error" th:errors="*{assunto}"></p>
                 <br>
+                <label for="interessado">Colegiado</label>
+                <select th:field="*{colegiado}" class="form-select">
+                    <option th:each="colegiado : ${colegiados}" th:value="${colegiado.id}" th:label="${colegiado.descricao}" />
+                </select>
+                <p class="texto-erro" th:if="${#fields.hasErrors('colegiado')}" th:errorclass="error" th:errors="*{colegiado}"></p>
+                <br>
                 <input  class="btn btn-outline-primary" type="submit" value="Salvar">
                 <a class="btn btn-outline-secondary" th:href="@{/processos}">Cancelar</a>
             </form>
