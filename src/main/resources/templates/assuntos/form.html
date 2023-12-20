@@ -23,8 +23,6 @@
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
     <div class="navbar-nav">
         <a class="nav-item nav-link" th:href="@{/home}">Home</a>
-        <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -35,23 +33,21 @@
 <div class="container">
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
-    <div class="card">
-        <div class="card-header">
-            Cadastro de Assunto
-        </div>
-        <div class="card-body">
-            <form th:action="@{/assuntos}" method="POST" th:object="${assunto}">
-                <input type="hidden" th:field="*{id}" class="form-control"/>
+    <h2 class="titulo">Cadastro de Assunto</h2>
+    <div class="card-form">
+            <div class="card-body" layout:fragment="content">
+                <form th:action="@{/assuntos}" method="POST" th:object="${assunto}">
+                    <input type="hidden" th:field="*{id}" class="form-control"/>
 
-                <label for="numero">Nome</label>
-                <input type="text" th:field="*{nome}" class="form-control"> <br>
-                <p class="texto-erro" th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}"></p>
+                    <label for="numero">Nome</label>
+                    <input type="text" th:field="*{nome}" class="form-control"> <br>
+                    <p class="texto-erro" th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}"></p>
+                    <br>
 
-                <br>
-
-                <input type="submit" value="Salvar">
-                <a th:href="@{/assuntos}">Cancelar</a>
-            </form>
+                    <input class="btn btn-outline-primary" type="submit" value="Salvar">
+                    <a class="btn btn-outline-secondary" th:href="@{/alunos}">Cancelar</a>
+                </form>
+            </div>
         </div>
     </div>
 </div>

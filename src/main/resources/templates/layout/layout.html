@@ -10,8 +10,18 @@
 <body>
     <div th:replace="~{/fragments/base :: header}" />
 
+    <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" th:href="@{/home}">Home</a>
+        </div>
+
+        <div style="margin-right: 5px;"><a href="#">
+            <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a>
+        </div>
+    </nav>
+
     <div class="container">
-        <h2 class="titulo">Cadastro de Alunos</h2>
+        <h2 class="titulo">Cadastro de Aluno</h2>
         <div class="card-form">
             <div class="card-body" layout:fragment="content">
                 <!-- Corpo da página entra aqui -->
