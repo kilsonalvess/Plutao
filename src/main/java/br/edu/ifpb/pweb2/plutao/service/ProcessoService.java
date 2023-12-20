@@ -15,23 +15,45 @@ import java.util.Optional;
 
 @Component
 public class ProcessoService implements Service<Processo, Integer> {
+
     @Autowired
     private ProcessoRepository processoRepository;
 
-    public List<Processo> getProcessos(){
-        return this.processoRepository.findAll();
+    @Override
+    public Page<Processo> findAll(Pageable page) {
+        return processoRepository.findAll(page);
+    }
+
+    @Override
+    public Processo findById(Integer id) {
+        Processo processo = null;
+        Optional<Processo> opAssunto = processoRepository.findById(id);
+        if (opAssunto.isPresent()) {
+            processo = opAssunto.get();
+        }
+        return processo;
+    }
+
+    @Override
+    public Processo save(Processo processo) {
+        return processoRepository.save(processo);
+    }
+
+    @Override
+    public void deleteById(Integer id) { processoRepository.deleteById(id);
+
     }
 
     public List<Processo> getProcessosPorAluno(Aluno aluno){
         return this.processoRepository.findByAluno(aluno);
     }
 
-    public List<Processo> getProcessosPorProfessor(Professor professor){
-        return this.processoRepository.findByRelator(professor);
+    public List<Processo> getProcessos(){
+        return this.processoRepository.findAll();
     }
 
-    public Processo getProcessoPorId(Integer id){
-        return this.processoRepository.findById(id).orElse(null);
+    public List<Processo> getProcessosPorProfessor(Professor professor){
+        return this.processoRepository.findByRelator(professor);
     }
 
     public Processo salvarProcesso(Processo processo){
@@ -58,37 +80,9 @@ public class ProcessoService implements Service<Processo, Integer> {
                 break;
             }
         }
-        processoAtualizado.setEstado(StatusProcesso.DISTRIBUIDO);
         processoAtualizado.setDataDistribuicao(new Date());
+        processoAtualizado.setEstado(StatusProcesso.DISTRIBUIDO);
         return this.processoRepository.save(processoAtualizado);
     }
 
-    public void deletarProcesso(Integer id){
-        processoRepository.deleteById(id);
-    }
-
-    @Override
-    public Page<Processo> findAll(Pageable page) {
-        return processoRepository.findAll(page);
-    }
-
-    @Override
-    public Processo findById(Integer id) {
-        Processo processo = null;
-        Optional<Processo> opAssunto = processoRepository.findById(id);
-        if (opAssunto.isPresent()) {
-            processo = opAssunto.get();
-        }
-        return processo;
-    }
-
-    @Override
-    public Processo save(Processo processo) {
-        return processoRepository.save(processo);
-    }
-
-    @Override
-    public void deleteById(Integer id) { processoRepository.deleteById(id);
-
-    }
 }

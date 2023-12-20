@@ -19,10 +19,7 @@
 </div>
 <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
     <div class="navbar-nav">
-        <a class="nav-item nav-link" th:href="@{/home}">Home</a>
-        <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
-        <a class="nav-item nav-link" th:href="@{/professores}" >Professores</a>
+        <a class="nav-item nav-link" th:href="@{/coordenador/{id}(id=${coordenador.id})}">Home</a>
     </div>
 
     <div style="margin-right: 5px;"><a href="#">
@@ -34,9 +31,7 @@
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
-
         <div class="card-body">
-            <!--LISTAGEM--->
             <div style="margin: 30px;">
                 <h2 style="margin-top: 20px">Painel de Distribuição de Processos - [[${coordenador.professor.nome}]]</h2>
                 <hr>
@@ -48,8 +43,8 @@
                                 <option value="" selected>Todos</option>
                                 <option value="Criado">Criado</option>
                                 <option value="Distribuido">Distribuído</option>
-                                <option value="Em pauta">Em pauta</option>
-                                <option value="Em julgamento">Em julgamento</option>
+                                <option value="Em_pauta">Em pauta</option>
+                                <option value="Em_julgamento">Em julgamento</option>
                                 <option value="Julgado">Julgado</option>
                             </select>
                         </div>
@@ -69,7 +64,6 @@
                         </div>
                     </div>
                 </div>
-                <!--TABELA DE PROCESSOS-->
                 <table class="table">
                     <thead>
                     <tr>
@@ -118,7 +112,6 @@
 <script th:src="@{/js/popper.min.js}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
-<!-- FILTRO POR STATUS-->
 <script>
     $(document).ready(function () {
         $('#filterStatus, #filterAluno, #filterRelator').on('change', function () {
@@ -139,6 +132,5 @@
         }
     });
 </script>
-
 </body>
 </html>

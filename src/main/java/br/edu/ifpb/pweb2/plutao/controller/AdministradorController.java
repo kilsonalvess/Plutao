@@ -9,8 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/admin")
 public class AdministradorController {
     @GetMapping
-    public ModelAndView showHomepage(ModelAndView model) {
-        model.setViewName("administrador/home");
-        return model;
+    public ModelAndView getHome(ModelAndView mav) {
+        mav.setViewName("administrador/home");
+        return mav;
     }
 }

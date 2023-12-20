@@ -39,74 +39,74 @@ public class CursoController {
     }
 
     @GetMapping("criar")
-    public ModelAndView createCurso(ModelAndView model, RedirectAttributes redirectAttributes ){
-        model.addObject("curso", new Curso());
-        model.addObject("acao", "salvar");
-        model.setViewName("cursos/form");
-        return model;
+    public ModelAndView criarCurso(ModelAndView mav, RedirectAttributes redirectAttributes ){
+        mav.addObject("curso", new Curso());
+        mav.addObject("acao", "salvar");
+        mav.setViewName("cursos/form");
+        return mav;
     }
 
     @PostMapping("criar")
-    public ModelAndView saveCurso(
+    public ModelAndView salvarCurso(
             @Valid Curso curso,
             BindingResult validation,
-            ModelAndView model,
+            ModelAndView mav,
             RedirectAttributes redirectAttributes
     ){
         if (validation.hasErrors()) {
-            model.setViewName("cursos/form");
-            model.addObject("acao", "salvar");
-            return model;
+            mav.setViewName("cursos/form");
+            mav.addObject("acao", "salvar");
+            return mav;
         }
-        cursoService.salvarCurso(curso);
-        model.addObject("cursos", cursoService.getCursos());
-        model.setViewName("redirect:/cursos");
-        redirectAttributes.addFlashAttribute("mensagem", "Curso Criado com Sucesso");
+        cursoService.save(curso);
+        mav.addObject("cursos", cursoService.getCursos());
+        mav.setViewName("redirect:/cursos");
+        redirectAttributes.addFlashAttribute("mensagem", "Curso criado com Sucesso");
         redirectAttributes.addFlashAttribute("cursoSalvo", true);
-        return model;
+        return mav;
     }
 
     @GetMapping("{id}")
-    public ModelAndView editCurso(@PathVariable("id") Integer id, ModelAndView model, RedirectAttributes redirectAttributes){
-        model.addObject("curso", cursoService.getCursoPorId(id));
-        model.addObject("acao", "editar");
-        model.setViewName("cursos/form");
-        redirectAttributes.addFlashAttribute("mensagem","Curso Editado com Sucesso");
+    public ModelAndView editarCurso(@PathVariable("id") Integer id, ModelAndView mav, RedirectAttributes redirectAttributes){
+        mav.addObject("curso", cursoService.getCursoPorId(id));
+        mav.addObject("acao", "editar");
+        mav.setViewName("cursos/form");
+        redirectAttributes.addFlashAttribute("mensagem","Curso editado com Sucesso");
         redirectAttributes.addFlashAttribute("cursosEditado", true);
-        return model;
+        return mav;
     }
 
     @PostMapping("{id}")
-    public ModelAndView updateCurso(
+    public ModelAndView atualizarCurso(
             @Valid Curso curso,
             BindingResult validation,
             @PathVariable("id") Integer id,
-            ModelAndView model,
+            ModelAndView mav,
             RedirectAttributes redirectAttributes
     ){
         if (validation.hasErrors()) {
-            model.addObject("curso", cursoService.getCursoPorId(id));
-            model.setViewName("redirect:/assuntos/"+id);
-            return model;
+            mav.addObject("curso", cursoService.getCursoPorId(id));
+            mav.setViewName("redirect:/assuntos/"+id);
+            return mav;
         }
-        cursoService.salvarCurso(curso);
-        model.addObject("assuntos", cursoService.getCursos());
-        model.setViewName("redirect:/assuntos");
-        redirectAttributes.addFlashAttribute("mensagem", "Curso Editado com Sucesso");
+        cursoService.save(curso);
+        mav.addObject("assuntos", cursoService.getCursos());
+        mav.setViewName("redirect:/assuntos");
+        redirectAttributes.addFlashAttribute("mensagem", "Curso editado com Sucesso");
         redirectAttributes.addFlashAttribute("cursosEditado", true);
-        return model;
+        return mav;
     }
 
 
     @RequestMapping("{id}/delete")
-    public ModelAndView deleteCurso(@PathVariable("id") Integer id, ModelAndView model, RedirectAttributes redirectAttributes){
-        cursoService.deletarCurso(id);
-        model.addObject("cursos", cursoService.getCursos());
-        model.addObject("curso", new Assunto());
-        model.setViewName("redirect:/cursos");
-        redirectAttributes.addFlashAttribute("mensagem", "Curso Deletado com Sucesso");
+    public ModelAndView deletarCurso(@PathVariable("id") Integer id, ModelAndView mav, RedirectAttributes redirectAttributes){
+        cursoService.deleteById(id);
+        mav.addObject("cursos", cursoService.getCursos());
+        mav.addObject("curso", new Assunto());
+        mav.setViewName("redirect:/cursos");
+        redirectAttributes.addFlashAttribute("mensagem", "Curso deletado com Sucesso");
         redirectAttributes.addFlashAttribute("cursosDeletado", true);
-        return model;
+        return mav;
     }
 
 

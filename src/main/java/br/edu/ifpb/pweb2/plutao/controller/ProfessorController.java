@@ -41,46 +41,46 @@ public class ProfessorController {
     }
 
     @GetMapping("/processos")
-    public ModelAndView showPainelProcessos(ModelAndView model, @PathVariable("id") Integer id) {
-        Professor professor = this.professorService.getProfessorPorId(id);
-        model.addObject("processos", processoService.getProcessosPorProfessor(professor));
-        model.addObject("professor", professor);
-        model.setViewName("/professores/painel");
-        return model;
+    public ModelAndView listProcessos(ModelAndView mav, @PathVariable("id") Integer id) {
+        Professor professor = this.professorService.findById(id);
+        mav.addObject("processos", processoService.getProcessosPorProfessor(professor));
+        mav.addObject("professor", professor);
+        mav.setViewName("/professores/painel");
+        return mav;
     }
 
     @GetMapping("/processos/{idProcesso}")
-    public ModelAndView showProcesso(ModelAndView model, @PathVariable("idProcesso") Integer idProcesso) {
-        model.addObject("processo", processoService.getProcessoPorId(idProcesso));
-        model.setViewName("/professores/processo");
-        return model;
+    public ModelAndView visualizarProcesso(ModelAndView mav, @PathVariable("idProcesso") Integer idProcesso) {
+        mav.addObject("processo", processoService.findById(idProcesso));
+        mav.setViewName("/professores/processo");
+        return mav;
     }
 
     @PostMapping("/processos/{idProcesso}")
-    public ModelAndView atualizarProcesso(ModelAndView model, Processo processo, @PathVariable("id") Integer id, @PathVariable("idProcesso") Integer idProcesso) {
+    public ModelAndView atualizarProcesso(ModelAndView mav, Processo processo, @PathVariable("id") Integer id, @PathVariable("idProcesso") Integer idProcesso) {
         processoService.atualizarProcesso(processo, idProcesso);
-        Professor professor = this.professorService.getProfessorPorId(id);
-        model.addObject("processos", processoService.getProcessosPorProfessor(professor));
-        model.setViewName("redirect:/professor/" + id + "/processos");
-        return model;
+        Professor professor = this.professorService.findById(id);
+        mav.addObject("processos", processoService.getProcessosPorProfessor(professor));
+        mav.setViewName("redirect:/professor/" + id + "/processos");
+        return mav;
     }
 
     @GetMapping("/reunioes")
-    public ModelAndView showPainelReunioes(ModelAndView model,@PathVariable("id") Integer id){
-        Professor professor = professorService.getProfessorPorId(id);
+    public ModelAndView listReunioes(ModelAndView mav,@PathVariable("id") Integer id){
+        Professor professor = professorService.findById(id);
         Colegiado colegiado = professor.getColegiados().get(0);
         List<Reuniao> reunioes = colegiado.getReunioes();
-        model.addObject("professor", professor);
-        model.addObject("reunioes", reunioes);
-        model.setViewName("/professores/painel-reunioes");
-        return model;
+        mav.addObject("professor", professor);
+        mav.addObject("reunioes", reunioes);
+        mav.setViewName("/professores/painel-reunioes");
+        return mav;
     }
 
     @GetMapping("/reunioes/{idReuniao}")
-    public ModelAndView showReuniao(ModelAndView model, @PathVariable("idReuniao") Integer idReuniao){
-        model.addObject("reuniao", this.reuniaoService.getReuniaoPorId(idReuniao));
-        model.setViewName("/professores/reuniao");
-        return model;
+    public ModelAndView visualizarReuniao(ModelAndView mav, @PathVariable("idReuniao") Integer idReuniao){
+        mav.addObject("reuniao", this.reuniaoService.getReuniaoPorId(idReuniao));
+        mav.setViewName("/professores/reuniao");
+        return mav;
     }
 
 }

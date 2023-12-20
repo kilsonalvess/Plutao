@@ -34,6 +34,7 @@ public class ProfessoresController {
     public List<Curso> getCursos() {
         return this.cursoService.getCursos();
     }
+
     @GetMapping("/form")
     public ModelAndView getForm(Professor professor, ModelAndView mav){
         mav.addObject("professor", professor);
@@ -72,14 +73,14 @@ public class ProfessoresController {
     }
 
     @GetMapping("/{id}/editar")
-    public ModelAndView getProfessorById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
+    public ModelAndView editarProfessor(@PathVariable(value = "id") Integer id, ModelAndView mav) {
         mav.addObject("professor", professorService.findById(id));
         mav.setViewName("professores/form");
         return mav;
     }
 
     @GetMapping("/{id}/delete")
-    public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+    public ModelAndView deletarProfessor(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
         professorService.deleteById(id);
         attr.addFlashAttribute("mensagem", "Professor removido com sucesso!");
         mav.setViewName("redirect:/professores");

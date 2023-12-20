@@ -33,6 +33,16 @@ public class AlunoController {
     @Autowired
     private ProcessoService processoService;
 
+    @ModelAttribute("assuntosItens")
+    public Page<Assunto> getAssuntos(Pageable page) {
+        return assuntoService.findAll(page);
+    }
+
+    @ModelAttribute("statusItens")
+    public List<StatusProcesso> getStatus() {
+        return List.of(StatusProcesso.values());
+    }
+
     @RequestMapping("/processos")
     public ModelAndView getProcessos(@PathVariable(value = "id") Integer id, ModelAndView mav) {
         mav.addObject("aluno", alunoService.findById(id));
@@ -42,7 +52,7 @@ public class AlunoController {
     }
 
     @RequestMapping("/processos/criar")
-    public ModelAndView criarProcesso(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+    public ModelAndView createProcesso(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
         Aluno aluno = this.alunoService.findById(id);
         mav.addObject("aluno", aluno);
         mav.addObject("processo", new Processo(aluno,new Assunto()));
@@ -51,7 +61,7 @@ public class AlunoController {
     }
 
     @RequestMapping("/processos/salvar")
-    public ModelAndView saveProcesso(@Valid Processo processo, BindingResult validation, @PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+    public ModelAndView salvarProcesso(@Valid Processo processo, BindingResult validation, @PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
 
         Aluno aluno = this.alunoService.findById(id);
         if (validation.hasErrors()) {
@@ -73,15 +83,4 @@ public class AlunoController {
         mav.setViewName("processos");
         return mav;
     }
-
-    @ModelAttribute("assuntosItens")
-    public Page<Assunto> getAssuntos(Pageable page) {
-        return assuntoService.findAll(page);
-    }
-
-    @ModelAttribute("statusItens")
-    public List<StatusProcesso> getStatus() {
-        return List.of(StatusProcesso.values());
-    }
-
 }

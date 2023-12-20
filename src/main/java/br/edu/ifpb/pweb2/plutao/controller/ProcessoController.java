@@ -94,15 +94,15 @@ public class ProcessoController {
     }
 
     @RequestMapping("/{id}")
-    public ModelAndView getProcessoById(@PathVariable(value = "id") Integer id, ModelAndView mav) {
-        mav.addObject("processo", processoService.getProcessoPorId(id));
+    public ModelAndView atualizarProcesso(@PathVariable(value = "id") Integer id, ModelAndView mav) {
+        mav.addObject("processo", processoService.findById(id));
         mav.setViewName("processos/form");
         return mav;
     }
 
     @RequestMapping("/{id}/delete")
-    public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
-        processoService.deletarProcesso(id);
+    public ModelAndView deletarProcesso(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+        processoService.deleteById(id);
         attr.addFlashAttribute("mensagem", "Processo removido com sucesso!");
         mav.setViewName("redirect:/processos");
         return mav;

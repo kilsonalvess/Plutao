@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ColegiadoRepository extends JpaRepository<Colegiado, Integer> {
-    public List<Colegiado> findByCoordenador(Coordenador coordenador);
+    List<Colegiado> findByCoordenador(Coordenador coordenador);
 }

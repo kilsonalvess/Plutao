@@ -98,7 +98,7 @@ public class ColegiadoController {
 
     @RequestMapping("/{id}/delete")
     public ModelAndView deleteById(@PathVariable(value = "id") Integer id, ModelAndView mav, RedirectAttributes attr) {
-        colegiadoService.deletarColegiado(id);
+        colegiadoService.deleteById(id);
         attr.addFlashAttribute("mensagem", "Colegiado removido com sucesso!");
         mav.setViewName("redirect:/colegiados");
         return mav;

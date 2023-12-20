@@ -55,9 +55,4 @@ public class ReuniaoService {
         return this.reuniaoRepository.save(reuniaoAtualizada);
     }
 
-    public void apagarReuniao(Integer id){
-        this.reuniaoRepository.deleteById(id);
-    }
-
-
 }

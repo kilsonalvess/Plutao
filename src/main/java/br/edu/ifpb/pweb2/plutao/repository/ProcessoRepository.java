@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ProcessoRepository extends JpaRepository<Processo, Integer> {
-    List<Processo> findByParecerAndAluno(boolean status, Aluno aluno);
 
     List<Processo> findByRelator(Professor professor);
 

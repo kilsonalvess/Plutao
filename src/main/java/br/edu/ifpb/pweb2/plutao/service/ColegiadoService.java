@@ -19,30 +19,6 @@ public class ColegiadoService implements Service<Colegiado, Integer> {
     @Autowired
     private ColegiadoRepository colegiadoRepository;
 
-    public List<Colegiado> getColegiados(){
-        return this.colegiadoRepository.findAll();
-    }
-
-    public Colegiado getColegiadoPorId(Integer id){
-        return this.colegiadoRepository.findById(id).orElse(null);
-    }
-
-    public Colegiado getColegiadoPorCoordenador(Coordenador coordenador){
-        return this.colegiadoRepository.findByCoordenador(coordenador).get(0);
-    }
-
-    public Colegiado salvarColegiado(Colegiado colegiado){
-        for(Professor professor : colegiado.getMembros() ){
-            professor.adicionarColegiado(colegiado);
-        }
-        colegiado.setDataInicio(new Date());
-        return this.colegiadoRepository.save(colegiado);
-    }
-
-    public void deletarColegiado(Integer id){
-        this.colegiadoRepository.deleteById(id);
-    }
-
     @Override
     public Page<Colegiado> findAll(Pageable page) {
         return colegiadoRepository.findAll(page);
@@ -62,4 +38,25 @@ public class ColegiadoService implements Service<Colegiado, Integer> {
     public void deleteById(Integer id) {
         colegiadoRepository.deleteById(id);
     }
+
+    public List<Colegiado> getColegiados(){
+        return this.colegiadoRepository.findAll();
+    }
+
+    public Colegiado getColegiadoPorId(Integer id){
+        return this.colegiadoRepository.findById(id).orElse(null);
+    }
+
+    public Colegiado getColegiadoPorCoordenador(Coordenador coordenador){
+        return this.colegiadoRepository.findByCoordenador(coordenador).get(0);
+    }
+
+    public Colegiado salvarColegiado(Colegiado colegiado){
+        colegiado.setDataInicio(new Date());
+        for(Professor professor : colegiado.getMembros() ){
+            professor.adicionarColegiado(colegiado);
+        }
+        return this.colegiadoRepository.save(colegiado);
+    }
+
 }

@@ -54,74 +54,74 @@ public class CoordenadoresController {
                 pageCoordenadores.getTotalElements(), pageCoordenadores.getTotalPages(), size);
         mav.addObject("coordenadores", pageCoordenadores);
         mav.addObject("navPage", navPage);
-        mav.setViewName("coordenador/list");
+        mav.setViewName("coordenadores/list");
         return mav;
     }
 
     @GetMapping("criar")
-    public ModelAndView createCoordenador(ModelAndView model, RedirectAttributes redirectAttributes ){
-        model.addObject("coordenador", new Coordenador());
-        model.addObject("acao", "salvar");
-        model.setViewName("coordenador/form");
-        return model;
+    public ModelAndView criarCoordenador(ModelAndView mav, RedirectAttributes redirectAttributes ){
+        mav.addObject("coordenador", new Coordenador());
+        mav.addObject("acao", "salvar");
+        mav.setViewName("coordenadores/form");
+        return mav;
     }
 
     @PostMapping("criar")
     public ModelAndView saveCoordenador(
             @Valid Coordenador coordenador,
             BindingResult validation,
-            ModelAndView model,
+            ModelAndView mav,
             RedirectAttributes redirectAttributes
     ){
         if (validation.hasErrors()) {
-            model.setViewName("coordenador/form");
-            model.addObject("acao", "salvar");
-            return model;
+            mav.setViewName("coordenadores/form");
+            mav.addObject("acao", "salvar");
+            return mav;
         }
-        coordenadorService.salvarCoordenador(coordenador);
-        model.addObject("coordenadores", professorService.getProfessores());
-        model.setViewName("redirect:/coordenadores");
+        coordenadorService.save(coordenador);
+        mav.addObject("coordenadores", professorService.getProfessores());
+        mav.setViewName("redirect:/coordenadores");
         redirectAttributes.addFlashAttribute("mensagem", "Coordenador Criado com Sucesso");
         redirectAttributes.addFlashAttribute("coordenadoresSalvo", true);
-        return model;
+        return mav;
     }
 
     @GetMapping("{id}")
-    public ModelAndView editCoordenador(@PathVariable("id") Integer id, ModelAndView model){
-        model.addObject("coordenador", coordenadorService.getCoordenadorPorId(id));
-        model.addObject("acao", "editar");
-        model.setViewName("coordenador/form");
-        return model;
+    public ModelAndView editarCoordenador(@PathVariable("id") Integer id, ModelAndView mav){
+        mav.addObject("coordenador", coordenadorService.getCoordenadorPorId(id));
+        mav.addObject("acao", "editar");
+        mav.setViewName("coordenadores/form");
+        return mav;
     }
 
     @PostMapping("{id}")
-    public ModelAndView updateCoordenador(
+    public ModelAndView atualizarCoordenador(
             @Valid Coordenador coordenador,
             BindingResult validation,
             @PathVariable("id") Integer id,
-            ModelAndView model,
+            ModelAndView mav,
             RedirectAttributes redirectAttributes
     ){
         if (validation.hasErrors()) {
-            model.addObject("coordenador", coordenadorService.getCoordenadorPorId(id));
-            model.setViewName("redirect:/professores/"+id);
-            return model;
+            mav.addObject("coordenador", coordenadorService.getCoordenadorPorId(id));
+            mav.setViewName("redirect:/professores/"+id);
+            return mav;
         }
-        coordenadorService.salvarCoordenador(coordenador);
-        model.addObject("coordenadores", coordenadorService.getCoordenadores());
-        model.setViewName("redirect:/coordenadores");
+        coordenadorService.save(coordenador);
+        mav.addObject("coordenadores", coordenadorService.getCoordenadores());
+        mav.setViewName("redirect:/coordenadores");
         redirectAttributes.addFlashAttribute("mensagem", "Coordenador Editado com Sucesso");
         redirectAttributes.addFlashAttribute("coordenadoresEditado", true);
-        return model;
+        return mav;
     }
 
     @RequestMapping("{id}/delete")
-    public ModelAndView deleteCoordenador(@PathVariable("id") Integer id, ModelAndView model, RedirectAttributes redirectAttributes){
-        coordenadorService.deletarCoordenador(id);
-        model.addObject("coordenadores", coordenadorService.getCoordenadores());
-        model.setViewName("redirect:/coordenadores");
+    public ModelAndView deletarCoordenador(@PathVariable("id") Integer id, ModelAndView mav, RedirectAttributes redirectAttributes){
+        coordenadorService.deleteById(id);
+        mav.addObject("coordenadores", coordenadorService.getCoordenadores());
+        mav.setViewName("redirect:/coordenadores");
         redirectAttributes.addFlashAttribute("mensagem","Coordenador Deletado com Sucesso");
         redirectAttributes.addFlashAttribute("coordenadoresDeletado", true);
-        return model;
+        return mav;
     }
 }

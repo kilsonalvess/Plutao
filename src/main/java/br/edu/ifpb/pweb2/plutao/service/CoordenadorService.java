@@ -15,24 +15,9 @@ import java.util.Optional;
 
 @Component
 public class CoordenadorService implements Service<Coordenador, Integer> {
+
     @Autowired
     private CoordenadorRepository coordenadorRepository;
-
-    public List<Coordenador> getCoordenadores(){
-        return this.coordenadorRepository.findAll();
-    }
-
-    public Coordenador getCoordenadorPorId(Integer id){
-        return this.coordenadorRepository.findById(id).orElse(null);
-    }
-
-    public Coordenador salvarCoordenador(Coordenador coordenador){
-        return this.coordenadorRepository.save(coordenador);
-    }
-
-    public void deletarCoordenador(Integer id){
-        this.coordenadorRepository.deleteById(id);
-    }
 
     @Override
     public Page<Coordenador> findAll(Pageable page) {
@@ -49,7 +34,6 @@ public class CoordenadorService implements Service<Coordenador, Integer> {
         return coordenador;
     }
 
-
     @Override
     public Coordenador save(Coordenador coordenador) {
         return coordenadorRepository.save(coordenador);
@@ -59,4 +43,13 @@ public class CoordenadorService implements Service<Coordenador, Integer> {
     public void deleteById(Integer id) {
         coordenadorRepository.deleteById(id);
     }
+
+    public List<Coordenador> getCoordenadores(){
+        return this.coordenadorRepository.findAll();
+    }
+
+    public Coordenador getCoordenadorPorId(Integer id){
+        return this.coordenadorRepository.findById(id).orElse(null);
+    }
+
 }

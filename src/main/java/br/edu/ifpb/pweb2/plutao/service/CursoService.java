@@ -14,24 +14,10 @@ import br.edu.ifpb.pweb2.plutao.repository.CursoRepository;
 
 @Component
 public class CursoService implements Service<Curso, Integer> {
+
     @Autowired
     private CursoRepository cursoRepository;
 
-    public List<Curso> getCursos(){
-        return this.cursoRepository.findAll();
-    }
-
-    public Curso getCursoPorId(Integer id){
-        return this.cursoRepository.findById(id).orElse(null);
-    }
-
-    public Curso salvarCurso(Curso assunto){
-        return this.cursoRepository.save(assunto);
-    }
-
-    public void deletarCurso(Integer id){
-        this.cursoRepository.deleteById(id);
-    }
 
     @Override
     public Page<Curso> findAll(Pageable p) {
@@ -56,6 +42,14 @@ public class CursoService implements Service<Curso, Integer> {
     @Override
     public void deleteById(Integer id) {
         cursoRepository.deleteById(id);
+    }
+
+    public List<Curso> getCursos(){
+        return this.cursoRepository.findAll();
+    }
+
+    public Curso getCursoPorId(Integer id){
+        return this.cursoRepository.findById(id).orElse(null);
     }
 
 }

@@ -38,7 +38,6 @@
         </div>
         <div class="card-body">
 
-            <!--LISTAGEM--->
             <div style="margin: 30px;">
             </div>
             <!-- PROCESSO -->
@@ -80,12 +79,11 @@
                 </div>
             </div>
 
-            <!-- MODAL PRA ESCOLHER O RELATOR -->
             <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <!--FORM DO RELATOR-->
-                        <form th:action="@{/coordenador/{idCoordenador}/processos/{id}(idCoordenador=${coordenador.id},id=${processo.id})}" method="post" th:object="${processo}">
+                        <form th:action="@{/templates/coordenadores/{idCoordenador}/processos/{id}(idCoordenador=${coordenador.id},id=${processo.id})}" method="post" th:object="${processo}">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="modalLabel">Atribuir Relator</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -118,5 +116,4 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 </body>
-
 </html>
