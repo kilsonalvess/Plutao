@@ -31,10 +31,11 @@
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
+        <div class="card-header">
+            Painel de Reuniões - <b>[[${coordenador.professor.nome}]]</b>
+        </div>
         <div class="container">
             <div style="margin: 30px;">
-                <h1 style="margin-top: 20px">Painel de Reuniões - [[${coordenador.professor.nome}]]</h1>
-                <hr>
                 <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 20px;">
                     <div class="btn-group">
                         <div class="input-group mb-3" style="margin-right: 10px;">
@@ -47,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <a th:href="@{reunioes/criar}" class="btn btn-primary justify-self-center">Criar Reunião</a>
+                <a th:href="@{reunioes/criar}" class="btn btn-primary justify-self-center">Nova Reunião</a>
                 <div role="alert" id="alerta" class="alert d-flex align-items-center alert-dismissible fade show" th:if="${mensagem ne null}">
                     <div th:text="${mensagem}"></div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -78,8 +79,8 @@
                             <form th:if="${reuniao.reuniao}==${programada}" th:action="@{/templates/coordenadores/{coordenadorId}/reunioes/{idReuniao}/iniciar(coordenadorId=${coordenador.id},idReuniao=${reuniao.id})}" method="post" th:object="${reuniao}">
                                 <button type="submit" class="btn btn-success">Iniciar</button>
                             </form>
-                            <a th:if="${reuniao.reuniao}==${emAndamento}" th:href="@{/templates/coordenadores/{coordenadorId}/reunioes/{idReuniao}/painel(coordenadorId=${coordenador.id},idReuniao=${reuniao.id})}" type="button" class="btn btn-success">Entrar</a>
-                            <a th:href="@{/templates/coordenadores/{coordenadorId}/reunioes/{idReuniao}(coordenadorId=${coordenador.id},idReuniao=${reuniao.id})}" type="button" class="btn btn-primary">Consultar</a>
+                            <a th:if="${reuniao.reuniao}==${emAndamento}" th:href="@{coordenador/{coordenadorId}/reunioes/{idReuniao}/painel(coordenadorId=${coordenador.id},idReuniao=${reuniao.id})}" type="button" class="btn btn-success">Entrar</a>
+                            <a th:href="@{/coordenador/{coordenadorId}/reunioes/{idReuniao}(coordenadorId=${coordenador.id},idReuniao=${reuniao.id})}" type="button" class="btn btn-primary">Consultar</a>
                         </td>
                     </tr>
                     </tbody>

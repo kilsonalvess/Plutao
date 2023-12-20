@@ -31,10 +31,11 @@
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
+        <div class="card-header">
+            Painel de Distribuição de Processos - <b>[[${coordenador.professor.nome}]]</b>
+        </div>
         <div class="card-body">
             <div style="margin: 30px;">
-                <h2 style="margin-top: 20px">Painel de Distribuição de Processos - [[${coordenador.professor.nome}]]</h2>
-                <hr>
                 <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 20px;">
                     <div class="btn-group">
                         <div class="input-group mb-3" style="margin-right: 10px;">

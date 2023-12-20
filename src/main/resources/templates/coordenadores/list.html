@@ -32,8 +32,10 @@
 
     <div class="card">
         <div class="container">
-            <h1 style="margin-top:20px;margin-bottom: 20px;">Painel de Coordenadores</h1>
-            <hr>
+            <div class="card-header">
+                Listagem de Coordenadores
+            </div>
+            <br>
             <a th:href="@{coordenadores/criar}" type="button" class="btn btn-primary"
                style="margin-bottom: 20px;">Novo</a>
             <div th:if="${not #lists.isEmpty(coordenadores)}">

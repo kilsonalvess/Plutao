@@ -34,13 +34,12 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>Atribuir Processo - #[[${processo.numero}]]</h4>
+            <h5>Atribuir Processo - #[[${processo.numero}]]</h5>
         </div>
         <div class="card-body">
 
             <div style="margin: 30px;">
             </div>
-            <!-- PROCESSO -->
             <div class="container">
                 <div class="row">
                     <div class="container col fs-4 border border-black p-4">Aluno: [[${processo.aluno.nome}]]</div>
@@ -82,7 +81,6 @@
             <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <!--FORM DO RELATOR-->
                         <form th:action="@{/templates/coordenadores/{idCoordenador}/processos/{id}(idCoordenador=${coordenador.id},id=${processo.id})}" method="post" th:object="${processo}">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="modalLabel">Atribuir Relator</h1>

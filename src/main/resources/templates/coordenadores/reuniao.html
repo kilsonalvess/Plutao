@@ -31,25 +31,25 @@
     <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
 
     <div class="card">
+        <div class="card-header">
+            <h5 style="margin-top: 20px">Reuniao de [[${reuniao.colegiado.descricao}]] - [[${reuniao.dataReuniao}]]</h5>
+        </div>
         <div class="container">
             <div style="margin: 30px;">
-                <h1 style="margin-top: 20px">Reuniao de [[${reuniao.colegiado.descricao}]] - [[${reuniao.dataReuniao}]]</h1>
-                <hr>
             </div>
-            <!--FORM DE PROCESSO-->
             <form class="container" th:object="${reuniao}">
                 <div class="row">
                     <div class="mb-3">
                         <label for="data" class="form-label">Data da Reunião:</label>
-                        <input disabled class="form-control" type="date" id="data" th:field="*{dataReuniao}"></input>
+                        <input disabled class="form-control" type="date" id="data" th:field="*{dataReuniao}">
                     </div>
                     <div class="mb-3">
                         <label for="colegiado" class="form-label">Colegiado:</label>
-                        <input class="form-control" disabled type="text" id="colegiado" th:value="${reuniao.colegiado.descricao}"></input>
+                        <input class="form-control" disabled type="text" id="colegiado" th:value="${reuniao.colegiado.descricao}">
                     </div>
                 </div>
                 <div>
-                    <h3>Pauta:</h3>
+                    <h5>Informações:</h5>
                     <table class="table">
                         <thead>
                         <tr>
