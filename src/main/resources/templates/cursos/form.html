@@ -14,59 +14,28 @@
 </head>
 <body>
 
-<div class="logo-bar mb-0 p-3">
-        <span class="logo-font">
-            <img th:src="@{/imagens/Plutao.png}" class="resized-image" /> Plutao
-        </span>
-</div>
-
-<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" th:href="@{/home}">Home</a>
-        <a class="nav-item nav-link" th:href="@{/alunos}" >Alunos</a>
-        <a class="nav-item nav-link" th:href="@{/processos}" >Processos</a>
-    </div>
-
-    <div style="margin-right: 5px;"><a href="#">
-        <button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a>
-    </div>
-</nav>
-
 <div class="container">
-    <div th:if="${mensagem ne null}" th:text="${mensagem}" class="alert alert-success"></div>
+    <h2 class="titulo">Cadastro de Cursos</h2>
 
-    <div class="card">
-        <div class="card-header">
-            Cadastro de Curso
-        </div>
-        <div class="card-body">
-            <h1 style="margin-bottom: 20px;margin-top: 20px;" th:text="${acao} == 'salvar' ? 'Criar Curso' : 'Editar Curso'"></h1>
-            <!-- INICIO DO FORM -->
+    <div class="card-form">
+
+        <div class="card-body" layout:fragment="content">
             <form th:action="${acao} == 'salvar' ? @{/cursos/criar} : @{/cursos/{id}(id=${curso.id})}" method="post" th:object="${curso}">
+                <input type="hidden" th:field="*{id}"><br>
 
-                <div class="modal-body">
-                    <div class="row">
-                        <input type="hidden" th:field="*{id}"><br>
-                        <!--NOME-->
-                        <div class="mb-3">
-                            <label for="nome" class="form-label">Nome do Curso:</label>
-                            <input type="text" id="nome" th:field="*{nome}" class="form-control">
-                            <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}" class="alert alert-danger"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a th:href="@{/cursos}"  class="btn btn-secondary" style="margin-right: 10px;">Fechar</a>
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-                            style="padding-left: 25px; padding-right:25px">Salvar</button>
-                </div>
+                <label for="nome" class="form-label">Nome do Curso:</label>
+                <input type="text" id="nome" th:field="*{nome}" class="form-control">
+                <p th:if="${#fields.hasErrors('nome')}" th:errorclass="error" th:errors="*{nome}" class="alert alert-danger"></p>
+
+                <br>
+                <input class="btn btn-outline-primary" type="submit" value="Salvar">
+                <a class="btn btn-outline-secondary" th:href="@{/cursos}">Cancelar</a>
             </form>
-        </div>
-
         </div>
     </div>
 </div>
 </body>
+
 </html>
 
 
