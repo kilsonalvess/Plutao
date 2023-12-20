@@ -10,9 +10,14 @@ import br.edu.ifpb.pweb2.plutao.service.AlunoService;
 import br.edu.ifpb.pweb2.plutao.service.AssuntoService;
 import br.edu.ifpb.pweb2.plutao.service.ColegiadoService;
 import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
+import br.edu.ifpb.pweb2.plutao.ui.NavPage;
+import br.edu.ifpb.pweb2.plutao.ui.NavePageBuilder;
 import jakarta.validation.Valid;
 import jakarta.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -45,13 +50,13 @@ public class ProcessoController {
     }
 
     @ModelAttribute("alunoItens")
-    public List<Aluno> getAlunos() {
-        return alunoService.findAll();
+    public Page<Aluno> getAlunos(Pageable page) {
+        return alunoService.findAll(page);
     }
 
     @ModelAttribute("assuntosItens")
-    public List<Assunto> getAssuntos() {
-        return assuntoService.findAll();
+    public Page<Assunto> getAssuntos(Pageable page) {
+        return assuntoService.findAll(page);
     }
 
     @ModelAttribute("colegiados")
@@ -77,9 +82,14 @@ public class ProcessoController {
     }
 
     @GetMapping
-    public ModelAndView listAll(ModelAndView mav) {
+    public ModelAndView listAll(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Processo> pageProcessos = processoService.findAll(paging);
+        NavPage navPage = NavePageBuilder.newNavPage(pageProcessos.getNumber() + 1,
+                pageProcessos.getTotalElements(), pageProcessos.getTotalPages(), size);
+        mav.addObject("processos", pageProcessos);
+        mav.addObject("navPage", navPage);
         mav.setViewName("processos/list");
-        mav.addObject("processos", processoService.getProcessos());
         return mav;
     }
 

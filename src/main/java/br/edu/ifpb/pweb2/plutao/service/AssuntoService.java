@@ -3,6 +3,8 @@ package br.edu.ifpb.pweb2.plutao.service;
 import br.edu.ifpb.pweb2.plutao.model.Assunto;
 import br.edu.ifpb.pweb2.plutao.repository.AssuntoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class AssuntoService implements Service<Assunto, Integer>{
     @Autowired
     private AssuntoRepository assuntoRepository;
     @Override
-    public List<Assunto> findAll() {
-        return assuntoRepository.findAll();
+    public Page<Assunto> findAll(Pageable page) {
+        return assuntoRepository.findAll(page);
     }
 
     @Override

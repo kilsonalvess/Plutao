@@ -1,15 +1,17 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
-import br.edu.ifpb.pweb2.plutao.model.Colegiado;
-import br.edu.ifpb.pweb2.plutao.model.Coordenador;
-import br.edu.ifpb.pweb2.plutao.model.Curso;
-import br.edu.ifpb.pweb2.plutao.model.Professor;
+import br.edu.ifpb.pweb2.plutao.model.*;
 import br.edu.ifpb.pweb2.plutao.service.ColegiadoService;
 import br.edu.ifpb.pweb2.plutao.service.CoordenadorService;
 import br.edu.ifpb.pweb2.plutao.service.CursoService;
 import br.edu.ifpb.pweb2.plutao.service.ProfessorService;
+import br.edu.ifpb.pweb2.plutao.ui.NavPage;
+import br.edu.ifpb.pweb2.plutao.ui.NavePageBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +43,8 @@ public class ColegiadoController {
         return mav;
     }
     @ModelAttribute("professoresList")
-    public List<Professor> getProfessores() {
-        return professorService.findAll();
+    public Page<Professor> getProfessores(Pageable page) {
+        return professorService.findAll(page);
     }
 
     @ModelAttribute("cursos")
@@ -56,8 +58,13 @@ public class ColegiadoController {
     }
 
     @GetMapping
-    public ModelAndView listAll(ModelAndView mav) {
-        mav.addObject("colegiados", colegiadoService.getColegiados());
+    public ModelAndView listAll(ModelAndView mav,@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Colegiado> pageColegiados = colegiadoService.findAll(paging);
+        NavPage navPage = NavePageBuilder.newNavPage(pageColegiados.getNumber() + 1,
+                pageColegiados.getTotalElements(), pageColegiados.getTotalPages(), size);
+        mav.addObject("colegiados", pageColegiados);
+        mav.addObject("navPage", navPage);
         mav.setViewName("colegiados/list");
         return mav;
     }

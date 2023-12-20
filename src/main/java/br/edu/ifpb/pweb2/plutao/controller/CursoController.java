@@ -1,12 +1,15 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
+
+import br.edu.ifpb.pweb2.plutao.ui.NavPage;
+import br.edu.ifpb.pweb2.plutao.ui.NavePageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,11 +26,16 @@ public class CursoController {
     private CursoService cursoService;
 
     @GetMapping
-    public ModelAndView listCursos(ModelAndView model){
-        model.addObject("cursos", cursoService.getCursos());
-        model.addObject("curso", new Curso());
-        model.setViewName("cursos/list");
-        return model;
+    public ModelAndView listCursos(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size){
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Curso> pageCursos = cursoService.findAll(paging);
+        NavPage navPage = NavePageBuilder.newNavPage(pageCursos.getNumber() + 1,
+                pageCursos.getTotalElements(), pageCursos.getTotalPages(), size);
+        mav.addObject("cursos", pageCursos);
+        mav.addObject("navPage", navPage);
+        mav.addObject("curso", new Curso());
+        mav.setViewName("cursos/list");
+        return mav;
     }
 
     @GetMapping("criar")
@@ -59,7 +67,7 @@ public class CursoController {
     }
 
     @GetMapping("{id}")
-    public ModelAndView editCurso(@PathVariable("id") long id, ModelAndView model, RedirectAttributes redirectAttributes){
+    public ModelAndView editCurso(@PathVariable("id") Integer id, ModelAndView model, RedirectAttributes redirectAttributes){
         model.addObject("curso", cursoService.getCursoPorId(id));
         model.addObject("acao", "editar");
         model.setViewName("cursos/form");
@@ -72,7 +80,7 @@ public class CursoController {
     public ModelAndView updateCurso(
             @Valid Curso curso,
             BindingResult validation,
-            @PathVariable("id") Long id,
+            @PathVariable("id") Integer id,
             ModelAndView model,
             RedirectAttributes redirectAttributes
     ){
@@ -91,7 +99,7 @@ public class CursoController {
 
 
     @RequestMapping("{id}/delete")
-    public ModelAndView deleteCurso(@PathVariable("id") Long id, ModelAndView model, RedirectAttributes redirectAttributes){
+    public ModelAndView deleteCurso(@PathVariable("id") Integer id, ModelAndView model, RedirectAttributes redirectAttributes){
         cursoService.deletarCurso(id);
         model.addObject("cursos", cursoService.getCursos());
         model.addObject("curso", new Assunto());

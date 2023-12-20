@@ -6,13 +6,15 @@ import br.edu.ifpb.pweb2.plutao.model.Coordenador;
 import br.edu.ifpb.pweb2.plutao.model.Professor;
 import br.edu.ifpb.pweb2.plutao.repository.ColegiadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class ColegiadoService{
+@Component
+public class ColegiadoService implements Service<Colegiado, Integer> {
 
     @Autowired
     private ColegiadoRepository colegiadoRepository;
@@ -39,5 +41,25 @@ public class ColegiadoService{
 
     public void deletarColegiado(Integer id){
         this.colegiadoRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Colegiado> findAll(Pageable page) {
+        return colegiadoRepository.findAll(page);
+    }
+
+    @Override
+    public Colegiado findById(Integer integer) {
+        return null;
+    }
+
+    @Override
+    public Colegiado save(Colegiado colegiado) {
+        return colegiadoRepository.save(colegiado);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        colegiadoRepository.deleteById(id);
     }
 }

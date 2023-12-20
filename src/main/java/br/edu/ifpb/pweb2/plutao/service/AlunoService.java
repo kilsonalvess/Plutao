@@ -5,6 +5,7 @@ import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.repository.AlunoRepository;
 import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +22,8 @@ public class AlunoService implements Service<Aluno, Integer>{
     @Autowired
     private ProcessoRepository processoRepository;
 
-    public List<Aluno> findAll() {
-        return alunoRepository.findAll();
+    public Page<Aluno> findAll(Pageable page) {
+        return alunoRepository.findAll(page);
     }
 
     @Override

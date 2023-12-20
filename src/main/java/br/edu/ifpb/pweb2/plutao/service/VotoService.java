@@ -3,6 +3,8 @@ package br.edu.ifpb.pweb2.plutao.service;
 import br.edu.ifpb.pweb2.plutao.model.Voto;
 import br.edu.ifpb.pweb2.plutao.repository.VotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class VotoService implements Service<Voto, Integer>{
     @Autowired
     private VotoRepository votoRepository;
     @Override
-    public List<Voto> findAll() {
-        return votoRepository.findAll();
+    public Page<Voto> findAll(Pageable page) {
+        return votoRepository.findAll(page);
     }
 
     @Override

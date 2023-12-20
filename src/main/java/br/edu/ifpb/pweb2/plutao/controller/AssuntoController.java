@@ -1,11 +1,17 @@
 package br.edu.ifpb.pweb2.plutao.controller;
 
+import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.model.Assunto;
 import br.edu.ifpb.pweb2.plutao.model.Processo;
 import br.edu.ifpb.pweb2.plutao.service.AssuntoService;
 import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
+import br.edu.ifpb.pweb2.plutao.ui.NavPage;
+import br.edu.ifpb.pweb2.plutao.ui.NavePageBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -55,8 +61,13 @@ public class AssuntoController {
     }
 
     @GetMapping
-    public ModelAndView listAll(ModelAndView mav){
-        mav.addObject("assuntos", assuntoService.findAll());
+    public ModelAndView listAll(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size){
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Assunto> pageAssuntos = assuntoService.findAll(paging);
+        NavPage navPage = NavePageBuilder.newNavPage(pageAssuntos.getNumber() + 1,
+                pageAssuntos.getTotalElements(), pageAssuntos.getTotalPages(), size);
+        mav.addObject("assuntos", pageAssuntos);
+        mav.addObject("navPage", navPage);
         mav.setViewName("assuntos/list");
         return mav;
     }

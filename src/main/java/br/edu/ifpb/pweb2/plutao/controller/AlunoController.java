@@ -9,6 +9,8 @@ import br.edu.ifpb.pweb2.plutao.service.AssuntoService;
 import br.edu.ifpb.pweb2.plutao.service.ProcessoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -73,8 +75,8 @@ public class AlunoController {
     }
 
     @ModelAttribute("assuntosItens")
-    public List<Assunto> getAssuntos() {
-        return assuntoService.findAll();
+    public Page<Assunto> getAssuntos(Pageable page) {
+        return assuntoService.findAll(page);
     }
 
     @ModelAttribute("statusItens")

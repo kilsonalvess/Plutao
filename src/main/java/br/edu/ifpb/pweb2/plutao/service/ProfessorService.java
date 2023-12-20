@@ -3,6 +3,8 @@ package br.edu.ifpb.pweb2.plutao.service;
 import br.edu.ifpb.pweb2.plutao.model.Professor;
 import br.edu.ifpb.pweb2.plutao.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -16,8 +18,8 @@ public class ProfessorService implements Service<Professor, Integer>{
     private ProfessorRepository professorRepository;
 
     @Override
-    public List<Professor> findAll() {
-        return professorRepository.findAll();
+    public Page<Professor> findAll(Pageable page) {
+        return professorRepository.findAll(page);
     }
 
     @Override

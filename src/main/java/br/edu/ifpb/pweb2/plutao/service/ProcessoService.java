@@ -1,20 +1,20 @@
 package br.edu.ifpb.pweb2.plutao.service;
 
 import br.edu.ifpb.pweb2.plutao.enums.StatusProcesso;
+import br.edu.ifpb.pweb2.plutao.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
 import br.edu.ifpb.pweb2.plutao.repository.ProcessoRepository;
-import br.edu.ifpb.pweb2.plutao.model.Aluno;
-import br.edu.ifpb.pweb2.plutao.model.Colegiado;
-import br.edu.ifpb.pweb2.plutao.model.Processo;
-import br.edu.ifpb.pweb2.plutao.model.Professor;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public class ProcessoService {
+@Component
+public class ProcessoService implements Service<Processo, Integer> {
     @Autowired
     private ProcessoRepository processoRepository;
 
@@ -67,4 +67,28 @@ public class ProcessoService {
         processoRepository.deleteById(id);
     }
 
+    @Override
+    public Page<Processo> findAll(Pageable page) {
+        return processoRepository.findAll(page);
+    }
+
+    @Override
+    public Processo findById(Integer id) {
+        Processo processo = null;
+        Optional<Processo> opAssunto = processoRepository.findById(id);
+        if (opAssunto.isPresent()) {
+            processo = opAssunto.get();
+        }
+        return processo;
+    }
+
+    @Override
+    public Processo save(Processo processo) {
+        return processoRepository.save(processo);
+    }
+
+    @Override
+    public void deleteById(Integer id) { processoRepository.deleteById(id);
+
+    }
 }

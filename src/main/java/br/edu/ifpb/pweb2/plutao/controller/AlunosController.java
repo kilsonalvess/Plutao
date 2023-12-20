@@ -3,6 +3,8 @@ package br.edu.ifpb.pweb2.plutao.controller;
 import br.edu.ifpb.pweb2.plutao.model.Aluno;
 import br.edu.ifpb.pweb2.plutao.service.AlunoService;
 
+import br.edu.ifpb.pweb2.plutao.ui.NavPage;
+import br.edu.ifpb.pweb2.plutao.ui.NavePageBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @Controller
 @RequestMapping("/alunos")
@@ -42,8 +47,13 @@ public class AlunosController {
         return mav;
     }
     @GetMapping
-    public ModelAndView listAll(ModelAndView mav){
-        mav.addObject("alunos", alunoService.findAll());
+    public ModelAndView listAll(ModelAndView mav, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size){
+        Pageable paging = PageRequest.of(page - 1, size);
+        Page<Aluno> pageAlunos = alunoService.findAll(paging);
+        NavPage navPage = NavePageBuilder.newNavPage(pageAlunos.getNumber() + 1,
+                pageAlunos.getTotalElements(), pageAlunos.getTotalPages(), size);
+        mav.addObject("alunos", pageAlunos);
+        mav.addObject("navPage", navPage);
         mav.setViewName("alunos/list");
         return mav;
     }
