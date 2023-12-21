@@ -27,6 +27,7 @@ public class Aluno implements Serializable {
     private String telefone;
 
     @NotBlank(message = "Campo obrigatório")
+    @CodMatricula
     private String matricula;
 
     @NotBlank(message = "Campo obrigatório")

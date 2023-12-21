@@ -27,6 +27,7 @@ public class Professor{
     private String telefone;
 
     @NotBlank(message = "Campo obrigatório")
+    @CodMatricula
     private String matricula;
 
     @NotBlank(message = "Campo obrigatório")
